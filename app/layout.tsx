@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     title: 'FIXDAY – Técnico Computadores a Domicilio',
     description: 'Tu computador reparado en casa. Profesional, rápido y a domicilio en Santiago.',
   },
+  verification: {
+    google: 'b2iejJ6TyvO27tVj4_4kwJZ_Jyzq6QhrxfNuV8qv2lY',
+  },
   other: {
     'geo.region': 'CL-RM',
     'geo.placename': 'Santiago, Región Metropolitana, Chile',
