@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Bix from './components/Bix'
 
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, necesito ayuda con mi computador 💻')}`
@@ -741,6 +742,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <Bix />
     </>
   )
 }

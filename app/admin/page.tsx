@@ -39,6 +39,8 @@ export default function AdminPage() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('Todos')
+  const [mascotOn, setMascotOn] = useState(true)
+  const [mascotSaving, setMascotSaving] = useState(false)
 
   const handleLogout = useCallback(async () => {
     await fetch('/api/admin/auth', { method: 'DELETE' })
@@ -55,6 +57,25 @@ export default function AdminPage() {
       .catch(() => setError('No se pudo conectar con la base de datos.'))
       .finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    fetch('/api/admin/settings?key=mascot_enabled')
+      .then(r => r.json())
+      .then(d => setMascotOn(d.value !== 'false'))
+      .catch(() => {})
+  }, [])
+
+  const toggleMascot = async () => {
+    const next = !mascotOn
+    setMascotOn(next)
+    setMascotSaving(true)
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'mascot_enabled', value: String(next) }),
+    }).catch(() => {})
+    setMascotSaving(false)
+  }
 
   const services = ['Todos', ...Array.from(new Set(leads.map(l => l.service)))]
 
@@ -88,6 +109,33 @@ export default function AdminPage() {
       </div>
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px 0' }}>
+
+        {/* Mascota Bix */}
+        <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,.08)', borderRadius: 16, padding: '20px 24px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 12, background: mascotOn ? 'rgba(41,151,255,.12)' : 'rgba(255,255,255,.05)', border: `1px solid ${mascotOn ? 'rgba(41,151,255,.3)' : 'rgba(255,255,255,.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
+              🤖
+            </div>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 2 }}>Mascota Bix</div>
+              <div style={{ fontSize: 12, color: '#636366' }}>{mascotOn ? 'Visible en el sitio público' : 'Oculta en el sitio público'}</div>
+            </div>
+          </div>
+          <button
+            onClick={toggleMascot}
+            disabled={mascotSaving}
+            style={{
+              background: mascotOn ? '#2997FF' : 'rgba(255,255,255,.08)',
+              border: mascotOn ? 'none' : '1px solid rgba(255,255,255,.12)',
+              borderRadius: 980, padding: '8px 20px',
+              color: mascotOn ? '#fff' : '#636366',
+              fontSize: 13, fontWeight: 600, cursor: mascotSaving ? 'not-allowed' : 'pointer',
+              opacity: mascotSaving ? 0.6 : 1, transition: 'all 0.2s',
+            }}
+          >
+            {mascotSaving ? 'Guardando…' : mascotOn ? 'Activa' : 'Inactiva'}
+          </button>
+        </div>
 
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 40 }}>
