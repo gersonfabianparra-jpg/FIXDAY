@@ -213,16 +213,15 @@ export default function AdminReviewsPage() {
                       Mover a pendiente
                     </button>
                   )}
-                  {r.status === 'approved' && (
-                    <a
-                      href={`/api/og/review/${r.id}`}
-                      download={`reseña-${r.client_name.replace(/\s+/g,'-').toLowerCase()}.png`}
-                      style={{ background: 'rgba(191,90,242,.12)', border: '1px solid rgba(191,90,242,.3)', borderRadius: 8, padding: '8px 18px', fontSize: 12, fontWeight: 600, color: '#BF5AF2', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
-                    >
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Imagen Instagram
-                    </a>
-                  )}
+                  <a
+                    href={`/api/og/review/${r.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ background: 'rgba(191,90,242,.12)', border: '1px solid rgba(191,90,242,.3)', borderRadius: 8, padding: '8px 18px', fontSize: 12, fontWeight: 600, color: '#BF5AF2', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    Imagen Instagram
+                  </a>
                 </div>
               </div>
             ))}
