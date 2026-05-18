@@ -261,9 +261,8 @@ export default function Bix() {
         @keyframes bix-star-up   { 0%{transform:translateY(0) scale(1);opacity:1} 100%{transform:translateY(-34px) scale(0);opacity:0} }
         @keyframes bix-wave-out  { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(2.4);opacity:0} }
         @keyframes bix-wrench    { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-22deg)} }
-        @keyframes bix-msg-in    { from{opacity:0;transform:translateY(-50%) translateX(8px)} to{opacity:1;transform:translateY(-50%) translateX(0)} }
 
-        .bix-wrap            { animation: bix-bob 2.6s ease-in-out infinite; }
+        .bix-wrap            { animation: bix-bob 2.6s ease-in-out infinite; filter: drop-shadow(0 8px 32px rgba(41,151,255,0.25)); }
         .bix-wrap.bix-happy  { animation: bix-happy-bob 1.5s ease-in-out infinite !important; }
         .bix-wrap.bix-shake  { animation: bix-shake 0.45s ease-in-out 1 !important; }
         .bix-pulse           { animation: bix-pulse 1.8s ease-in-out infinite; }
@@ -275,20 +274,19 @@ export default function Bix() {
         .bix-wave2           { animation: bix-wave-out 0.7s ease-out 0.35s infinite; }
         .bix-wrench          { animation: bix-wrench 0.6s ease-in-out infinite; transform-origin: -7px 0px; }
 
-        @media (max-width: 768px) { .bix-outer { display: none !important; } }
+        @media (max-width: 768px) { .bix-fixed { display: none !important; } }
       `}</style>
 
       <div
-        className="bix-outer"
+        className="bix-fixed"
         style={{
           position: 'fixed', right: 20, top: '55%',
+          transform: 'translateY(-50%)',
           zIndex: 40,
           opacity: visible ? 1 : 0,
-          transform: `translateY(-50%) ${visible ? 'scale(1)' : 'scale(0.85)'}`,
-          transition: 'opacity 0.6s ease, transform 0.6s ease',
+          transition: 'opacity 0.6s ease',
           pointerEvents: visible ? 'auto' : 'none',
           userSelect: 'none',
-          filter: 'drop-shadow(0 8px 36px rgba(41,151,255,0.28))',
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -300,6 +298,7 @@ export default function Bix() {
           opacity: (hovered || showMsg) ? 1 : 0,
           pointerEvents: 'none',
           transition: 'opacity 0.3s ease',
+          zIndex: 1,
         }}>
           <div style={{
             background: '#12122A', border: '1px solid rgba(41,151,255,0.3)',
