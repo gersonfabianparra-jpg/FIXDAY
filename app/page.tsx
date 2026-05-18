@@ -36,6 +36,14 @@ function WAIcon() {
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error'
 
+interface Review {
+  id: string
+  client_name: string
+  client_location?: string
+  rating: number
+  review_text: string
+}
+
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [mnavOpen, setMnavOpen] = useState(false)
@@ -43,6 +51,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' })
   const [formStatus, setFormStatus] = useState<FormStatus>('idle')
   const [stats, setStats] = useState({ equipos: 0, satisfaccion: 0 })
+  const [reviews, setReviews] = useState<Review[]>([])
 
   // Particles + shooting stars + mouse attraction
   useEffect(() => {
@@ -222,6 +231,14 @@ export default function Home() {
       card.removeEventListener('mousemove', onMove as EventListener)
       card.removeEventListener('mouseleave', onLeave as EventListener)
     })
+  }, [])
+
+  // Approved reviews
+  useEffect(() => {
+    fetch('/api/reviews')
+      .then(r => r.json())
+      .then(d => setReviews(d.reviews ?? []))
+      .catch(() => {})
   }, [])
 
   // Stats counter
@@ -468,14 +485,19 @@ export default function Home() {
               </div>
             </div>
             <div className="fu-r d2">
-              <div className="wcard">
-                <div className="stars">★★★★★</div>
-                <p className="wquote">&ldquo;Mi laptop llevaba meses lenta y pensé que necesitaba comprar una nueva. FIXDAY vino a casa, la optimizó completamente y quedó como nueva en 2 horas. Excelente servicio, muy profesional.&rdquo;</p>
-                <div className="wauthor">
-                  <div className="wavatar">M</div>
-                  <div className="wainfo"><strong>María González</strong><span>Providencia, Santiago</span></div>
+              {reviews.length > 0 && (
+                <div className="wcard">
+                  <div className="stars">{'★'.repeat(reviews[0].rating)}{'☆'.repeat(5 - reviews[0].rating)}</div>
+                  <p className="wquote">&ldquo;{reviews[0].review_text}&rdquo;</p>
+                  <div className="wauthor">
+                    <div className="wavatar">{reviews[0].client_name[0].toUpperCase()}</div>
+                    <div className="wainfo">
+                      <strong>{reviews[0].client_name}</strong>
+                      {reviews[0].client_location && <span>{reviews[0].client_location}</span>}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="wstats">
                 <div className="wstat"><div className="n">+200</div><div className="l">Equipos reparados</div></div>
                 <div className="wstat"><div className="n">98%</div><div className="l">Satisfacción</div></div>
