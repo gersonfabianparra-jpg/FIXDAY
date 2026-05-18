@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Login page is always public
+  // Login page and auth API are always public
   if (pathname === '/admin/login') return NextResponse.next()
+  if (pathname === '/api/admin/auth') return NextResponse.next()
 
   // Protect /admin and /api/admin
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
