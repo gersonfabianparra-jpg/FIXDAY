@@ -77,6 +77,8 @@ export default function AdminPage() {
           <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-.02em' }}>FIXDAY <span style={{ color: '#636366', fontWeight: 400, fontSize: 14 }}>/ Admin</span></span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <a href="/admin" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid #2997FF', paddingBottom: 1 }}>Leads</a>
+          <a href="/admin/reports" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Informes</a>
           <a href="/" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none' }}>← Volver al sitio</a>
           <button onClick={handleLogout} style={{ background: 'rgba(255,69,58,.12)', border: '1px solid rgba(255,69,58,.3)', borderRadius: 8, padding: '7px 16px', color: '#FF453A', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
             Cerrar sesión

@@ -543,6 +543,24 @@ export default function Home() {
                   <div className="cdet-text"><strong>Horario de atención</strong><span>Lunes a Sábado, 9:00 – 20:00 hrs</span></div>
                 </div>
               </div>
+
+              <div className="pay-methods">
+                <span className="pay-title">Medios de pago aceptados</span>
+                <div className="pay-badges">
+                  <div className="pay-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+                    </svg>
+                    Transferencia
+                  </div>
+                  <div className="pay-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                    Efectivo
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="cform fu-r d2">
@@ -641,7 +659,7 @@ export default function Home() {
             </div>
           </div>
           <div className="fbot">
-            <p>© 2025 <span className="gd">FIXDAY</span>. Todos los derechos reservados.</p>
+            <p>© {new Date().getFullYear()} <span className="gd">FIXDAY</span>. Todos los derechos reservados.</p>
             <p>Santiago, Chile — Región Metropolitana</p>
           </div>
         </div>

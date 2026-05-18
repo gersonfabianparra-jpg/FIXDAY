@@ -478,6 +478,12 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(24px) saturate(180%);
 .fsuccess h3 { color:#F5F5F7; margin-bottom:10px; font-size:1.3rem; }
 .fsuccess p { color:var(--ml); }
 .ferror { color:#FF453A; font-size:0.85rem; margin-top:14px; text-align:center; }
+.pay-methods { margin-top:28px; padding-top:24px; border-top:1px solid rgba(255,255,255,.07); }
+.pay-title { font-size:0.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ml); display:block; margin-bottom:12px; }
+.pay-badges { display:flex; gap:10px; flex-wrap:wrap; }
+.pay-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:10px 16px; font-size:0.84rem; font-weight:600; color:rgba(255,255,255,.75); transition:all 0.3s ease; }
+.pay-badge svg { stroke:var(--blue-d); flex-shrink:0; }
+.pay-badge:hover { background:rgba(41,151,255,.08); border-color:rgba(41,151,255,.25); color:var(--blue-d); }
 
 /* ════════════════════════════
    FOOTER — BLACK
