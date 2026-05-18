@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIXDAY – Técnico Computadores a Domicilio | Región Metropolitana</title>
+  <meta name="description" content="Servicio técnico de computadores a domicilio en Santiago y Región Metropolitana. Mantención, recuperación de datos, instalación de Windows, optimización y WiFi. Rápido, confiable y profesional.">
+  <meta name="keywords" content="técnico computadores domicilio santiago, reparación pc domicilio, mantención computador santiago, recuperación datos santiago, instalación windows domicilio, optimización pc santiago, instalación wifi domicilio, técnico pc región metropolitana, servicio técnico computadores santiago">
+  <meta name="author" content="FIXDAY">
+  <meta name="geo.region" content="CL-RM">
+  <meta name="geo.placename" content="Santiago, Región Metropolitana, Chile">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FIXDAY – Técnico Computadores a Domicilio">
+  <meta property="og:description" content="Tu computador reparado en casa. Servicio técnico profesional a domicilio en la Región Metropolitana.">
+  <meta property="og:site_name" content="FIXDAY">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FIXDAY – Técnico Computadores a Domicilio">
+  <meta name="twitter:description" content="Tu computador reparado en casa. Profesional, rápido y a domicilio en Santiago.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "FIXDAY",
+    "description": "Servicio técnico de computadores a domicilio en la Región Metropolitana de Santiago, Chile.",
+    "telephone": "+56936649332",
+    "areaServed": {"@type": "State", "name": "Región Metropolitana", "containedInPlace": {"@type": "Country", "name": "Chile"}},
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios Técnicos",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Mantención Lógica y Física de Computadores"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Respaldo y Recuperación de Datos"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Instalación de Windows a Domicilio"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Optimización de Sistema Operativo"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Instalación WiFi y Repetidores"}}
+      ]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --dark:      #030A1A;
+      --dark-2:    #071428;
+      --dark-3:    #0C1E40;
+      --primary:   #1560FF;
+      --accent:    #00D4FF;
+      --gradient:  linear-gradient(135deg, #1560FF 0%, #00D4FF 100%);
+      --text:      #C8D8F4;
+      --muted:     #6A7FA8;
+      --white:     #FFFFFF;
+      --border:    rgba(0,212,255,0.12);
+      --card:      rgba(21,96,255,0.05);
+      --shadow:    0 20px 60px rgba(21,96,255,0.18);
+      --r:         16px;
+      --t:         all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', sans-serif; color: var(--white); }
+    a { text-decoration: none; color: inherit; }
+
+    /* UTILS */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .gtext { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .chip::before { content: ''; display: block; width: 22px; height: 2px; background: var(--gradient); border-radius: 2px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; border-radius: 50px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--t); border: none; }
+    .btn-p { background: var(--gradient); color: var(--white); box-shadow: 0 0 30px rgba(21,96,255,0.35); }
+    .btn-p:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(21,96,255,0.55); }
+    .btn-o { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.25); }
+    .btn-o:hover { border-color: var(--accent); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+    .sec-head { text-align: center; margin-bottom: 64px; }
+    .sec-head h2 { font-size: clamp(2rem,4vw,2.9rem); font-weight: 700; margin-bottom: 14px; line-height: 1.2; }
+    .sec-head p { font-size: 1.05rem; color: var(--muted); max-width: 560px; margin: 0 auto; }
+
+    /* CANVAS */
+    #cv { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35; }
+
+    /* WHATSAPP FLOAT */
+    .wafloat { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; align-items: center; gap: 10px; background: #25D366; color: white; padding: 13px 22px; border-radius: 50px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.92rem; box-shadow: 0 8px 28px rgba(37,211,102,0.4); transition: var(--t); }
+    .wafloat:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(37,211,102,0.6); }
+    .wafloat .pulse-ring { position: absolute; inset: 0; border-radius: 50px; background: #25D366; animation: pwa 2s ease-out infinite; z-index: -1; }
+    @keyframes pwa { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.18); opacity: 0; } }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 18px 0; transition: var(--t); }
+    nav.scrolled { background: rgba(3,10,26,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 12px 0; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 11px; }
+    .logo-icon { width: 42px; height: 42px; flex-shrink: 0; }
+    .logo-name { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.45rem; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+    .logo-tag { font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+    .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: var(--t); }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { padding: 10px 22px !important; font-size: 0.88rem !important; }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--t); }
+    .mnav { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+    .mnav.open { display: flex; }
+    .mnav a { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 700; color: var(--white); transition: var(--t); }
+    .mnav a:hover { color: var(--accent); }
+    .mclose { position: absolute; top: 22px; right: 24px; font-size: 2rem; color: var(--muted); background: none; border: none; cursor: pointer; line-height: 1; }
+
+    /* HERO */
+    #hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 130px 0 90px; z-index: 1; overflow: hidden; }
+    .hbg1 { position: absolute; top: -30%; right: -15%; width: 75vw; max-width: 850px; aspect-ratio: 1; background: radial-gradient(ellipse, rgba(21,96,255,.14) 0%, transparent 70%); pointer-events: none; }
+    .hbg2 { position: absolute; bottom: -20%; left: -8%; width: 60vw; max-width: 700px; aspect-ratio: 1; background: radial-gradient(ellipse, rgba(0,212,255,.07) 0%, transparent 70%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hbadge { display: inline-flex; align-items: center; gap: 8px; background: rgba(21,96,255,.1); border: 1px solid rgba(21,96,255,.28); padding: 8px 18px; border-radius: 50px; font-size: 0.82rem; font-weight: 500; color: var(--accent); margin-bottom: 28px; }
+    .hdot { width: 8px; height: 8px; background: #25D366; border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .hero-title { font-size: clamp(2.8rem,6vw,4.8rem); font-weight: 800; line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 22px; }
+    .hero-sub { font-size: 1.15rem; color: var(--muted); margin-bottom: 40px; max-width: 530px; line-height: 1.7; }
+    .hbtns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+    .hstats { display: flex; gap: 36px; flex-wrap: wrap; }
+    .stat-n { font-family: 'Space Grotesk', sans-serif; font-size: 1.9rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+    .stat-l { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+    .hero-visual { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 42%; max-width: 520px; z-index: 2; }
+    .tcards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .tc { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 10px; gap: 9px; transition: var(--t); animation: fc 4s ease-in-out infinite; }
+    .tc:nth-child(2) { animation-delay: 0.4s; animation-duration: 5s; }
+    .tc:nth-child(3) { animation-delay: 0.8s; animation-duration: 4.5s; }
+    .tc:nth-child(4) { animation-delay: 0.2s; animation-duration: 3.8s; }
+    .tc:nth-child(5) { animation-delay: 0.6s; animation-duration: 5.2s; }
+    .tc:nth-child(6) { animation-delay: 1s; animation-duration: 4.2s; }
+    @keyframes fc { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .tc:hover { border-color: var(--accent); background: rgba(0,212,255,.07); }
+    .tc-lbl { font-size: 0.67rem; font-weight: 600; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* SLIDER */
+    #slider { position: relative; z-index: 1; padding: 70px 0; background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 50%, var(--dark) 100%); overflow: hidden; }
+    .slider-wrap { overflow: hidden; position: relative; }
+    .slider-wrap::before, .slider-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none; }
+    .slider-wrap::before { left: 0; background: linear-gradient(to right, var(--dark-2), transparent); }
+    .slider-wrap::after { right: 0; background: linear-gradient(to left, var(--dark-2), transparent); }
+    .strack { display: flex; gap: 20px; animation: sinf 28s linear infinite; width: max-content; }
+    .strack:hover { animation-play-state: paused; }
+    @keyframes sinf { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .si { flex: 0 0 290px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 28px 22px; display: flex; align-items: flex-start; gap: 16px; transition: var(--t); }
+    .si:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .si-icon { width: 48px; height: 48px; border-radius: 13px; background: var(--gradient); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .si-content h4 { font-size: 0.97rem; font-weight: 600; margin-bottom: 5px; }
+    .si-content p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+    /* SERVICES */
+    #services { position: relative; z-index: 1; padding: 100px 0; }
+    .sgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .scard { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 38px 30px; transition: var(--t); position: relative; overflow: hidden; }
+    .scard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
+    .scard:hover { border-color: rgba(0,212,255,.28); transform: translateY(-8px); box-shadow: var(--shadow); background: rgba(21,96,255,.08); }
+    .scard:hover::before { transform: scaleX(1); }
+    .scard:hover .sicon { background: var(--gradient); border-color: transparent; }
+    .sicon { width: 56px; height: 56px; border-radius: 15px; background: rgba(21,96,255,.1); border: 1px solid rgba(21,96,255,.2); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; transition: var(--t); }
+    .scard h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .scard p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .snum { position: absolute; bottom: 16px; right: 22px; font-family: 'Space Grotesk', sans-serif; font-size: 3.2rem; font-weight: 800; color: rgba(255,255,255,.04); line-height: 1; }
+
+    /* WHY US */
+    #why { position: relative; z-index: 1; padding: 100px 0; background: var(--dark-2); }
+    .wgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .wfeats { display: flex; flex-direction: column; gap: 28px; }
+    .wfeat { display: flex; gap: 18px; align-items: flex-start; }
+    .wfeat-icon { width: 46px; height: 46px; border-radius: 13px; background: var(--gradient); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .wfeat-text h4 { font-size: 1rem; font-weight: 600; margin-bottom: 5px; }
+    .wfeat-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+    .wcard { background: var(--dark-3); border: 1px solid var(--border); border-radius: 22px; padding: 36px; }
+    .stars { color: #FFD700; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .wquote { font-size: 1.05rem; font-style: italic; color: var(--text); line-height: 1.7; margin-bottom: 22px; }
+    .wauthor { display: flex; align-items: center; gap: 12px; }
+    .wavatar { width: 42px; height: 42px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: white; }
+    .wainfo strong { display: block; font-size: 0.92rem; color: var(--white); }
+    .wainfo span { font-size: 0.78rem; color: var(--muted); }
+    .wstats { display: flex; gap: 16px; margin-top: 18px; }
+    .wstat { flex: 1; background: var(--dark-3); border: 1px solid var(--border); border-radius: 14px; padding: 22px 16px; text-align: center; }
+    .wstat .n { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .wstat .l { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+
+    /* PROCESS */
+    #process { position: relative; z-index: 1; padding: 100px 0; }
+    .psteps { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; position: relative; }
+    .psteps::before { content: ''; position: absolute; top: 35px; left: 12.5%; right: 12.5%; height: 2px; background: linear-gradient(to right, var(--primary), var(--accent)); opacity: .35; }
+    .pstep { text-align: center; padding: 18px 14px; }
+    .pnum { width: 70px; height: 70px; border-radius: 50%; background: var(--gradient); color: white; font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; position: relative; z-index: 1; box-shadow: 0 0 28px rgba(21,96,255,.4); }
+    .pstep h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .pstep p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    /* CONTACT */
+    #contact { position: relative; z-index: 1; padding: 100px 0; background: var(--dark-2); }
+    .cgrid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+    .cinfo h2 { font-size: clamp(1.8rem,3vw,2.4rem); font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
+    .cinfo > p { color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+    .cdets { display: flex; flex-direction: column; gap: 18px; }
+    .cdet { display: flex; align-items: center; gap: 14px; }
+    .cdet-icon { width: 46px; height: 46px; border-radius: 13px; background: rgba(21,96,255,.1); border: 1px solid rgba(21,96,255,.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cdet-text strong { display: block; font-size: 0.88rem; color: var(--white); font-weight: 600; }
+    .cdet-text span { font-size: 0.83rem; color: var(--muted); }
+    .cform { background: var(--dark-3); border: 1px solid var(--border); border-radius: 22px; padding: 44px 38px; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { margin-bottom: 18px; }
+    .fg label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--muted); margin-bottom: 7px; letter-spacing: .02em; }
+    .fg input, .fg select, .fg textarea { width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 9px; padding: 13px 16px; color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.93rem; transition: var(--t); outline: none; appearance: none; -webkit-appearance: none; }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--muted); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--primary); background: rgba(21,96,255,.07); box-shadow: 0 0 0 3px rgba(21,96,255,.12); }
+    .fg select option { background: var(--dark-3); color: var(--white); }
+    .fg textarea { resize: vertical; min-height: 110px; }
+    .fsub { width: 100%; padding: 15px; justify-content: center; font-size: 1rem; }
+    .fsuccess { display: none; text-align: center; padding: 28px; }
+    .fsuccess .fcheck { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 1.6rem; }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; background: var(--dark); border-top: 1px solid var(--border); padding: 56px 0 28px; }
+    .fgrid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+    .fbrand p { font-size: 0.87rem; color: var(--muted); line-height: 1.7; margin: 14px 0 22px; max-width: 290px; }
+    .fcol h5 { font-size: 0.8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .fcol ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .fcol ul li a { font-size: 0.87rem; color: var(--muted); transition: var(--t); }
+    .fcol ul li a:hover { color: var(--accent); }
+    .fbot { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+    .fbot p { font-size: 0.8rem; color: var(--muted); }
+
+    /* SCROLL ANIM */
+    .fu { opacity: 0; transform: translateY(38px); transition: opacity .7s ease, transform .7s ease; }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; } .d5 { transition-delay: .5s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .sgrid { grid-template-columns: repeat(2,1fr); }
+      .hero-visual { display: none; }
+      .wgrid { grid-template-columns: 1fr; }
+      .psteps { grid-template-columns: repeat(2,1fr); }
+      .psteps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .sgrid { grid-template-columns: 1fr; }
+      .cgrid { grid-template-columns: 1fr; }
+      .fgrid { grid-template-columns: 1fr; gap: 28px; }
+      .fbot { flex-direction: column; gap: 10px; text-align: center; }
+      .frow { grid-template-columns: 1fr; }
+      .cform { padding: 28px 22px; }
+      .wstats { gap: 10px; }
+      .hstats { gap: 24px; }
+      .wafloat span { display: none; }
+      .wafloat { padding: 14px; border-radius: 50%; }
+    }
+    @media (max-width: 480px) {
+      .hbtns { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .psteps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/56936649332?text=Hola%20FIXDAY%2C%20necesito%20ayuda%20con%20mi%20computador%20%F0%9F%92%BB" class="wafloat" target="_blank" rel="noopener">
+  <div class="pulse-ring"></div>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+  <span>Escríbenos por WhatsApp</span>
+</a>
+
+<!-- Mobile nav overlay -->
+<div class="mnav" id="mnav">
+  <button class="mclose" onclick="closeMnav()">&times;</button>
+  <a href="#services" onclick="closeMnav()">Servicios</a>
+  <a href="#why" onclick="closeMnav()">Por qué nosotros</a>
+  <a href="#process" onclick="closeMnav()">Cómo funciona</a>
+  <a href="#contact" onclick="closeMnav()" class="btn btn-p">Agendar visita</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <!-- LOGO SVG -->
+        <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1560FF"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </linearGradient>
+            <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#1560FF"/>
+            </linearGradient>
+          </defs>
+          <!-- Hexagon -->
+          <path d="M21 1.5 L38.5 11 L38.5 31 L21 40.5 L3.5 31 L3.5 11 Z" fill="url(#lg1)"/>
+          <!-- Circuit lines -->
+          <line x1="10" y1="21" x2="16" y2="21" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="26" y1="21" x2="32" y2="21" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="21" y1="10" x2="21" y2="16" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="21" y1="26" x2="21" y2="32" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Wrench -->
+          <path d="M25.5 12.5 C27.7 12.5 29.5 14.3 29.5 16.5 C29.5 17.5 29.1 18.4 28.5 19.1 L22 25.6 L23.5 27.1 L17 28.5 L18.4 22 L20 23.6 L26.5 17.1 C26.2 16.6 26 16.1 26 15.5 L24 15.5 L22 13.5 L24 11.5 L25.5 12.5Z" fill="white" opacity="0.92"/>
+          <!-- Small dot nodes -->
+          <circle cx="10" cy="21" r="1.8" fill="white" opacity="0.5"/>
+          <circle cx="32" cy="21" r="1.8" fill="white" opacity="0.5"/>
+          <circle cx="21" cy="10" r="1.8" fill="white" opacity="0.5"/>
+          <circle cx="21" cy="32" r="1.8" fill="white" opacity="0.5"/>
+        </svg>
+        <div>
+          <div class="logo-name">FIXDAY</div>
+          <div class="logo-tag">Técnico a Domicilio</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#why">Por qué nosotros</a></li>
+        <li><a href="#process">Cómo funciona</a></li>
+        <li><a href="#contact" class="btn btn-p nav-cta">Agendar visita</a></li>
+      </ul>
+      <div class="burger" onclick="openMnav()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbg1"></div>
+  <div class="hbg2"></div>
+  <div class="container" style="position:relative;z-index:2;width:100%;">
+    <div class="hero-content">
+      <div class="hbadge fu">
+        <div class="hdot"></div>
+        Disponible en toda la Región Metropolitana
+      </div>
+      <h1 class="hero-title fu d1">
+        Tu computador<br>
+        <span class="gtext">reparado hoy.</span><br>
+        En tu casa.
+      </h1>
+      <p class="hero-sub fu d2">
+        Servicio técnico profesional a domicilio. Diagnóstico rápido, soluciones reales y sin vueltas. Llevamos el taller directamente donde tú estás.
+      </p>
+      <div class="hbtns fu d3">
+        <a href="https://wa.me/56936649332?text=Hola%20FIXDAY%2C%20quiero%20agendar%20una%20visita%20t%C3%A9cnica" class="btn btn-p" target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+          Agendar por WhatsApp
+        </a>
+        <a href="#services" class="btn btn-o">
+          Ver servicios
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hstats fu d4">
+        <div><div class="stat-n">+200</div><div class="stat-l">Equipos reparados</div></div>
+        <div><div class="stat-n">98%</div><div class="stat-l">Satisfacción</div></div>
+        <div><div class="stat-n">&lt;24h</div><div class="stat-l">Tiempo de respuesta</div></div>
+      </div>
+    </div>
+
+    <!-- Tech Cards Visual -->
+    <div class="hero-visual">
+      <div class="tcards">
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="18" rx="3" stroke="#00D4FF" stroke-width="1.8"/><path d="M12 25v4M24 25v4M9 29h18" stroke="#00D4FF" stroke-width="1.8" stroke-linecap="round"/><path d="M9 14h10M9 18h6" stroke="#1560FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="tc-lbl">PC & Laptop</div>
+        </div>
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="5" y="5" width="26" height="26" rx="3" stroke="#00D4FF" stroke-width="1.8"/><path d="M12 18h5M12 23h8M12 13h12" stroke="#1560FF" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="13" r="2.5" fill="#00D4FF"/></svg>
+          <div class="tc-lbl">Windows</div>
+        </div>
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="15" rx="10" ry="6" stroke="#00D4FF" stroke-width="1.8"/><path d="M8 15v6c0 3.3 4.5 6 10 6s10-2.7 10-6v-6" stroke="#1560FF" stroke-width="1.8"/><path d="M8 21v6c0 3.3 4.5 6 10 6s10-2.7 10-6v-6" stroke="#00D4FF" stroke-width="1.8" opacity=".5"/></svg>
+          <div class="tc-lbl">Datos</div>
+        </div>
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M5 14c7.2-7.2 18.8-7.2 26 0" stroke="#00D4FF" stroke-width="1.8" stroke-linecap="round"/><path d="M9 18c4.97-4.97 13.03-4.97 18 0" stroke="#1560FF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 22c2.76-2.76 7.24-2.76 10 0" stroke="#00D4FF" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="27" r="2.5" fill="#00D4FF"/></svg>
+          <div class="tc-lbl">WiFi</div>
+        </div>
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4l3.5 9h9.5l-7.5 5.5 3 9.5L18 23 9.5 28l3-9.5L5 13h9.5z" stroke="#00D4FF" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <div class="tc-lbl">Premium</div>
+        </div>
+        <div class="tc">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="7" y="15" width="22" height="14" rx="2" stroke="#00D4FF" stroke-width="1.8"/><path d="M13 15V11a5 5 0 0 1 10 0v4" stroke="#1560FF" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="22" r="2.5" fill="#00D4FF"/></svg>
+          <div class="tc-lbl">Seguro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE SLIDER -->
+<section id="slider">
+  <div style="text-align:center;margin-bottom:40px;">
+    <span class="chip" style="margin:0 auto;">Todos nuestros servicios</span>
+  </div>
+  <div class="slider-wrap">
+    <div class="strack" id="strack">
+      <!-- Set 1 -->
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M6 10h12v2H6z"/></svg></div><div class="si-content"><h4>Mantención Física y Lógica</h4><p>Limpieza interna, pasta térmica y actualización completa.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>Respaldo de Información</h4><p>Copia de seguridad de todos tus datos antes de cualquier intervención.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>Recuperación de Datos</h4><p>Recuperamos archivos de discos dañados o formateados.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="white" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="si-content"><h4>Instalación de Windows</h4><p>Windows 10 u 11 con todos los drivers y programas esenciales.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="si-content"><h4>Optimización del Sistema</h4><p>Tu PC como nuevo: eliminamos malware, basura y procesos lentos.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>WiFi y Repetidores</h4><p>Routers, access points y repetidores para cobertura total.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div><div class="si-content"><h4>Servicio a Domicilio</h4><p>Vamos donde tú estás. Sin traslados. Toda la Región Metropolitana.</p></div></div>
+      <!-- Set 2 (duplicate for infinite loop) -->
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M6 10h12v2H6z"/></svg></div><div class="si-content"><h4>Mantención Física y Lógica</h4><p>Limpieza interna, pasta térmica y actualización completa.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>Respaldo de Información</h4><p>Copia de seguridad de todos tus datos antes de cualquier intervención.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>Recuperación de Datos</h4><p>Recuperamos archivos de discos dañados o formateados.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="white" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="si-content"><h4>Instalación de Windows</h4><p>Windows 10 u 11 con todos los drivers y programas esenciales.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="si-content"><h4>Optimización del Sistema</h4><p>Tu PC como nuevo: eliminamos malware, basura y procesos lentos.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18" stroke="white" stroke-width="2"/></svg></div><div class="si-content"><h4>WiFi y Repetidores</h4><p>Routers, access points y repetidores para cobertura total.</p></div></div>
+      <div class="si"><div class="si-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div><div class="si-content"><h4>Servicio a Domicilio</h4><p>Vamos donde tú estás. Sin traslados. Toda la Región Metropolitana.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section id="services">
+  <div class="container">
+    <div class="sec-head fu">
+      <span class="chip">Lo que hacemos</span>
+      <h2>Servicios técnicos<br><span class="gtext">profesionales</span></h2>
+      <p>Diagnóstico previo, sin cargos ocultos y con garantía de satisfacción en cada visita.</p>
+    </div>
+    <div class="sgrid">
+      <div class="scard fu d1">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Mantención Lógica y Física</h3>
+        <p>Limpieza interna de polvo, cambio de pasta térmica, diagnóstico de hardware, actualización de drivers y sistema operativo.</p>
+        <span class="snum">01</span>
+      </div>
+      <div class="scard fu d2">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+        <h3>Respaldo de Información</h3>
+        <p>Resguardamos tus documentos, fotos y archivos importantes antes de cualquier intervención. Tus datos siempre protegidos.</p>
+        <span class="snum">02</span>
+      </div>
+      <div class="scard fu d3">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg></div>
+        <h3>Recuperación de Datos</h3>
+        <p>¿Perdiste archivos importantes? Recuperamos información de discos dañados, formateados o con particiones corruptas.</p>
+        <span class="snum">03</span>
+      </div>
+      <div class="scard fu d1">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4"/></svg></div>
+        <h3>Instalación de Windows</h3>
+        <p>Instalación limpia de Windows 10 u 11, con todos los drivers necesarios, antivirus y programas básicos configurados.</p>
+        <span class="snum">04</span>
+      </div>
+      <div class="scard fu d2">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h3>Optimización del Sistema</h3>
+        <p>Hacemos que tu equipo vuelva a funcionar como nuevo. Eliminamos malware, programas basura y procesos que lo frenan.</p>
+        <span class="snum">05</span>
+      </div>
+      <div class="scard fu d3">
+        <div class="sicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg></div>
+        <h3>WiFi y Repetidores</h3>
+        <p>Configuramos tu red doméstica o de oficina. Routers, access points y repetidores para cobertura WiFi completa en todo el hogar.</p>
+        <span class="snum">06</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="wgrid">
+      <div>
+        <span class="chip fu">¿Por qué FIXDAY?</span>
+        <h2 class="fu d1" style="font-size:clamp(1.9rem,3.5vw,2.7rem);margin-bottom:36px;line-height:1.2;">La diferencia está<br><span class="gtext">en cómo trabajamos</span></h2>
+        <div class="wfeats">
+          <div class="wfeat fu d1">
+            <div class="wfeat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>
+            <div class="wfeat-text">
+              <h4>Vamos a tu domicilio</h4>
+              <p>No tienes que llevar tu equipo a ningún lado. Llegamos donde estés en toda la Región Metropolitana.</p>
+            </div>
+          </div>
+          <div class="wfeat fu d2">
+            <div class="wfeat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
+            <div class="wfeat-text">
+              <h4>Diagnóstico sin costo</h4>
+              <p>Revisamos tu equipo y te explicamos qué tiene antes de cobrar un peso. Total transparencia desde el inicio.</p>
+            </div>
+          </div>
+          <div class="wfeat fu d3">
+            <div class="wfeat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+            <div class="wfeat-text">
+              <h4>Garantía de satisfacción</h4>
+              <p>Si el problema vuelve dentro de los 7 días, regresamos sin costo adicional. Así de serios somos.</p>
+            </div>
+          </div>
+          <div class="wfeat fu d4">
+            <div class="wfeat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></div>
+            <div class="wfeat-text">
+              <h4>Respuesta inmediata</h4>
+              <p>Respondemos por WhatsApp al instante y agendamos en el horario que más te acomode. Sin burocracia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fu d2">
+        <div class="wcard">
+          <div class="stars">★★★★★</div>
+          <p class="wquote">"Mi laptop llevaba meses lenta y pensé que necesitaba comprar una nueva. FIXDAY vino a casa, la optimizó completamente y quedó como nueva en 2 horas. Excelente servicio, muy profesional."</p>
+          <div class="wauthor">
+            <div class="wavatar">M</div>
+            <div class="wainfo"><strong>María González</strong><span>Providencia, Santiago</span></div>
+          </div>
+        </div>
+        <div class="wstats">
+          <div class="wstat"><div class="n">+200</div><div class="l">Equipos reparados</div></div>
+          <div class="wstat"><div class="n">98%</div><div class="l">Satisfacción</div></div>
+          <div class="wstat"><div class="n">&lt;24h</div><div class="l">Respuesta</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="sec-head fu">
+      <span class="chip">Cómo funciona</span>
+      <h2>Del problema a la solución<br><span class="gtext">en 4 pasos</span></h2>
+      <p>Proceso simple, transparente y sin sorpresas. Tú solo cuéntanos el problema.</p>
+    </div>
+    <div class="psteps">
+      <div class="pstep fu d1"><div class="pnum">1</div><h4>Contáctanos</h4><p>Escríbenos por WhatsApp o el formulario. Cuéntanos qué le pasa a tu equipo.</p></div>
+      <div class="pstep fu d2"><div class="pnum">2</div><h4>Agendamos</h4><p>Coordinamos una visita en el horario que más te acomode. Sin esperas largas.</p></div>
+      <div class="pstep fu d3"><div class="pnum">3</div><h4>Diagnóstico</h4><p>Revisamos tu equipo en tu casa y te explicamos el problema con presupuesto claro.</p></div>
+      <div class="pstep fu d4"><div class="pnum">4</div><h4>¡Listo!</h4><p>Solucionamos el problema y te entregamos tu equipo funcionando perfectamente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="cgrid">
+      <div class="cinfo fu">
+        <span class="chip">Contacto</span>
+        <h2>Agenda tu visita<br><span class="gtext">hoy mismo</span></h2>
+        <p>Completa el formulario o escríbenos directamente por WhatsApp. Respondemos en minutos durante nuestro horario de atención.</p>
+        <div class="cdets">
+          <div class="cdet">
+            <div class="cdet-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#00D4FF"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg></div>
+            <div class="cdet-text"><strong>WhatsApp</strong><span>+56 9 3664 9332</span></div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="cdet-text"><strong>Zona de cobertura</strong><span>Región Metropolitana, Chile</span></div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="cdet-text"><strong>Horario de atención</strong><span>Lunes a Sábado, 9:00 – 20:00 hrs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cform fu d2" id="cformWrap">
+        <form id="cform" onsubmit="handleForm(event)">
+          <div class="frow">
+            <div class="fg"><label>Nombre *</label><input id="f-name" type="text" placeholder="Tu nombre completo" required></div>
+            <div class="fg"><label>Teléfono *</label><input id="f-tel" type="tel" placeholder="+56 9 XXXX XXXX" required></div>
+          </div>
+          <div class="fg"><label>Correo electrónico</label><input id="f-email" type="email" placeholder="tucorreo@ejemplo.com"></div>
+          <div class="fg">
+            <label>Servicio que necesitas *</label>
+            <select id="f-service" required>
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option>Mantención lógica y física</option>
+              <option>Respaldo de información</option>
+              <option>Recuperación de datos</option>
+              <option>Instalación de Windows</option>
+              <option>Optimización del sistema</option>
+              <option>Instalación WiFi / Repetidores</option>
+              <option>Otro / No sé qué tiene</option>
+            </select>
+          </div>
+          <div class="fg"><label>Cuéntanos el problema</label><textarea id="f-msg" placeholder="Describe qué le pasa a tu equipo o qué necesitas..."></textarea></div>
+          <button type="submit" class="btn btn-p fsub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar solicitud
+          </button>
+        </form>
+        <div class="fsuccess" id="fsuccess">
+          <div class="fcheck">✓</div>
+          <h3 style="margin-bottom:10px;">¡Solicitud enviada!</h3>
+          <p style="color:var(--muted);margin-bottom:22px;">Te redirigiremos a WhatsApp para confirmar. También puedes escribirnos directamente.</p>
+          <a href="https://wa.me/56936649332" class="btn btn-p" style="display:inline-flex;" target="_blank">Ir al WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="fgrid">
+      <div class="fbrand">
+        <a href="#" class="logo">
+          <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1560FF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient></defs>
+            <path d="M21 1.5 L38.5 11 L38.5 31 L21 40.5 L3.5 31 L3.5 11 Z" fill="url(#lg3)"/>
+            <line x1="10" y1="21" x2="16" y2="21" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="26" y1="21" x2="32" y2="21" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="21" y1="10" x2="21" y2="16" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="21" y1="26" x2="21" y2="32" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M25.5 12.5 C27.7 12.5 29.5 14.3 29.5 16.5 C29.5 17.5 29.1 18.4 28.5 19.1 L22 25.6 L23.5 27.1 L17 28.5 L18.4 22 L20 23.6 L26.5 17.1 C26.2 16.6 26 16.1 26 15.5 L24 15.5 L22 13.5 L24 11.5 L25.5 12.5Z" fill="white" opacity="0.92"/>
+            <circle cx="10" cy="21" r="1.8" fill="white" opacity="0.5"/>
+            <circle cx="32" cy="21" r="1.8" fill="white" opacity="0.5"/>
+            <circle cx="21" cy="10" r="1.8" fill="white" opacity="0.5"/>
+            <circle cx="21" cy="32" r="1.8" fill="white" opacity="0.5"/>
+          </svg>
+          <div><div class="logo-name">FIXDAY</div><div class="logo-tag">Técnico a Domicilio</div></div>
+        </a>
+        <p>Servicio técnico profesional a domicilio en la Región Metropolitana de Santiago. Rápido, confiable y transparente.</p>
+        <a href="https://wa.me/56936649332" class="btn btn-p" style="padding:11px 22px;font-size:0.88rem;" target="_blank">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+          +56 9 3664 9332
+        </a>
+      </div>
+      <div class="fcol">
+        <h5>Servicios</h5>
+        <ul>
+          <li><a href="#services">Mantención de PC</a></li>
+          <li><a href="#services">Respaldo de datos</a></li>
+          <li><a href="#services">Recuperación de datos</a></li>
+          <li><a href="#services">Instalación Windows</a></li>
+          <li><a href="#services">Optimización PC</a></li>
+          <li><a href="#services">Redes WiFi</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="#why">Por qué FIXDAY</a></li>
+          <li><a href="#process">Cómo funciona</a></li>
+          <li><a href="#contact">Contacto</a></li>
+          <li><a href="https://wa.me/56936649332" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>© 2025 <span class="gtext">FIXDAY</span>. Todos los derechos reservados.</p>
+      <p>Santiago, Chile — Región Metropolitana</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // PARTICLES
+  const cv = document.getElementById('cv');
+  const cx = cv.getContext('2d');
+  let pts = [];
+  function resizeCv() { cv.width = innerWidth; cv.height = innerHeight; }
+  resizeCv();
+  addEventListener('resize', resizeCv);
+  class Dot {
+    constructor() { this.r(); }
+    r() {
+      this.x = Math.random() * cv.width;
+      this.y = Math.random() * cv.height;
+      this.s = Math.random() * 1.8 + 0.4;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = (Math.random() - 0.5) * 0.35;
+      this.a = Math.random() * 0.45 + 0.1;
+      this.c = Math.random() > 0.5 ? '#1560FF' : '#00D4FF';
+    }
+    u() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > cv.width || this.y < 0 || this.y > cv.height) this.r();
+    }
+    d() { cx.globalAlpha = this.a; cx.fillStyle = this.c; cx.beginPath(); cx.arc(this.x, this.y, this.s, 0, Math.PI * 2); cx.fill(); }
+  }
+  for (let i = 0; i < 75; i++) pts.push(new Dot());
+  function animPts() {
+    cx.clearRect(0, 0, cv.width, cv.height);
+    pts.forEach(p => { p.u(); p.d(); });
+    pts.forEach((p1, i) => {
+      for (let j = i + 1; j < pts.length; j++) {
+        const p2 = pts[j];
+        const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        if (d < 110) {
+          cx.globalAlpha = (1 - d / 110) * 0.12;
+          cx.strokeStyle = '#1560FF';
+          cx.lineWidth = 0.5;
+          cx.beginPath(); cx.moveTo(p1.x, p1.y); cx.lineTo(p2.x, p2.y); cx.stroke();
+        }
+      }
+    });
+    cx.globalAlpha = 1;
+    requestAnimationFrame(animPts);
+  }
+  animPts();
+
+  // NAVBAR
+  addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', scrollY > 50);
+  });
+
+  // MOBILE NAV
+  function openMnav() { document.getElementById('mnav').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMnav() { document.getElementById('mnav').classList.remove('open'); document.body.style.overflow = ''; }
+
+  // SCROLL ANIMATIONS
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+
+  // FORM
+  function handleForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('f-name').value;
+    const tel = document.getElementById('f-tel').value;
+    const service = document.getElementById('f-service').value;
+    const msg = document.getElementById('f-msg').value;
+    const waText = encodeURIComponent(
+      `Hola FIXDAY! 👋\n` +
+      `Me llamo *${name}*\n` +
+      `📱 Tel: ${tel}\n` +
+      `🔧 Servicio: ${service}\n` +
+      (msg ? `📝 Problema: ${msg}` : '')
+    );
+    document.getElementById('cform').style.display = 'none';
+    document.getElementById('fsuccess').style.display = 'block';
+    setTimeout(() => window.open(`https://wa.me/56936649332?text=${waText}`, '_blank'), 1200);
+  }
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
