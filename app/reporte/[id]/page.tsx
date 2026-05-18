@@ -1,5 +1,6 @@
 import { getSupabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
+import PrintButton from './PrintButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,12 +72,22 @@ export default async function ReportPage({ params }: { params: { id: string } })
 
   return (
     <div style={{ minHeight: '100vh', background: '#08090F', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif', color: '#F5F5F7' }}>
+      <style>{`
+        @media print {
+          #no-print-nav, #no-print-cta, #no-print-footer, #print-btn { display: none !important; }
+          #print-top-bar { display: block !important; }
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+          @page { margin: 12mm 15mm; size: A4 portrait; }
+          body { background: #08090F !important; }
+        }
+        #print-top-bar { display: none; }
+      `}</style>
 
       {/* Rainbow top bar */}
       <div style={{ height: 3, background: 'linear-gradient(90deg, #0071E3, #2997FF, #BF5AF2, #2997FF, #0071E3)' }} />
 
-      {/* Nav */}
-      <div style={{ borderBottom: '1px solid rgba(255,255,255,.07)', padding: '18px 0' }}>
+      {/* Nav (hidden on print) */}
+      <div id="no-print-nav" style={{ borderBottom: '1px solid rgba(255,255,255,.07)', padding: '18px 0' }}>
         <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{ width: 34, height: 34, borderRadius: 9, background: 'linear-gradient(135deg,#0071E3,#2997FF)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 15, color: '#fff' }}>F</div>
@@ -85,10 +96,23 @@ export default async function ReportPage({ params }: { params: { id: string } })
               <div style={{ fontSize: 9, color: '#2997FF', letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 600, marginTop: 1 }}>Técnico a domicilio</div>
             </div>
           </div>
-          <span style={{ background: `${status.color}18`, color: status.color, border: `1px solid ${status.color}38`, borderRadius: 980, padding: '5px 14px', fontSize: 11, fontWeight: 700, letterSpacing: '.02em' }}>
-            {status.label}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <PrintButton />
+            <span style={{ background: `${status.color}18`, color: status.color, border: `1px solid ${status.color}38`, borderRadius: 980, padding: '5px 14px', fontSize: 11, fontWeight: 700, letterSpacing: '.02em' }}>
+              {status.label}
+            </span>
+          </div>
         </div>
+      </div>
+
+      {/* Print-only compact header */}
+      <div id="print-top-bar" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,.1)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 7, background: 'linear-gradient(135deg,#0071E3,#2997FF)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 13, color: '#fff' }}>F</div>
+          <span style={{ fontWeight: 800, fontSize: 15, letterSpacing: '-.02em' }}>FIXDAY</span>
+          <span style={{ fontSize: 10, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 600 }}>· Técnico a domicilio</span>
+        </div>
+        <span style={{ fontSize: 11, color: '#636366' }}>fixday.cl</span>
       </div>
 
       {/* Body */}
@@ -180,8 +204,8 @@ export default async function ReportPage({ params }: { params: { id: string } })
           </div>
         </div>
 
-        {/* WhatsApp CTA */}
-        <div style={{ marginTop: 36, textAlign: 'center' }}>
+        {/* WhatsApp CTA (hidden on print) */}
+        <div id="no-print-cta" style={{ marginTop: 36, textAlign: 'center' }}>
           <p style={{ fontSize: 13, color: '#48484A', marginBottom: 18 }}>¿Tienes alguna duda sobre tu informe?</p>
           <a
             href={waUrl}
@@ -196,8 +220,8 @@ export default async function ReportPage({ params }: { params: { id: string } })
           </a>
         </div>
 
-        {/* Footer */}
-        <div style={{ marginTop: 60, textAlign: 'center', borderTop: '1px solid rgba(255,255,255,.05)', paddingTop: 28 }}>
+        {/* Footer (hidden on print) */}
+        <div id="no-print-footer" style={{ marginTop: 60, textAlign: 'center', borderTop: '1px solid rgba(255,255,255,.05)', paddingTop: 28 }}>
           <div style={{ fontSize: 11, color: '#3A3A3C' }}>
             © {new Date().getFullYear()} FIXDAY · Servicio técnico a domicilio · Región Metropolitana, Chile
           </div>
