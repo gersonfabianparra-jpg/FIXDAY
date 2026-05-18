@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { getSupabase } from '@/lib/supabase'
 
 interface ContactPayload {
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Faltan campos requeridos.' }, { status: 400 })
   }
 
-  // Save to Supabase
+  // Guardar en Supabase
   const db = getSupabase()
   if (db) {
     const { error } = await db.from('leads').insert({
@@ -31,45 +31,54 @@ export async function POST(req: NextRequest) {
     if (error) console.error('Supabase insert error:', error)
   }
 
-  // Send email notification if credentials are configured
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-      })
+  // Enviar email de notificación con Resend
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY)
+    const to = process.env.EMAIL_TO ?? 'fabiansitolaral@gmail.com'
 
-      await transporter.sendMail({
-        from: `"FIXDAY Web" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
-        subject: `🔧 Nuevo contacto FIXDAY – ${service}`,
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#030A1A;color:#C8D8F4;padding:32px;border-radius:12px;">
-            <h2 style="color:#00D4FF;margin-bottom:24px;">Nuevo contacto desde la web</h2>
-            <table style="width:100%;border-collapse:collapse;">
-              <tr><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);color:#6A7FA8;width:140px;">Nombre</td><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);font-weight:600;color:#fff;">${name}</td></tr>
-              <tr><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);color:#6A7FA8;">Teléfono</td><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);font-weight:600;color:#fff;">${phone}</td></tr>
-              ${email ? `<tr><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);color:#6A7FA8;">Email</td><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);color:#fff;">${email}</td></tr>` : ''}
-              <tr><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);color:#6A7FA8;">Servicio</td><td style="padding:10px 0;border-bottom:1px solid rgba(0,212,255,0.15);font-weight:600;color:#00D4FF;">${service}</td></tr>
-              ${message ? `<tr><td style="padding:10px 0;color:#6A7FA8;vertical-align:top;">Descripción</td><td style="padding:10px 0;color:#C8D8F4;">${message}</td></tr>` : ''}
-            </table>
-            <div style="margin-top:28px;">
-              <a href="https://wa.me/56936649332?text=${encodeURIComponent(`Hola ${name}! Vi tu solicitud de ${service}. `)}" style="display:inline-block;background:linear-gradient(135deg,#1560FF,#00D4FF);color:white;padding:12px 24px;border-radius:50px;font-weight:600;text-decoration:none;">Responder por WhatsApp</a>
-            </div>
+    await resend.emails.send({
+      from: 'FIXDAY Web <onboarding@resend.dev>',
+      to,
+      subject: `🔧 Nueva solicitud – ${service}`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#F5F5F7;padding:36px;border-radius:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#0071E3,#2997FF);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;">F</div>
+            <span style="font-weight:800;font-size:20px;letter-spacing:-.02em;">FIXDAY</span>
           </div>
-        `,
-      })
-    } catch (err) {
-      console.error('Error enviando email:', err)
-    }
+          <h2 style="color:#2997FF;margin:0 0 24px;font-size:18px;">Nueva solicitud desde la web</h2>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);color:#636366;width:130px;font-size:14px;">Nombre</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700;font-size:14px;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);color:#636366;font-size:14px;">Teléfono</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700;font-size:14px;">${phone}</td>
+            </tr>
+            ${email ? `
+            <tr>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);color:#636366;font-size:14px;">Email</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;">${email}</td>
+            </tr>` : ''}
+            <tr>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);color:#636366;font-size:14px;">Servicio</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700;color:#2997FF;font-size:14px;">${service}</td>
+            </tr>
+            ${message ? `
+            <tr>
+              <td style="padding:12px 0;color:#636366;vertical-align:top;font-size:14px;">Descripción</td>
+              <td style="padding:12px 0;font-size:14px;color:#AEAEB2;">${message}</td>
+            </tr>` : ''}
+          </table>
+          <div style="margin-top:28px;padding:16px;background:#161616;border-radius:10px;border:1px solid rgba(255,255,255,.07);">
+            <p style="margin:0;font-size:13px;color:#636366;">Para responder, llama o escribe al número: <strong style="color:#F5F5F7;">${phone}</strong></p>
+          </div>
+          <p style="margin-top:24px;font-size:11px;color:#3A3A3C;">Este mensaje fue generado automáticamente desde fixday.cl</p>
+        </div>
+      `,
+    }).catch(err => console.error('Resend error:', err))
   }
 
-  const waText = encodeURIComponent(
-    `Hola FIXDAY! 👋\nMe llamo *${name}*\n📱 Tel: ${phone}\n🔧 Servicio: ${service}${message ? `\n📝 Problema: ${message}` : ''}`
-  )
-
-  return NextResponse.json({
-    success: true,
-    waUrl: `https://wa.me/56936649332?text=${waText}`,
-  })
+  return NextResponse.json({ success: true })
 }

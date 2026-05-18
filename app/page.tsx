@@ -286,7 +286,6 @@ export default function Home() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       setFormStatus('success')
-      setTimeout(() => window.open(data.waUrl, '_blank'), 1200)
     } catch {
       setFormStatus('error')
     }
@@ -645,11 +644,9 @@ export default function Home() {
               {formStatus === 'success' ? (
                 <div className="fsuccess">
                   <div className="fcheck">✓</div>
-                  <h3 style={{ marginBottom: 10 }}>¡Solicitud enviada!</h3>
-                  <p style={{ marginBottom: 22 }}>Te estamos redirigiendo a WhatsApp para confirmar. ¡Nos vemos pronto!</p>
-                  <a href={WA_LINK} className="btn btn-dp" style={{ display: 'inline-flex' }} target="_blank" rel="noopener noreferrer">
-                    Ir al WhatsApp
-                  </a>
+                  <h3 style={{ marginBottom: 10 }}>¡Solicitud recibida!</h3>
+                  <p style={{ marginBottom: 8 }}>Gracias por contactarnos. Te responderemos a la brevedad.</p>
+                  <p style={{ fontSize: 14, color: '#636366' }}>Horario de atención: Lunes a Viernes, 8:00 – 19:00 hrs</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -685,7 +682,7 @@ export default function Home() {
                     <textarea id="f-msg" placeholder="Describe qué le pasa a tu equipo o qué necesitas..." {...field('message')} />
                   </div>
                   {formStatus === 'error' && (
-                    <p className="ferror">Hubo un error. Escríbenos directamente por WhatsApp.</p>
+                    <p className="ferror">Hubo un error al enviar. Inténtalo de nuevo.</p>
                   )}
                   <button type="submit" className="btn btn-dp fsub" disabled={formStatus === 'loading'}>
                     {formStatus === 'loading' ? 'Enviando...' : (
