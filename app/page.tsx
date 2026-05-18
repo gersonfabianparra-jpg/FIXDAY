@@ -52,6 +52,8 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle')
   const [stats, setStats] = useState({ equipos: 0, satisfaccion: 0 })
   const [reviews, setReviews] = useState<Review[]>([])
+  const [reportCount, setReportCount] = useState(200)
+  const equiposTarget = useRef(200)
 
   // Particles + shooting stars + mouse attraction
   useEffect(() => {
@@ -233,11 +235,20 @@ export default function Home() {
     })
   }, [])
 
-  // Approved reviews
+  // Approved reviews + real report count
   useEffect(() => {
     fetch('/api/reviews')
       .then(r => r.json())
       .then(d => setReviews(d.reviews ?? []))
+      .catch(() => {})
+    fetch('/api/stats')
+      .then(r => r.json())
+      .then(d => {
+        if (d.count > 0) {
+          equiposTarget.current = d.count
+          setReportCount(d.count)
+        }
+      })
       .catch(() => {})
   }, [])
 
@@ -253,7 +264,7 @@ export default function Home() {
       const tick = () => {
         frame++
         const ease = 1 - Math.pow(1 - frame / total, 3)
-        setStats({ equipos: Math.round(ease * 200), satisfaccion: Math.round(ease * 98) })
+        setStats({ equipos: Math.round(ease * equiposTarget.current), satisfaccion: Math.round(ease * 98) })
         if (frame < total) requestAnimationFrame(tick)
       }
       requestAnimationFrame(tick)
@@ -302,8 +313,9 @@ export default function Home() {
       <div className={`mnav ${mnavOpen ? 'open' : ''}`}>
         <button className="mclose" onClick={() => setMnavOpen(false)}>&times;</button>
         <a href="#services" onClick={() => setMnavOpen(false)}>Servicios</a>
+        <a href="#precios" onClick={() => setMnavOpen(false)}>Precios</a>
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
-        <a href="#process" onClick={() => setMnavOpen(false)}>Cómo funciona</a>
+        <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
       </div>
 
@@ -320,8 +332,9 @@ export default function Home() {
             </a>
             <ul className="nav-links">
               <li><a href="#services">Servicios</a></li>
+              <li><a href="#precios">Precios</a></li>
               <li><a href="#why">Por qué nosotros</a></li>
-              <li><a href="#process">Cómo funciona</a></li>
+              <li><a href="/zonas">Zonas</a></li>
               <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
@@ -461,6 +474,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── PRICING ── */}
+      <section id="precios">
+        <div className="container">
+          <div className="sh fu">
+            <span className="chip-d">Tarifas</span>
+            <h2>Precios claros,<br /><span className="gl">sin sorpresas</span></h2>
+            <p>Diagnóstico siempre gratuito. Solo pagas cuando hay una solución real para tu equipo.</p>
+            <div className="price-banner fu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#30D158"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+              Diagnóstico en tu domicilio — siempre <strong style={{ marginLeft: 5, color: '#30D158' }}>GRATIS</strong>
+            </div>
+          </div>
+          <div className="pgrid">
+            {([
+              { name:'Mantención Lógica y Física', price:'$25.000', items:['Limpieza interna y pasta térmica','Actualización de drivers y SO','Diagnóstico completo de hardware'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg> },
+              { name:'Respaldo de Información', price:'$15.000', items:['Copia de todos tus archivos','Organización por categorías','Entrega en disco o pendrive'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
+              { name:'Recuperación de Datos', price:'$35.000', extra:'según dificultad', items:['Discos dañados o formateados','Particiones corruptas','Sin cobro si no hay recuperación'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg> },
+              { name:'Instalación de Windows', price:'$30.000', items:['Windows 10 u 11 original','Todos los drivers instalados','Antivirus y programas esenciales'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+              { name:'Optimización del Sistema', price:'$20.000', items:['Eliminación de malware y basura','Inicio rápido y sistema fluido','Tuning completo del rendimiento'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
+              { name:'WiFi y Repetidores', price:'$30.000', items:['Configuración de router','Instalación de repetidores','Cobertura total en tu hogar'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
+            ] as Array<{ name: string; price: string; extra?: string; items: string[]; icon: React.ReactNode }>).map(({ name, price, extra, items, icon }, i) => (
+              <div key={name} className={`pcard fu d${(i % 3) + 1}`}>
+                <div className="pcard-icon">{icon}</div>
+                <div className="pcard-name">{name}</div>
+                <div className="pcard-price">Desde {price}</div>
+                <div className="pcard-label">{extra ?? 'precio de referencia'}</div>
+                <ul className="pcard-list">
+                  {items.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="price-note fu">
+            Los precios son referenciales e incluyen mano de obra. Repuestos o materiales adicionales se cotizan aparte.<br />
+            Visita a domicilio sin cargo en toda la Región Metropolitana.
+          </p>
+          <div style={{ textAlign: 'center', marginTop: 40 }} className="fu">
+            <a href="#contact" className="btn btn-dp">Solicitar presupuesto gratis</a>
+          </div>
+        </div>
+      </section>
+
       {/* ── WHY US ── */}
       <section id="why">
         <div className="container">
@@ -499,7 +554,7 @@ export default function Home() {
                 </div>
               )}
               <div className="wstats">
-                <div className="wstat"><div className="n">+200</div><div className="l">Equipos reparados</div></div>
+                <div className="wstat"><div className="n">+{reportCount}</div><div className="l">Equipos reparados</div></div>
                 <div className="wstat"><div className="n">98%</div><div className="l">Satisfacción</div></div>
                 <div className="wstat"><div className="n">&lt;24h</div><div className="l">Respuesta</div></div>
               </div>

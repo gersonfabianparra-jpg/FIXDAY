@@ -185,7 +185,7 @@ export default function AdminReviewsPage() {
                   &ldquo;{r.review_text}&rdquo;
                 </p>
 
-                <div style={{ display: 'flex', gap: 8, paddingLeft: 54 }}>
+                <div style={{ display: 'flex', gap: 8, paddingLeft: 54, flexWrap: 'wrap' }}>
                   {r.status !== 'approved' && (
                     <button
                       disabled={updating === r.id}
@@ -212,6 +212,16 @@ export default function AdminReviewsPage() {
                     >
                       Mover a pendiente
                     </button>
+                  )}
+                  {r.status === 'approved' && (
+                    <a
+                      href={`/api/og/review/${r.id}`}
+                      download={`reseña-${r.client_name.replace(/\s+/g,'-').toLowerCase()}.png`}
+                      style={{ background: 'rgba(191,90,242,.12)', border: '1px solid rgba(191,90,242,.3)', borderRadius: 8, padding: '8px 18px', fontSize: 12, fontWeight: 600, color: '#BF5AF2', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                    >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Imagen Instagram
+                    </a>
                   )}
                 </div>
               </div>
