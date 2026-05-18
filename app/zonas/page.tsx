@@ -122,7 +122,7 @@ export default function ZonasPage() {
               FIXDAY ofrece servicio técnico de computadores a domicilio en toda la Región Metropolitana. Nuestro técnico va directamente a tu casa o empresa, sin que tengas que trasladar tu equipo. Atendemos problemas de software, hardware, redes WiFi, recuperación de datos y mucho más.
             </p>
             <p style={{ fontSize: '0.95rem', color: '#86868B', lineHeight: 1.85 }}>
-              El diagnóstico es siempre <strong style={{ color: '#30D158' }}>gratuito</strong>. Solo pagas si encontramos solución. Horario de atención de lunes a sábado, de 9:00 a 20:00 hrs.
+              El diagnóstico es siempre <strong style={{ color: '#30D158' }}>gratuito</strong>. Solo pagas si encontramos solución. Horario de atención de lunes a viernes, de 8:00 a 19:00 hrs.
             </p>
           </div>
 

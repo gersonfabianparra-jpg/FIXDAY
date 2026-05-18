@@ -618,7 +618,7 @@ export default function Home() {
                       <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                     </svg>
                   </div>
-                  <div className="cdet-text"><strong>Horario de atención</strong><span>Lunes a Sábado, 9:00 – 20:00 hrs</span></div>
+                  <div className="cdet-text"><strong>Horario de atención</strong><span>Lunes a Viernes, 8:00 – 19:00 hrs</span></div>
                 </div>
               </div>
 
