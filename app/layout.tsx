@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 })
 
-const SITE_URL = 'https://fixday.vercel.app' // Cambia esto cuando tengas dominio propio
+const SITE_URL = 'https://fixday.cl'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
