@@ -213,15 +213,13 @@ export default function AdminReviewsPage() {
                       Mover a pendiente
                     </button>
                   )}
-                  <a
-                    href={`/api/og/review/${r.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`/admin/imagen/${r.id}`}
                     style={{ background: 'rgba(191,90,242,.12)', border: '1px solid rgba(191,90,242,.3)', borderRadius: 8, padding: '8px 18px', fontSize: 12, fontWeight: 600, color: '#BF5AF2', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
                   >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                     Imagen Instagram
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}
