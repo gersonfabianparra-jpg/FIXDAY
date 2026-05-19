@@ -20,7 +20,7 @@ function norm(s: string) {
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/\s+/g, '')
 }
-const coveredNorm = new Set([...COVERED].map(norm))
+const coveredNorm = new Set(Array.from(COVERED).map(norm))
 
 const GEOJSON_URL = 'https://raw.githubusercontent.com/caracena/chile-geojson/master/13.geojson'
 
