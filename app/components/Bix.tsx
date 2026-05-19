@@ -136,13 +136,14 @@ function BixSVG({ mood, ex, ey, blink }: { mood: Mood; ex: number; ey: number; b
 }
 
 export default function Bix() {
-  const [enabled, setEnabled] = useState(true)   // optimista: visible por defecto
-  const [ready,   setReady]   = useState(false)  // para fade-in suave
-  const [mood,    setMood]    = useState<Mood>('idle')
-  const [eye,     setEye]     = useState({ x: 0, y: 0 })
-  const [blink,   setBlink]   = useState(false)
-  const [hovered, setHovered] = useState(false)
-  const [showMsg, setShowMsg] = useState(false)
+  const [enabled,  setEnabled]  = useState(true)
+  const [ready,    setReady]    = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [mood,     setMood]     = useState<Mood>('idle')
+  const [eye,      setEye]      = useState({ x: 0, y: 0 })
+  const [blink,    setBlink]    = useState(false)
+  const [hovered,  setHovered]  = useState(false)
+  const [showMsg,  setShowMsg]  = useState(false)
 
   const wrapRef     = useRef<HTMLDivElement>(null)
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -159,6 +160,14 @@ export default function Bix() {
     moodRef.current = m
     setMood(m)
   }
+
+  // Detectar mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   // Fade-in suave + consultar admin
   useEffect(() => {
@@ -274,29 +283,13 @@ export default function Bix() {
         .bix-wave2           { animation: bix-wave-out 0.7s ease-out 0.35s infinite; }
         .bix-wrench          { animation: bix-wrench 0.6s ease-in-out infinite; transform-origin: -7px 0px; }
 
-        @media (max-width: 768px) {
-          .bix-fixed {
-            top: auto !important;
-            bottom: 90px !important;
-            transform: none !important;
-            right: 10px !important;
-          }
-          .bix-fixed .bix-wrap {
-            transform-origin: right bottom;
-            transform: scale(0.62);
-          }
-          .bix-fixed .bix-wrap.bix-shake {
-            animation: bix-shake 0.45s ease-in-out 1 !important;
-          }
-          .bix-bubble { display: none !important; }
-        }
       `}</style>
 
       <div
-        className="bix-fixed"
         style={{
-          position: 'fixed', right: 20, top: '55%',
-          transform: 'translateY(-50%)',
+          position: 'fixed',
+          right: isMobile ? 10 : 20,
+          ...(isMobile ? { bottom: 88 } : { top: '55%', transform: 'translateY(-50%)' }),
           zIndex: 40,
           opacity: visible ? 1 : 0,
           transition: 'opacity 0.6s ease',
@@ -306,8 +299,9 @@ export default function Bix() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* Burbuja */}
-        <div className="bix-bubble" style={{
+        {/* Burbuja — solo desktop */}
+        <div style={{
+          display: isMobile ? 'none' : undefined,
           position: 'absolute', right: 104, top: '50%',
           transform: 'translateY(-50%)',
           opacity: (hovered || showMsg) ? 1 : 0,
@@ -326,11 +320,14 @@ export default function Bix() {
           </div>
         </div>
 
-        <div
-          ref={wrapRef}
-          className={`bix-wrap${mood === 'happy' ? ' bix-happy' : ''}`}
-        >
-          <BixSVG mood={mood} ex={eye.x} ey={eye.y} blink={blink} />
+        {/* Wrapper de escala para mobile (separado de la animación bob) */}
+        <div style={isMobile ? { transform: 'scale(0.62)', transformOrigin: 'right bottom' } : undefined}>
+          <div
+            ref={wrapRef}
+            className={`bix-wrap${mood === 'happy' ? ' bix-happy' : ''}`}
+          >
+            <BixSVG mood={mood} ex={eye.x} ey={eye.y} blink={blink} />
+          </div>
         </div>
       </div>
     </>
