@@ -30,8 +30,8 @@ function BixSVG({ mood, ex, ey, blink }: { mood: Mood; ex: number; ey: number; b
   const isWaving    = mood === 'waving'
 
   const er = isScrolling ? 7.5 : 5.5
-  const dx = Math.max(-2.5, Math.min(2.5, ex * 2.5))
-  const dy = Math.max(-2.5, Math.min(2.5, ey * 2.5))
+  const dx = Math.max(-5.5, Math.min(5.5, ex * 6))
+  const dy = Math.max(-3.5, Math.min(3.5, ey * 6))
 
   return (
     <svg width="96" height="130" viewBox="-8 0 96 130" fill="none" style={{ overflow: 'visible' }}>
@@ -227,7 +227,7 @@ export default function Bix() {
       const rect = wrap.getBoundingClientRect()
       const cx = rect.left + rect.width  / 2
       const cy = rect.top  + rect.height / 2
-      setEye({ x: (clientX - cx) / 360, y: (clientY - cy) / 360 })
+      setEye({ x: (clientX - cx) / 110, y: (clientY - cy) / 110 })
     }
 
     let lastY = window.scrollY
