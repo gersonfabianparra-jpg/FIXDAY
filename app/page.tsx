@@ -735,6 +735,7 @@ export default function Home() {
           <div className="fbot">
             <p>© {new Date().getFullYear()} <span className="gd">FIXDAY</span>. Todos los derechos reservados.</p>
             <p>Santiago, Chile — Región Metropolitana</p>
+            <a href="/admin" style={{ opacity: 0.08, fontSize: '11px', color: 'inherit', textDecoration: 'none', userSelect: 'none' }} tabIndex={-1} aria-hidden="true">·</a>
           </div>
         </div>
       </footer>

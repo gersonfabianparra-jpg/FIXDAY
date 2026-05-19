@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { getSupabase } from '@/lib/supabase'
+import { rateLimit, getIP } from '@/lib/rateLimit'
 
 interface ContactPayload {
   name: string
@@ -11,6 +12,12 @@ interface ContactPayload {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = getIP(req)
+  const rl = rateLimit(`contact:${ip}`, { max: 5, windowMs: 60 * 60 * 1000 })
+  if (!rl.ok) {
+    return NextResponse.json({ error: 'Demasiados envíos. Intenta más tarde.' }, { status: 429 })
+  }
+
   const body: ContactPayload = await req.json()
   const { name, phone, email, service, message } = body
 
