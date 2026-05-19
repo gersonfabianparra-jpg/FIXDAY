@@ -322,20 +322,22 @@ export default function Home() {
       <nav className={navScrolled ? 'sc' : ''}>
         <div className="container">
           <div className="nav-inner">
-            <a href="#" className="logo">
-              <LogoSVG id="lg-nav" />
-              <div>
-                <div className="logo-name">FIXDAY</div>
-                <div className="logo-tag">Técnico a Domicilio</div>
-              </div>
-            </a>
-            <a href="/admin" title="Admin" style={{ opacity: 0.18, color: 'inherit', display: 'inline-flex', alignItems: 'center', marginLeft: 6, textDecoration: 'none', transition: 'opacity .2s' }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.65')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '0.18')}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6zm9 14H6V10h12v10zm-6-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-              </svg>
-            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <a href="#" className="logo">
+                <LogoSVG id="lg-nav" />
+                <div>
+                  <div className="logo-name">FIXDAY</div>
+                  <div className="logo-tag">Técnico a Domicilio</div>
+                </div>
+              </a>
+              <a href="/admin" title="Admin" style={{ opacity: 0.18, color: 'inherit', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', transition: 'opacity .2s', marginTop: 1 }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.65')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '0.18')}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6zm9 14H6V10h12v10zm-6-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                </svg>
+              </a>
+            </div>
             <ul className="nav-links">
               <li><a href="#services">Servicios</a></li>
               <li><a href="#precios">Precios</a></li>
