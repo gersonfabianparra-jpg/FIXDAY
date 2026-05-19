@@ -53,6 +53,7 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle')
   const [stats, setStats] = useState({ equipos: 0, satisfaccion: 0 })
   const [reviews, setReviews] = useState<Review[]>([])
+  const [reviewIdx, setReviewIdx] = useState(0)
   const [reportCount] = useState(100)
   const equiposTarget = useRef(100)
 
@@ -251,6 +252,13 @@ export default function Home() {
       })
       .catch(() => {})
   }, [])
+
+  // Auto-avance de reseñas
+  useEffect(() => {
+    if (reviews.length < 2) return
+    const id = setInterval(() => setReviewIdx(i => (i + 1) % reviews.length), 4500)
+    return () => clearInterval(id)
+  }, [reviews.length])
 
   // Stats counter
   useEffect(() => {
@@ -548,19 +556,47 @@ export default function Home() {
               </div>
             </div>
             <div className="fu-r d2">
-              {reviews.length > 0 && (
-                <div className="wcard">
-                  <div className="stars">{'★'.repeat(reviews[0].rating)}{'☆'.repeat(5 - reviews[0].rating)}</div>
-                  <p className="wquote">&ldquo;{reviews[0].review_text}&rdquo;</p>
-                  <div className="wauthor">
-                    <div className="wavatar">{reviews[0].client_name[0].toUpperCase()}</div>
-                    <div className="wainfo">
-                      <strong>{reviews[0].client_name}</strong>
-                      {reviews[0].client_location && <span>{reviews[0].client_location}</span>}
+              {reviews.length > 0 && (() => {
+                const r = reviews[reviewIdx]
+                return (
+                  <div className="wcard" style={{ position: 'relative', minHeight: 180 }}>
+                    <div key={reviewIdx} style={{ animation: 'rev-fade 0.5s ease' }}>
+                      <div className="stars">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</div>
+                      <p className="wquote">&ldquo;{r.review_text}&rdquo;</p>
+                      <div className="wauthor">
+                        <div className="wavatar">{r.client_name[0].toUpperCase()}</div>
+                        <div className="wainfo">
+                          <strong>{r.client_name}</strong>
+                          {r.client_location && <span>{r.client_location}</span>}
+                        </div>
+                      </div>
                     </div>
+                    {reviews.length > 1 && (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}>
+                        {/* Flechas */}
+                        <button
+                          onClick={() => setReviewIdx(i => (i - 1 + reviews.length) % reviews.length)}
+                          style={{ background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 8, width: 32, height: 32, cursor: 'pointer', color: '#2997FF', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >‹</button>
+                        {/* Puntos */}
+                        <div style={{ display: 'flex', gap: 6 }}>
+                          {reviews.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setReviewIdx(i)}
+                              style={{ width: i === reviewIdx ? 18 : 6, height: 6, borderRadius: 3, background: i === reviewIdx ? '#2997FF' : 'rgba(255,255,255,.2)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s ease' }}
+                            />
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => setReviewIdx(i => (i + 1) % reviews.length)}
+                          style={{ background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 8, width: 32, height: 32, cursor: 'pointer', color: '#2997FF', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >›</button>
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                )
+              })()}
               <div className="wstats">
                 <div className="wstat"><div className="n">+{reportCount}</div><div className="l">Equipos reparados</div></div>
                 <div className="wstat"><div className="n">98%</div><div className="l">Satisfacción</div></div>
