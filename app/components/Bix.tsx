@@ -274,7 +274,22 @@ export default function Bix() {
         .bix-wave2           { animation: bix-wave-out 0.7s ease-out 0.35s infinite; }
         .bix-wrench          { animation: bix-wrench 0.6s ease-in-out infinite; transform-origin: -7px 0px; }
 
-        @media (max-width: 768px) { .bix-fixed { display: none !important; } }
+        @media (max-width: 768px) {
+          .bix-fixed {
+            top: auto !important;
+            bottom: 90px !important;
+            transform: none !important;
+            right: 10px !important;
+          }
+          .bix-fixed .bix-wrap {
+            transform-origin: right bottom;
+            transform: scale(0.62);
+          }
+          .bix-fixed .bix-wrap.bix-shake {
+            animation: bix-shake 0.45s ease-in-out 1 !important;
+          }
+          .bix-bubble { display: none !important; }
+        }
       `}</style>
 
       <div
@@ -292,7 +307,7 @@ export default function Bix() {
         onMouseLeave={() => setHovered(false)}
       >
         {/* Burbuja */}
-        <div style={{
+        <div className="bix-bubble" style={{
           position: 'absolute', right: 104, top: '50%',
           transform: 'translateY(-50%)',
           opacity: (hovered || showMsg) ? 1 : 0,
