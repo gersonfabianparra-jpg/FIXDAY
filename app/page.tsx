@@ -53,8 +53,8 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle')
   const [stats, setStats] = useState({ equipos: 0, satisfaccion: 0 })
   const [reviews, setReviews] = useState<Review[]>([])
-  const [reportCount, setReportCount] = useState(200)
-  const equiposTarget = useRef(200)
+  const [reportCount] = useState(100)
+  const equiposTarget = useRef(100)
 
   // Particles + shooting stars + mouse attraction
   useEffect(() => {
@@ -246,8 +246,7 @@ export default function Home() {
       .then(r => r.json())
       .then(d => {
         if (d.count > 0) {
-          equiposTarget.current = d.count
-          setReportCount(d.count)
+          void d.count // contador fijo en 100
         }
       })
       .catch(() => {})

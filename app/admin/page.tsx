@@ -47,16 +47,23 @@ export default function AdminPage() {
     router.push('/admin/login')
   }, [router])
 
-  useEffect(() => {
-    fetch('/api/admin/leads')
+  const loadLeads = useCallback((silent = false) => {
+    if (!silent) setLoading(true)
+    fetch('/api/admin/leads', { cache: 'no-store' })
       .then(r => r.json())
       .then(d => {
         if (d.error) setError(d.error)
         else setLeads(d.leads ?? [])
       })
       .catch(() => setError('No se pudo conectar con la base de datos.'))
-      .finally(() => setLoading(false))
+      .finally(() => { if (!silent) setLoading(false) })
   }, [])
+
+  useEffect(() => {
+    loadLeads()
+    const interval = setInterval(() => loadLeads(true), 30_000)
+    return () => clearInterval(interval)
+  }, [loadLeads])
 
   useEffect(() => {
     fetch('/api/admin/settings?key=mascot_enabled')
@@ -98,6 +105,7 @@ export default function AdminPage() {
           <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-.02em' }}>FIXDAY <span style={{ color: '#636366', fontWeight: 400, fontSize: 14 }}>/ Admin</span></span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <button onClick={() => loadLeads()} style={{ background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.25)', borderRadius: 8, padding: '6px 14px', color: '#2997FF', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>↻ Actualizar</button>
           <a href="/admin" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid #2997FF', paddingBottom: 1 }}>Leads</a>
           <a href="/admin/reports" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Informes</a>
           <a href="/admin/reviews" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Reseñas</a>

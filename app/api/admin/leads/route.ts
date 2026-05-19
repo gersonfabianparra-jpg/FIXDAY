@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const db = getSupabase()
   if (!db) {
@@ -16,5 +18,7 @@ export async function GET() {
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json({ leads: data })
+  return NextResponse.json({ leads: data }, {
+    headers: { 'Cache-Control': 'no-store' },
+  })
 }
