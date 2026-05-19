@@ -161,22 +161,26 @@ export default function Bix() {
     setMood(m)
   }
 
-  // Detectar mobile
+  // Todo en un solo efecto: mobile → settings → aparecer
   useEffect(() => {
+    // 1. Detectar mobile inmediatamente (antes del fade-in)
     const check = () => setIsMobile(window.innerWidth <= 768)
     check()
     window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
 
-  // Fade-in suave + consultar admin
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 200)
+    // 2. Consultar si está habilitado
     fetch('/api/settings?key=mascot_enabled')
       .then(r => r.json())
       .then(d => setEnabled(d.value !== 'false'))
       .catch(() => {})
-    return () => clearTimeout(t)
+
+    // 3. Aparecer DESPUÉS de que mobile ya está detectado
+    const t = setTimeout(() => setReady(true), 80)
+
+    return () => {
+      window.removeEventListener('resize', check)
+      clearTimeout(t)
+    }
   }, [])
 
   // Parpadeo aleatorio
@@ -271,7 +275,8 @@ export default function Bix() {
         @keyframes bix-wave-out  { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(2.4);opacity:0} }
         @keyframes bix-wrench    { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-22deg)} }
 
-        .bix-wrap            { animation: bix-bob 2.6s ease-in-out infinite; filter: drop-shadow(0 8px 32px rgba(41,151,255,0.25)); }
+        .bix-wrap            { animation: bix-bob 2.6s ease-in-out infinite; }
+        .bix-wrap.bix-shadow { filter: drop-shadow(0 8px 32px rgba(41,151,255,0.25)); }
         .bix-wrap.bix-happy  { animation: bix-happy-bob 1.5s ease-in-out infinite !important; }
         .bix-wrap.bix-shake  { animation: bix-shake 0.45s ease-in-out 1 !important; }
         .bix-pulse           { animation: bix-pulse 1.8s ease-in-out infinite; }
@@ -324,7 +329,7 @@ export default function Bix() {
         <div style={isMobile ? { transform: 'scale(0.62)', transformOrigin: 'right bottom' } : undefined}>
           <div
             ref={wrapRef}
-            className={`bix-wrap${mood === 'happy' ? ' bix-happy' : ''}`}
+            className={`bix-wrap${mood === 'happy' ? ' bix-happy' : ''}${!isMobile ? ' bix-shadow' : ''}`}
           >
             <BixSVG mood={mood} ex={eye.x} ey={eye.y} blink={blink} />
           </div>
