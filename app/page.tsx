@@ -459,7 +459,7 @@ export default function Home() {
           <div className="sh fu">
             <span className="chip-l">Lo que hacemos</span>
             <h2>Servicios técnicos<br /><span className="gl">profesionales</span></h2>
-            <p>Diagnóstico previo, sin cargos ocultos y con garantía de satisfacción en cada visita.</p>
+            <p>Visita a domicilio con diagnóstico técnico incluido. Sin cargos ocultos y con garantía en cada servicio.</p>
           </div>
           <div className="sgrid">
             {[
@@ -488,10 +488,10 @@ export default function Home() {
           <div className="sh fu">
             <span className="chip-d">Tarifas</span>
             <h2>Precios claros,<br /><span className="gl">sin sorpresas</span></h2>
-            <p>Diagnóstico siempre gratuito. Solo pagas cuando hay una solución real para tu equipo.</p>
+            <p>Visita a domicilio + diagnóstico técnico: <strong>$15.000</strong>. Si realizamos la reparación, ese valor se aplica al total del servicio.</p>
             <div className="price-banner fu">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#30D158"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-              Diagnóstico en tu domicilio — siempre <strong style={{ marginLeft: 5, color: '#30D158' }}>GRATIS</strong>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Visita a domicilio + diagnóstico — <strong style={{ marginLeft: 5, color: '#2997FF' }}>$15.000</strong><span style={{ marginLeft: 8, color: '#636366', fontWeight: 400, fontSize: '0.85em' }}>(se aplica al servicio si hay reparación)</span>
             </div>
           </div>
           <div className="pgrid">
@@ -516,10 +516,10 @@ export default function Home() {
           </div>
           <p className="price-note fu">
             Los precios son referenciales e incluyen mano de obra. Repuestos o materiales adicionales se cotizan aparte.<br />
-            Visita a domicilio sin cargo en toda la Región Metropolitana.
+            Visita + diagnóstico: $15.000 — se aplica al total si realizamos la reparación.
           </p>
           <div style={{ textAlign: 'center', marginTop: 40 }} className="fu">
-            <a href="#contact" className="btn btn-dp">Solicitar presupuesto gratis</a>
+            <a href="#contact" className="btn btn-dp">Solicitar visita técnica</a>
           </div>
         </div>
       </section>
