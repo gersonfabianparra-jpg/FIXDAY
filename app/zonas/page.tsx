@@ -1,5 +1,12 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const MapaZonas = dynamic(() => import('./MapaZonas'), { ssr: false, loading: () => (
+  <div style={{ height: '100%', background: '#0a0a0a', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ color: '#636366', fontSize: 13 }}>Cargando mapa…</div>
+  </div>
+) })
 
 export const metadata: Metadata = {
   title: 'Zonas de cobertura — FIXDAY Técnico a Domicilio en Santiago',
@@ -87,6 +94,29 @@ export default function ZonasPage() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
             Consultar disponibilidad
           </a>
+        </div>
+      </section>
+
+      {/* Mapa */}
+      <section style={{ padding: '0 0 60px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ position: 'relative', height: 480, borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,255,255,.09)' }}>
+            <MapaZonas />
+            {/* Leyenda */}
+            <div style={{ position: 'absolute', top: 16, left: 16, zIndex: 1000, background: 'rgba(8,9,15,.88)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 12, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12 }}>
+                <div style={{ width: 14, height: 14, borderRadius: 3, background: 'rgba(41,151,255,.35)', border: '1.5px solid #2997FF' }} />
+                <span style={{ color: '#F5F5F7', fontWeight: 600 }}>Comunas atendidas</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12 }}>
+                <div style={{ width: 14, height: 14, borderRadius: 3, background: 'rgba(26,26,46,.7)', border: '0.5px solid rgba(255,255,255,.1)' }} />
+                <span style={{ color: '#636366' }}>Fuera de cobertura</span>
+              </div>
+            </div>
+          </div>
+          <p style={{ textAlign: 'center', fontSize: 12, color: '#3A3A3C', marginTop: 12 }}>
+            Pasa el cursor sobre una comuna para ver su nombre · Scroll desactivado — usa los botones +/−
+          </p>
         </div>
       </section>
 
