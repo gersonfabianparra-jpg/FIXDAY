@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 160" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="4" y1="4" x2="156" y2="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0A0D18"/>
+      <stop offset="100%" stop-color="#060608"/>
+    </linearGradient>
+    <linearGradient id="gd" x1="14" y1="80" x2="146" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2997FF"/>
+      <stop offset="100%" stop-color="#BF5AF2"/>
+    </linearGradient>
+    <linearGradient id="tg" x1="190" y1="80" x2="680" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2997FF"/>
+      <stop offset="100%" stop-color="#BF5AF2"/>
+    </linearGradient>
+  </defs>
+  <!-- Ícono -->
+  <rect x="4" y="4" width="152" height="152" rx="30" fill="url(#bg)" stroke="url(#gd)" stroke-width="5"/>
+  <path d="M 14 45 L 80 45 L 80 60 L 38 60 L 38 71 L 63 71 L 63 86 L 38 86 L 38 114 L 14 114 Z" fill="url(#gd)"/>
+  <path d="M 80 45 L 97 45 Q 146 45 146 80 Q 146 114 97 114 L 80 114 L 80 99 L 97 99 Q 122 99 122 80 Q 122 60 97 60 L 80 60 Z" fill="url(#gd)"/>
+  <line x1="80" y1="45" x2="80" y2="114" stroke="#07080F" stroke-width="5.5"/>
+  <!-- Texto FIXDAY -->
+  <text x="190" y="104" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="800" font-size="86" letter-spacing="-3" fill="url(#tg)">FIXDAY</text>
+  <!-- Tagline -->
+  <text x="192" y="134" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="500" font-size="22" letter-spacing="4" fill="#2997FF" opacity="0.7">TÉCNICO A DOMICILIO</text>
+</svg>

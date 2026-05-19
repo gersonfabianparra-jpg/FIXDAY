@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="12" y1="12" x2="500" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0A0D18"/>
+      <stop offset="100%" stop-color="#060608"/>
+    </linearGradient>
+    <linearGradient id="gd" x1="48" y1="256" x2="464" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2997FF"/>
+      <stop offset="100%" stop-color="#BF5AF2"/>
+    </linearGradient>
+  </defs>
+  <!-- Fondo -->
+  <rect x="12" y="12" width="488" height="488" rx="96" fill="url(#bg)" stroke="url(#gd)" stroke-width="18"/>
+  <!-- Letra F -->
+  <path d="M 48 146 L 256 146 L 256 195 L 122 195 L 122 232 L 207 232 L 207 281 L 122 281 L 122 366 L 48 366 Z" fill="url(#gd)"/>
+  <!-- Letra D -->
+  <path d="M 256 146 L 317 146 Q 464 146 464 256 Q 464 366 317 366 L 256 366 L 256 317 L 317 317 Q 390 317 390 256 Q 390 195 317 195 L 256 195 Z" fill="url(#gd)"/>
+  <!-- Divisor -->
+  <line x1="256" y1="146" x2="256" y2="366" stroke="#07080F" stroke-width="18"/>
+</svg>
