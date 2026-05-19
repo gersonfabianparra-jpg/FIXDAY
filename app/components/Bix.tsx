@@ -150,6 +150,7 @@ export default function Bix() {
   const msgTimer    = useRef<ReturnType<typeof setTimeout> | null>(null)
   const moodRef     = useRef<Mood>('idle')
   const waveActive  = useRef(false)
+  const lastMouse   = useRef({ x: -1, y: -1 })
 
   const setM = (m: Mood) => {
     if (moodRef.current !== m && m !== 'scrolling') {
@@ -220,11 +221,22 @@ export default function Bix() {
       setM('idle')
     }
 
+    const calcEye = (clientX: number, clientY: number) => {
+      const wrap = wrapRef.current
+      if (!wrap) return
+      const rect = wrap.getBoundingClientRect()
+      const cx = rect.left + rect.width  / 2
+      const cy = rect.top  + rect.height / 2
+      setEye({ x: (clientX - cx) / 360, y: (clientY - cy) / 360 })
+    }
+
     let lastY = window.scrollY
     const onScroll = () => {
       const curr = window.scrollY
       const delta = Math.abs(curr - lastY)
       lastY = curr
+      // Actualizar ojos con la última posición conocida del mouse
+      if (lastMouse.current.x >= 0) calcEye(lastMouse.current.x, lastMouse.current.y)
       if (delta > 10) {
         const el = wrapRef.current
         if (el) { el.classList.remove('bix-shake'); void el.offsetWidth; el.classList.add('bix-shake') }
@@ -239,13 +251,14 @@ export default function Bix() {
     }
 
     const onMouseMove = (e: MouseEvent) => {
+      lastMouse.current = { x: e.clientX, y: e.clientY }
+      calcEye(e.clientX, e.clientY)
+
       const wrap = wrapRef.current
       if (!wrap) return
       const rect = wrap.getBoundingClientRect()
       const cx = rect.left + rect.width  / 2
       const cy = rect.top  + rect.height / 2
-      setEye({ x: (e.clientX - cx) / 360, y: (e.clientY - cy) / 360 })
-
       if (Math.hypot(e.clientX - cx, e.clientY - cy) < 150 && !waveActive.current && moodRef.current === 'idle') {
         waveActive.current = true
         setM('waving')
