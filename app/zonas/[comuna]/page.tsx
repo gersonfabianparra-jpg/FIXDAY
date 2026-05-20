@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { COMUNAS, getComunaBySlug } from '../comunas'
+import Logo from '@/app/components/Logo'
 
 export function generateStaticParams() {
   return COMUNAS.map(c => ({ comuna: c.slug }))
@@ -60,16 +61,7 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
       <nav style={{ borderBottom: '1px solid rgba(255,255,255,.08)', padding: '16px 0', position: 'sticky', top: 0, background: 'rgba(0,0,0,.88)', backdropFilter: 'blur(20px)', zIndex: 100 }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <svg viewBox="0 0 42 42" fill="none" style={{ width: 34, height: 34 }}>
-              <defs>
-                <linearGradient id="nbg" x1="1" y1="1" x2="41" y2="41" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#0A0D18"/><stop offset="100%" stopColor="#060608"/></linearGradient>
-                <linearGradient id="ngd" x1="4" y1="21" x2="38" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2997FF"/><stop offset="100%" stopColor="#BF5AF2"/></linearGradient>
-              </defs>
-              <rect x="1" y="1" width="40" height="40" rx="8" fill="url(#nbg)" stroke="url(#ngd)" strokeWidth="1.5"/>
-              <path d="M 4 12 L 21 12 L 21 16 L 10 16 L 10 19 L 17 19 L 17 23 L 10 23 L 10 30 L 4 30 Z" fill="url(#ngd)"/>
-              <path d="M 21 12 L 26 12 Q 38 12 38 21 Q 38 30 26 30 L 21 30 L 21 26 L 26 26 Q 32 26 32 21 Q 32 16 26 16 L 21 16 Z" fill="url(#ngd)"/>
-              <line x1="21" y1="12" x2="21" y2="30" stroke="#08090F" strokeWidth="1.5"/>
-            </svg>
+            <Logo id="lg-comuna" />
             <div>
               <div style={{ fontWeight: 800, fontSize: 16, color: '#fff', lineHeight: 1, letterSpacing: '-.02em' }}>FIXDAY</div>
               <div style={{ fontSize: 9, color: '#2997FF', letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 600 }}>Técnico a domicilio</div>
