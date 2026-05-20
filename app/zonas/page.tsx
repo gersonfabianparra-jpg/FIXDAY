@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { COMUNAS } from './comunas'
 
 export const dynamic = 'force-dynamic'
 
-const MapaZonas = dynamic(() => import('./MapaZonas'), { ssr: false, loading: () => (
+const MapaZonas = nextDynamic(() => import('./MapaZonas'), { ssr: false, loading: () => (
   <div style={{ height: '100%', background: '#0a0a0a', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
     <div style={{ color: '#636366', fontSize: 13 }}>Cargando mapa…</div>
   </div>
