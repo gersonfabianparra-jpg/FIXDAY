@@ -34,7 +34,7 @@ export default function DaisySecret() {
       {/* Punto secreto — invisible, esquina inferior derecha del footer */}
       <span
         onClick={() => setClicks(c => c + 1)}
-        style={{ position: 'fixed', bottom: 18, right: 18, width: 22, height: 22, cursor: 'default', zIndex: 9998, userSelect: 'none', WebkitUserSelect: 'none' }}
+        style={{ position: 'fixed', bottom: 18, left: 18, width: 22, height: 22, cursor: 'default', zIndex: 9998, userSelect: 'none', WebkitUserSelect: 'none' }}
         title=""
       />
 
