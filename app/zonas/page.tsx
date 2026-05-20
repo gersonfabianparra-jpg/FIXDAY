@@ -3,7 +3,6 @@ import Link from 'next/link'
 import nextDynamic from 'next/dynamic'
 import { COMUNAS } from './comunas'
 
-export const dynamic = 'force-dynamic'
 
 const MapaZonas = nextDynamic(() => import('./MapaZonas'), { ssr: false, loading: () => (
   <div style={{ height: '100%', background: '#0a0a0a', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
