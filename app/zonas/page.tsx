@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { COMUNAS } from './comunas'
 
 const MapaZonas = dynamic(() => import('./MapaZonas'), { ssr: false, loading: () => (
   <div style={{ height: '100%', background: '#0a0a0a', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -133,11 +134,20 @@ export default function ZonasPage() {
                   {sector.desc}
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {sector.comunas.map(c => (
-                    <span key={c} style={{ background: 'rgba(41,151,255,.07)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 8, padding: '5px 12px', fontSize: '0.82rem', fontWeight: 500, color: '#C7C7CC' }}>
-                      {c}
-                    </span>
-                  ))}
+                  {sector.comunas.map(c => {
+                    const slug = COMUNAS.find(x => x.name === c)?.slug
+                    return slug ? (
+                      <Link key={c} href={`/zonas/${slug}`} style={{ background: 'rgba(41,151,255,.07)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 8, padding: '5px 12px', fontSize: '0.82rem', fontWeight: 500, color: '#C7C7CC', textDecoration: 'none', transition: 'all 0.2s' }}
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(41,151,255,.18)'; e.currentTarget.style.color = '#fff' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(41,151,255,.07)'; e.currentTarget.style.color = '#C7C7CC' }}>
+                        {c}
+                      </Link>
+                    ) : (
+                      <span key={c} style={{ background: 'rgba(41,151,255,.07)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 8, padding: '5px 12px', fontSize: '0.82rem', fontWeight: 500, color: '#C7C7CC' }}>
+                        {c}
+                      </span>
+                    )
+                  })}
                 </div>
               </div>
             ))}
