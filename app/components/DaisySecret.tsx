@@ -31,12 +31,18 @@ export default function DaisySecret() {
 
   return (
     <>
-      {/* Punto secreto — invisible, esquina inferior derecha del footer */}
+      {/* Botón secreto — esquina inferior izquierda */}
       <span
         onClick={() => setClicks(c => c + 1)}
-        style={{ position: 'fixed', bottom: 18, left: 18, width: 22, height: 22, cursor: 'default', zIndex: 9998, userSelect: 'none', WebkitUserSelect: 'none' }}
-        title=""
-      />
+        style={{
+          position: 'fixed', bottom: 16, left: 18,
+          width: 22, height: 22,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,.15)',
+          cursor: 'default', zIndex: 9998, userSelect: 'none', WebkitUserSelect: 'none',
+          letterSpacing: 0, lineHeight: 1,
+        }}
+      >D</span>
 
       {open && (
         <div
