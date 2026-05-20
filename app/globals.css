@@ -70,16 +70,16 @@ h1,h2,h3,h4,h5 { font-family: var(--font-h); }
   75%     { opacity: 0.9; }
 }
 @keyframes btnAura {
-  0%,100% { box-shadow: 0 0 0 0 rgba(41,151,255,0), 0 8px 30px rgba(41,151,255,0.35); }
-  50%     { box-shadow: 0 0 0 4px rgba(191,90,242,0.35), 0 8px 44px rgba(191,90,242,0.42); }
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.88; }
 }
 @keyframes gradientShift {
   0%,100% { background-position: 0% 50%; }
   50%     { background-position: 100% 50%; }
 }
 @keyframes badgePulse {
-  0%,100% { box-shadow: 0 0 18px rgba(41,151,255,0.12); border-color: rgba(41,151,255,.25); }
-  50%     { box-shadow: 0 0 28px rgba(191,90,242,0.22); border-color: rgba(191,90,242,.38); }
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.75; }
 }
 
 /* ════════════════════════════
@@ -159,8 +159,8 @@ h1,h2,h3,h4,h5 { font-family: var(--font-h); }
 /* ════════════════════════════
    NAV
 ════════════════════════════ */
-nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:16px 0; transition:var(--t); }
-nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); border-bottom:1px solid rgba(255,255,255,.08); padding:12px 0; }
+nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:16px 0; transition:var(--t); will-change:transform; }
+nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.08); padding:12px 0; }
 .nav-inner { display:flex; align-items:center; justify-content:space-between; }
 .logo { display:flex; align-items:center; gap:10px; }
 .logo:hover .logo-icon { filter: drop-shadow(0 0 8px rgba(41,151,255,0.65)); transition: filter 0.35s ease; }
@@ -353,6 +353,7 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(24px) saturate(180%);
   transform:skewX(-15deg); transition:none; pointer-events:none; z-index:2;
 }
 .scard:hover .card-shine { left:130%; transition:left 0.65s ease; }
+.scard { will-change:transform; }
 .scard:hover { box-shadow:0 2px 4px rgba(0,0,0,.04), 0 24px 70px rgba(0,0,0,.13); transform:translateY(-4px); }
 .sicon {
   width:56px; height:56px; border-radius:16px; background:rgba(0,113,227,.09);
@@ -455,6 +456,7 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(24px) saturate(180%);
   padding:34px 28px; transition:var(--t); position:relative; overflow:hidden;
 }
 .pcard::after { content:''; position:absolute; inset:0; border-radius:22px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.04); pointer-events:none; }
+.pcard { will-change:transform; }
 .pcard:hover { transform:translateY(-5px); border-color:rgba(41,151,255,.4); box-shadow:0 20px 60px rgba(0,0,0,.6); }
 .pcard-icon { width:52px; height:52px; border-radius:14px; background:rgba(41,151,255,.09); border:1px solid rgba(41,151,255,.18); display:flex; align-items:center; justify-content:center; margin-bottom:22px; transition:var(--t); }
 .pcard:hover .pcard-icon { background:rgba(41,151,255,.18); transform:scale(1.08) rotate(-5deg); }

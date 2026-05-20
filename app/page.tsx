@@ -90,8 +90,8 @@ export default function Home() {
       }
       update() {
         const dx = mouse.x - this.x, dy = mouse.y - this.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 180) { this.vx += (dx / dist) * 0.04; this.vy += (dy / dist) * 0.04 }
+        const distSq = dx * dx + dy * dy
+        if (distSq < 180 * 180) { const d = Math.sqrt(distSq); this.vx += (dx / d) * 0.04; this.vy += (dy / d) * 0.04 }
         const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy)
         if (speed > 1.5) { this.vx = (this.vx / speed) * 1.5; this.vy = (this.vy / speed) * 1.5 }
         this.x += this.vx; this.y += this.vy
@@ -145,19 +145,23 @@ export default function Home() {
       }
     }
 
-    const dots: Dot[] = Array.from({ length: 130 }, () => new Dot())
-    const shooters: ShootingStar[] = Array.from({ length: 5 }, () => new ShootingStar())
+    const dots: Dot[] = Array.from({ length: 60 }, () => new Dot())
+    const shooters: ShootingStar[] = Array.from({ length: 4 }, () => new ShootingStar())
     let raf: number
+    const DIST_SQ = 110 * 110
+
     const animate = () => {
+      if (document.hidden) { raf = requestAnimationFrame(animate); return }
       ctx.clearRect(0, 0, c.width, c.height)
       shooters.forEach(s => { s.update(); s.draw() })
       dots.forEach(d => { d.update(); d.draw() })
+      // Use squared distance to avoid sqrt in O(n²) loop
       for (let i = 0; i < dots.length; i++) {
         for (let j = i + 1; j < dots.length; j++) {
           const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
-            ctx.globalAlpha = (1 - dist / 120) * 0.14
+          const distSq = dx * dx + dy * dy
+          if (distSq < DIST_SQ) {
+            ctx.globalAlpha = (1 - Math.sqrt(distSq) / 110) * 0.13
             ctx.strokeStyle = dots[i].col; ctx.lineWidth = 0.5
             ctx.beginPath(); ctx.moveTo(dots[i].x, dots[i].y); ctx.lineTo(dots[j].x, dots[j].y); ctx.stroke()
           }
