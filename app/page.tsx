@@ -323,6 +323,7 @@ export default function Home() {
         <a href="#precios" onClick={() => setMnavOpen(false)}>Precios</a>
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
+        <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
       </div>
 
@@ -351,6 +352,7 @@ export default function Home() {
               <li><a href="#precios">Precios</a></li>
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/zonas">Zonas</a></li>
+              <li><a href="/paginas-web">Páginas Web</a></li>
               <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
@@ -765,7 +767,7 @@ export default function Home() {
             <div className="fcol">
               <h5>Servicios</h5>
               <ul>
-                {['Mantención de PC','Respaldo de datos','Recuperación de datos','Instalación Windows','Optimización PC','Redes WiFi','Páginas Web'].map(s => (
+                {['Mantención de PC','Respaldo de datos','Recuperación de datos','Instalación Windows','Optimización PC','Redes WiFi'].map(s => (
                   <li key={s}><a href="#services">{s}</a></li>
                 ))}
               </ul>
@@ -775,6 +777,8 @@ export default function Home() {
               <ul>
                 <li><a href="#why">Por qué FIXDAY</a></li>
                 <li><a href="#process">Cómo funciona</a></li>
+                <li><a href="/zonas">Zonas de cobertura</a></li>
+                <li><a href="/paginas-web">Páginas Web</a></li>
                 <li><a href="#contact">Contacto</a></li>
                 <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
               </ul>
