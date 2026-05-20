@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 const STATS = [
-  { target: 150, prefix: '+', suffix: '', label: 'Equipos reparados', icon: '🔧' },
-  { target: 98,  prefix: '',  suffix: '%', label: 'Clientes satisfechos', icon: '⭐' },
-  { target: 38,  prefix: '',  suffix: '', label: 'Comunas atendidas', icon: '📍' },
-  { target: 24,  prefix: '<', suffix: 'h', label: 'Tiempo de respuesta', icon: '⚡' },
+  { target: 150, prefix: '+', suffix: '', label: 'Equipos reparados' },
+  { target: 98,  prefix: '',  suffix: '%', label: 'Clientes satisfechos' },
+  { target: 38,  prefix: '',  suffix: '', label: 'Comunas atendidas' },
+  { target: 24,  prefix: '<', suffix: 'h', label: 'Tiempo de respuesta' },
 ]
 
 function useCountUp(target: number, active: boolean) {
@@ -26,11 +26,10 @@ function useCountUp(target: number, active: boolean) {
   return val
 }
 
-function StatItem({ target, prefix, suffix, label, icon, active }: typeof STATS[0] & { active: boolean }) {
+function StatItem({ target, prefix, suffix, label, active }: typeof STATS[0] & { active: boolean }) {
   const val = useCountUp(target, active)
   return (
     <div style={{ textAlign: 'center', flex: '1 1 160px' }}>
-      <div style={{ fontSize: 28, marginBottom: 8 }}>{icon}</div>
       <div style={{
         fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
         fontWeight: 900,
