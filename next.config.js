@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  staticPageGenerationTimeout: 180,
+  staticPageGenerationTimeout: 300,
   async headers() {
     return [
       {
