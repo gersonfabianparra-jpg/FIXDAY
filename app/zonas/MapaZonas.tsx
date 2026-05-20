@@ -22,7 +22,7 @@ function norm(s: string) {
 }
 const coveredNorm = new Set(Array.from(COVERED).map(norm))
 
-const GEOJSON_URL = 'https://raw.githubusercontent.com/caracena/chile-geojson/master/13.geojson'
+const GEOJSON_URL = '/rm-comunas.geojson'
 
 export default function MapaZonas() {
   const containerRef = useRef<HTMLDivElement>(null)
