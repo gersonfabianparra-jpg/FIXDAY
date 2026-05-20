@@ -466,8 +466,8 @@ export default function Home() {
         <div className="container">
           <div className="sh fu">
             <span className="chip-l">Lo que hacemos</span>
-            <h2>Servicios técnicos<br /><span className="gl">profesionales</span></h2>
-            <p>Visita a domicilio con diagnóstico técnico incluido. Sin cargos ocultos y con garantía en cada servicio.</p>
+            <h2>Técnico a domicilio<br /><span className="gl">y páginas web</span></h2>
+            <p>Visita a domicilio con diagnóstico técnico incluido — y también creamos tu sitio web profesional. Sin cargos ocultos y con garantía.</p>
           </div>
           <div className="sgrid">
             {[
@@ -477,6 +477,7 @@ export default function Home() {
               { n:'04', title:'Instalación de Windows', desc:'Instalación limpia de Windows 10 u 11, con todos los drivers necesarios, antivirus y programas básicos configurados.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
               { n:'05', title:'Optimización del Sistema', desc:'Hacemos que tu equipo vuelva a funcionar como nuevo. Eliminamos malware, programas basura y procesos que lo frenan.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
               { n:'06', title:'WiFi y Repetidores', desc:'Configuramos tu red doméstica o de oficina. Routers, access points y repetidores para cobertura WiFi completa en todo el hogar.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
+              { n:'07', title:'Diseño de Páginas Web', desc:'Creamos tu sitio web profesional: rápido, moderno y optimizado para Google. Ideal para negocios, emprendimientos y profesionales independientes.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l3 3-3 3" strokeLinecap="round" strokeLinejoin="round"/><line x1="13" y1="11" x2="17" y2="11"/></svg> },
             ].map(({ n, title, desc, icon }, i) => (
               <div key={n} className={`scard fu d${(i % 3) + 1}`}>
                 <div className="card-shine" />
@@ -510,6 +511,7 @@ export default function Home() {
               { name:'Instalación de Windows', price:'$30.000', items:['Windows 10 u 11 original','Todos los drivers instalados','Antivirus y programas esenciales'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
               { name:'Optimización del Sistema', price:'$20.000', items:['Eliminación de malware y basura','Inicio rápido y sistema fluido','Tuning completo del rendimiento'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
               { name:'WiFi y Repetidores', price:'$30.000', items:['Configuración de router','Instalación de repetidores','Cobertura total en tu hogar'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
+              { name:'Diseño de Páginas Web', price:'$150.000', extra:'sitio completo y publicado', items:['Diseño moderno y profesional','Optimizado para Google (SEO)','Dominio y hosting incluido 1 año'], icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l3 3-3 3" strokeLinecap="round" strokeLinejoin="round"/><line x1="13" y1="11" x2="17" y2="11"/></svg> },
             ] as Array<{ name: string; price: string; extra?: string; items: string[]; icon: React.ReactNode }>).map(({ name, price, extra, items, icon }, i) => (
               <div key={name} className={`pcard fu d${(i % 3) + 1}`}>
                 <div className="pcard-icon">{icon}</div>
@@ -718,6 +720,7 @@ export default function Home() {
                       <option>Instalación de Windows</option>
                       <option>Optimización del sistema</option>
                       <option>Instalación WiFi / Repetidores</option>
+                      <option>Diseño de página web</option>
                       <option>Otro / No sé qué tiene</option>
                     </select>
                   </div>
@@ -762,7 +765,7 @@ export default function Home() {
             <div className="fcol">
               <h5>Servicios</h5>
               <ul>
-                {['Mantención de PC','Respaldo de datos','Recuperación de datos','Instalación Windows','Optimización PC','Redes WiFi'].map(s => (
+                {['Mantención de PC','Respaldo de datos','Recuperación de datos','Instalación Windows','Optimización PC','Redes WiFi','Páginas Web'].map(s => (
                   <li key={s}><a href="#services">{s}</a></li>
                 ))}
               </ul>
