@@ -5,6 +5,19 @@ import Logo from '@/app/components/Logo'
 export const metadata: Metadata = {
   title: 'Oferta de Lanzamiento — Visita + Diagnóstico $10.000 | FIXDAY',
   description: 'Por tiempo limitado: visita a domicilio + diagnóstico técnico por solo $10.000 (valor normal $15.000). Técnico certificado en toda la Región Metropolitana.',
+  openGraph: {
+    title: 'FIXDAY — Visita + Diagnóstico $10.000 🔧',
+    description: 'Oferta de lanzamiento: técnico a domicilio en toda la RM. Diagnóstico incluido, sin traslados, mismo día.',
+    url: 'https://fixday.cl/oferta',
+    siteName: 'FIXDAY',
+    locale: 'es_CL',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FIXDAY — Visita + Diagnóstico $10.000 🔧',
+    description: 'Oferta de lanzamiento: técnico a domicilio en toda la RM. Sin traslados, mismo día.',
+  },
 }
 
 const WA = `https://wa.me/56936649332?text=${encodeURIComponent('Hola FIXDAY, vi la oferta de lanzamiento y quiero agendar una visita técnica a domicilio')}`
