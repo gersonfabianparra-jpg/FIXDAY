@@ -331,7 +331,7 @@ export default function Home() {
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
-        <a href="/blog" onClick={() => setMnavOpen(false)} target="_blank" rel="noopener noreferrer">Blog</a>
+        <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
       </div>
 
@@ -361,7 +361,7 @@ export default function Home() {
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/zonas">Zonas</a></li>
               <li><a href="/paginas-web">Páginas Web</a></li>
-              <li><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></li>
+              <li><a href="/blog">Blog</a></li>
               <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
