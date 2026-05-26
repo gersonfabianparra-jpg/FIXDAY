@@ -125,6 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 ],
               },
               sameAs: [`https://wa.me/56936649332`, `https://www.instagram.com/fixdaycl`],
+              mainEntityOfPage: `${SITE_URL}/blog`,
             }),
           }}
         />

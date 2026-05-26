@@ -330,6 +330,7 @@ export default function Home() {
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
+        <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
       </div>
 
@@ -359,6 +360,7 @@ export default function Home() {
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/zonas">Zonas</a></li>
               <li><a href="/paginas-web">Páginas Web</a></li>
+              <li><a href="/blog">Blog</a></li>
               <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
@@ -641,6 +643,34 @@ export default function Home() {
                 <h4>{title}</h4>
                 <p>{desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+        <div className="container">
+          <div className="sh fu" style={{ marginBottom: 40 }}>
+            <span className="chip-l">Preguntas frecuentes</span>
+            <h2>Todo lo que necesitas<br /><span className="gl">saber antes de llamar</span></h2>
+          </div>
+          <div style={{ maxWidth: 720, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {[
+              { q: '¿Cuánto cuesta la visita a domicilio?', a: 'La visita + diagnóstico técnico tiene un valor especial de $10.000 (precio normal $15.000) durante nuestra oferta de lanzamiento. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.' },
+              { q: '¿En cuánto tiempo llegan?', a: 'Atendemos el mismo día o al día siguiente, de lunes a viernes de 8:00 a 19:00 hrs. Respondemos en menos de 1 hora para coordinar la visita.' },
+              { q: '¿En qué comunas atienden?', a: 'Cubrimos 38 comunas de la Región Metropolitana: Santiago, Providencia, Las Condes, Ñuñoa, La Florida, Maipú, Puente Alto, Vitacura, La Reina, Peñalolén, Macul y muchas más. Consulta el listado completo en nuestra sección de zonas.' },
+              { q: '¿Qué pasa si no pueden reparar mi equipo?', a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($10.000). Sin presiones ni costos adicionales.' },
+              { q: '¿Qué medios de pago aceptan?', a: 'Aceptamos efectivo y transferencia bancaria. El pago se realiza una vez terminado el trabajo, nunca antes.' },
+              { q: '¿Pueden recuperar datos de un disco dañado?', a: 'Sí. Ofrecemos servicio de recuperación de datos de discos con daño lógico (virus, formateo, partición corrupta) y en muchos casos de daño físico. El diagnóstico inicial determina el porcentaje de recuperación posible.' },
+            ].map(({ q, a }) => (
+              <details key={q} style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, overflow: 'hidden' }}>
+                <summary style={{ padding: '18px 22px', fontWeight: 700, fontSize: '0.95rem', color: '#F5F5F7', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  {q}
+                  <span style={{ color: '#2997FF', fontSize: 20, flexShrink: 0, marginLeft: 12 }}>+</span>
+                </summary>
+                <div style={{ padding: '0 22px 18px', fontSize: '0.88rem', color: '#86868B', lineHeight: 1.7 }}>{a}</div>
+              </details>
             ))}
           </div>
         </div>
