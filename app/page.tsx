@@ -57,6 +57,7 @@ export default function Home() {
   const [reviews, setReviews] = useState<Review[]>([])
   const [reviewIdx, setReviewIdx] = useState(0)
   const [reportCount] = useState(100)
+  const [faqOpen, setFaqOpen] = useState<number | null>(null)
   const equiposTarget = useRef(100)
 
   // Particles + shooting stars + mouse attraction
@@ -649,29 +650,97 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
-      <section id="faq" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
-        <div className="container">
-          <div className="sh fu" style={{ marginBottom: 40 }}>
+      <section id="faq" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-60%)', width: 800, height: 500, background: 'radial-gradient(ellipse, rgba(41,151,255,.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div className="container" style={{ position: 'relative' }}>
+          <div className="sh fu" style={{ marginBottom: 52 }}>
             <span className="chip-l">Preguntas frecuentes</span>
             <h2>Todo lo que necesitas<br /><span className="gl">saber antes de llamar</span></h2>
           </div>
-          <div style={{ maxWidth: 720, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {[
-              { q: '¿Cuánto cuesta la visita a domicilio?', a: 'La visita + diagnóstico técnico tiene un valor especial de $10.000 (precio normal $15.000) durante nuestra oferta de lanzamiento. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.' },
-              { q: '¿En cuánto tiempo llegan?', a: 'Atendemos el mismo día o al día siguiente, de lunes a viernes de 8:00 a 19:00 hrs. Respondemos en menos de 1 hora para coordinar la visita.' },
-              { q: '¿En qué comunas atienden?', a: 'Cubrimos 38 comunas de la Región Metropolitana: Santiago, Providencia, Las Condes, Ñuñoa, La Florida, Maipú, Puente Alto, Vitacura, La Reina, Peñalolén, Macul y muchas más. Consulta el listado completo en nuestra sección de zonas.' },
-              { q: '¿Qué pasa si no pueden reparar mi equipo?', a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($10.000). Sin presiones ni costos adicionales.' },
-              { q: '¿Qué medios de pago aceptan?', a: 'Aceptamos efectivo y transferencia bancaria. El pago se realiza una vez terminado el trabajo, nunca antes.' },
-              { q: '¿Pueden recuperar datos de un disco dañado?', a: 'Sí. Ofrecemos servicio de recuperación de datos de discos con daño lógico (virus, formateo, partición corrupta) y en muchos casos de daño físico. El diagnóstico inicial determina el porcentaje de recuperación posible.' },
-            ].map(({ q, a }) => (
-              <details key={q} style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, overflow: 'hidden' }}>
-                <summary style={{ padding: '18px 22px', fontWeight: 700, fontSize: '0.95rem', color: '#F5F5F7', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  {q}
-                  <span style={{ color: '#2997FF', fontSize: 20, flexShrink: 0, marginLeft: 12 }}>+</span>
-                </summary>
-                <div style={{ padding: '0 22px 18px', fontSize: '0.88rem', color: '#86868B', lineHeight: 1.7 }}>{a}</div>
-              </details>
-            ))}
+          <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {([
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+                q: '¿Cuánto cuesta la visita a domicilio?',
+                a: 'La visita + diagnóstico técnico tiene un valor especial de $10.000 (precio normal $15.000) durante nuestra oferta de lanzamiento. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.',
+              },
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+                q: '¿En cuánto tiempo llegan?',
+                a: 'Atendemos el mismo día o al día siguiente, de lunes a viernes de 8:00 a 19:00 hrs. Respondemos en menos de 1 hora para coordinar la visita.',
+              },
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+                q: '¿En qué comunas atienden?',
+                a: 'Cubrimos 38 comunas de la Región Metropolitana: Santiago, Providencia, Las Condes, Ñuñoa, La Florida, Maipú, Puente Alto, Vitacura, La Reina, Peñalolén, Macul y muchas más. Consulta el listado completo en nuestra sección de zonas.',
+              },
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+                q: '¿Qué pasa si no pueden reparar mi equipo?',
+                a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($10.000). Sin presiones ni costos adicionales.',
+              },
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>,
+                q: '¿Qué medios de pago aceptan?',
+                a: 'Aceptamos efectivo y transferencia bancaria. El pago se realiza una vez terminado el trabajo, nunca antes.',
+              },
+              {
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+                q: '¿Pueden recuperar datos de un disco dañado?',
+                a: 'Sí. Ofrecemos recuperación de datos de discos con daño lógico (virus, formateo, partición corrupta) y en muchos casos de daño físico. El diagnóstico inicial determina el porcentaje de recuperación posible.',
+              },
+            ] as { icon: React.ReactNode; q: string; a: string }[]).map(({ icon, q, a }, i) => {
+              const open = faqOpen === i
+              return (
+                <div
+                  key={i}
+                  style={{
+                    background: open ? 'rgba(41,151,255,.04)' : '#0D0D0D',
+                    border: `1px solid ${open ? 'rgba(41,151,255,.25)' : 'rgba(255,255,255,.07)'}`,
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                    transition: 'border-color .25s, background .25s',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setFaqOpen(open ? null : i)}
+                >
+                  <div style={{ padding: '18px 22px', display: 'flex', alignItems: 'center', gap: 14 }}>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                      background: open ? 'rgba(41,151,255,.15)' : 'rgba(255,255,255,.05)',
+                      border: `1px solid ${open ? 'rgba(41,151,255,.3)' : 'rgba(255,255,255,.08)'}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: open ? '#2997FF' : '#636366',
+                      transition: 'all .25s',
+                    }}>
+                      {icon}
+                    </div>
+                    <span style={{ flex: 1, fontWeight: 700, fontSize: '0.95rem', color: open ? '#F5F5F7' : '#D1D1D6', lineHeight: 1.4, transition: 'color .25s' }}>
+                      {q}
+                    </span>
+                    <div style={{
+                      width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                      background: open ? 'rgba(41,151,255,.15)' : 'rgba(255,255,255,.05)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: 'all .25s',
+                    }}>
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .25s' }}>
+                        <path d="M2 4l4 4 4-4" stroke={open ? '#2997FF' : '#636366'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div style={{
+                    maxHeight: open ? 200 : 0,
+                    overflow: 'hidden',
+                    transition: 'max-height .35s cubic-bezier(.4,0,.2,1)',
+                  }}>
+                    <div style={{ padding: '0 22px 20px 74px', fontSize: '0.88rem', color: '#86868B', lineHeight: 1.75 }}>
+                      {a}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
