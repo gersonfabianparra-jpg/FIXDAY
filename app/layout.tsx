@@ -124,7 +124,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Diseño de Páginas Web Profesionales', areaServed: 'Chile' } },
                 ],
               },
-              sameAs: [`https://wa.me/56936649332`],
+              sameAs: [`https://wa.me/56936649332`, `https://www.instagram.com/fixdaycl`],
             }),
           }}
         />

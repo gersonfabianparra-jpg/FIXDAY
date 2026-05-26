@@ -324,6 +324,7 @@ export default function PaginasWebPage() {
         <div style={{ marginTop: 10, display: 'flex', justifyContent: 'center', gap: 20 }}>
           <Link href="/" style={{ fontSize: 13, color: '#2997FF', textDecoration: 'none' }}>← Volver al inicio</Link>
           <Link href="/zonas" style={{ fontSize: 13, color: '#636366', textDecoration: 'none' }}>Zonas de cobertura</Link>
+          <a href="https://www.instagram.com/fixdaycl" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#636366', textDecoration: 'none' }}>Instagram</a>
         </div>
       </footer>
     </div>

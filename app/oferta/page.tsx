@@ -140,6 +140,9 @@ export default function OfertaPage() {
 
       <footer style={{ borderTop: '1px solid rgba(255,255,255,.06)', padding: '24px 0', textAlign: 'center' }}>
         <div style={{ fontSize: 12, color: '#3A3A3C' }}>© {new Date().getFullYear()} FIXDAY · Técnico a domicilio · Región Metropolitana, Chile</div>
+        <div style={{ marginTop: 10 }}>
+          <a href="https://www.instagram.com/fixdaycl" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#636366', textDecoration: 'none' }}>@fixdaycl</a>
+        </div>
       </footer>
     </div>
   )

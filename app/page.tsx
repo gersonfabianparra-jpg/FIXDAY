@@ -789,6 +789,7 @@ export default function Home() {
                 <li><a href="/paginas-web">Páginas Web</a></li>
                 <li><a href="#contact">Contacto</a></li>
                 <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                <li><a href="https://www.instagram.com/fixdaycl" target="_blank" rel="noopener noreferrer">Instagram</a></li>
               </ul>
             </div>
           </div>
