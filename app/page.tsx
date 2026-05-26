@@ -330,7 +330,7 @@ export default function Home() {
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
-        <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
+        <a href="/blog" onClick={() => setMnavOpen(false)} target="_blank" rel="noopener noreferrer">Blog</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
       </div>
 
@@ -360,7 +360,7 @@ export default function Home() {
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/zonas">Zonas</a></li>
               <li><a href="/paginas-web">Páginas Web</a></li>
-              <li><a href="/blog">Blog</a></li>
+              <li><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></li>
               <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
@@ -483,21 +483,21 @@ export default function Home() {
           </div>
           <div className="sgrid">
             {[
-              { n:'01', title:'Mantención Lógica y Física', desc:'Limpieza interna de polvo, cambio de pasta térmica, diagnóstico de hardware, actualización de drivers y sistema operativo.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg> },
-              { n:'02', title:'Respaldo de Información', desc:'Resguardamos tus documentos, fotos y archivos importantes antes de cualquier intervención. Tus datos siempre protegidos.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
-              { n:'03', title:'Recuperación de Datos', desc:'¿Perdiste archivos importantes? Recuperamos información de discos dañados, formateados o con particiones corruptas.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg> },
-              { n:'04', title:'Instalación de Windows', desc:'Instalación limpia de Windows 10 u 11, con todos los drivers necesarios, antivirus y programas básicos configurados.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-              { n:'05', title:'Optimización del Sistema', desc:'Hacemos que tu equipo vuelva a funcionar como nuevo. Eliminamos malware, programas basura y procesos que lo frenan.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
-              { n:'06', title:'WiFi y Repetidores', desc:'Configuramos tu red doméstica o de oficina. Routers, access points y repetidores para cobertura WiFi completa en todo el hogar.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
-              { n:'07', title:'Diseño de Páginas Web', desc:'Creamos tu sitio web profesional: rápido, moderno y optimizado para Google. Ideal para negocios, emprendimientos y profesionales independientes.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l3 3-3 3" strokeLinecap="round" strokeLinejoin="round"/><line x1="13" y1="11" x2="17" y2="11"/></svg> },
-            ].map(({ n, title, desc, icon }, i) => (
-              <div key={n} className={`scard fu d${(i % 3) + 1}`}>
+              { n:'01', title:'Mantención Lógica y Física', desc:'Limpieza interna de polvo, cambio de pasta térmica, diagnóstico de hardware, actualización de drivers y sistema operativo.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg>, href:'/servicios/mantencion-pc' },
+              { n:'02', title:'Respaldo de Información', desc:'Resguardamos tus documentos, fotos y archivos importantes antes de cualquier intervención. Tus datos siempre protegidos.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>, href:'/servicios/respaldo-datos' },
+              { n:'03', title:'Recuperación de Datos', desc:'¿Perdiste archivos importantes? Recuperamos información de discos dañados, formateados o con particiones corruptas.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg>, href:'/servicios/recuperacion-datos' },
+              { n:'04', title:'Instalación de Windows', desc:'Instalación limpia de Windows 10 u 11, con todos los drivers necesarios, antivirus y programas básicos configurados.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>, href:'/servicios/instalacion-windows' },
+              { n:'05', title:'Optimización del Sistema', desc:'Hacemos que tu equipo vuelva a funcionar como nuevo. Eliminamos malware, programas basura y procesos que lo frenan.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>, href:'/servicios/optimizacion-pc' },
+              { n:'06', title:'WiFi y Repetidores', desc:'Configuramos tu red doméstica o de oficina. Routers, access points y repetidores para cobertura WiFi completa en todo el hogar.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg>, href:'/servicios/wifi-redes' },
+              { n:'07', title:'Diseño de Páginas Web', desc:'Creamos tu sitio web profesional: rápido, moderno y optimizado para Google. Ideal para negocios, emprendimientos y profesionales independientes.', icon:<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l3 3-3 3" strokeLinecap="round" strokeLinejoin="round"/><line x1="13" y1="11" x2="17" y2="11"/></svg>, href:'/paginas-web' },
+            ].map(({ n, title, desc, icon, href }, i) => (
+              <a key={n} href={href} target="_blank" rel="noopener noreferrer" className={`scard fu d${(i % 3) + 1}`} style={{ textDecoration: 'none', display: 'block' }}>
                 <div className="card-shine" />
                 <div className="sicon">{icon}</div>
                 <h3>{title}</h3>
                 <p>{desc}</p>
                 <span className="snum">{n}</span>
-              </div>
+              </a>
             ))}
           </div>
         </div>

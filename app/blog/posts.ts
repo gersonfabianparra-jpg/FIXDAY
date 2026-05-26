@@ -296,6 +296,292 @@ export const POSTS: Post[] = [
 <p>Si probaste todo y la señal sigue siendo un problema, un técnico puede hacer una evaluación completa de tu red, identificar puntos ciegos, configurar canales óptimos y recomendar el equipo adecuado para tu espacio. En FIXDAY atendemos instalación y configuración de WiFi a domicilio en toda la Región Metropolitana.</p>
 `,
   },
+  {
+    slug: 'que-hacer-si-pc-no-enciende',
+    title: '¿Qué hacer si tu PC no enciende? Checklist paso a paso',
+    description: 'Tu computador no enciende y no sabes por qué. Sigue esta guía para identificar si el problema es la corriente, la fuente de poder, la RAM o la tarjeta madre.',
+    date: '2026-05-20',
+    readTime: 6,
+    category: 'Hardware',
+    content: `
+<p>Un computador que no enciende puede tener causas muy distintas: desde algo tan simple como un cable desconectado hasta un fallo en la fuente de poder o la tarjeta madre. Esta guía te ayuda a identificar el problema antes de llamar a un técnico.</p>
+
+<h2>Paso 1: Verifica la corriente eléctrica</h2>
+<p>Parece obvio, pero es el origen del problema más frecuente. Antes de asumir que el equipo está dañado:</p>
+<ul>
+<li>Revisa que el enchufe esté bien conectado a la pared y al equipo</li>
+<li>Prueba el tomacorriente con otro aparato</li>
+<li>Si usas extensión o UPS, prueba conectar directamente a la pared</li>
+<li>En laptops, verifica que el cargador esté enchufado y que el LED del cargador encienda</li>
+</ul>
+
+<h2>Paso 2: Observa qué pasa al presionar el botón de encendido</h2>
+<p>La reacción del equipo al presionar el botón de encendido da pistas importantes:</p>
+<ul>
+<li><strong>No pasa absolutamente nada:</strong> problema de corriente, fuente de poder o botón de encendido dañado</li>
+<li><strong>Ventiladores giran pero no hay imagen:</strong> problema de RAM, tarjeta de video o monitor</li>
+<li><strong>Enciende y se apaga solo (en loop):</strong> sobrecalentamiento, RAM defectuosa o problema en tarjeta madre</li>
+<li><strong>Pitidos al encender:</strong> código de error BIOS, generalmente RAM o tarjeta de video</li>
+<li><strong>Enciende pero se queda en pantalla negra:</strong> problema de disco duro o sistema operativo</li>
+</ul>
+
+<h2>Paso 3: Revisa el monitor (para PCs de escritorio)</h2>
+<p>Muchas veces el computador está encendido pero parece que no, porque el problema es el monitor:</p>
+<ul>
+<li>Verifica que el monitor esté enchufado y encendido (busca el LED del monitor)</li>
+<li>Asegúrate de que el cable HDMI o DisplayPort esté bien conectado en ambos extremos</li>
+<li>Si el monitor tiene varios inputs, verifica que esté en el canal correcto</li>
+<li>Prueba con otro cable o con otro monitor si tienes disponible</li>
+</ul>
+
+<h2>Paso 4: Prueba con la RAM</h2>
+<p>La RAM suelta o defectuosa es una causa frecuente de que el PC no encienda. Para PCs de escritorio:</p>
+<ol>
+<li>Apaga y desenchufa el equipo completamente</li>
+<li>Abre la carcasa y retira los módulos de RAM (presiona las pestañas de los lados)</li>
+<li>Límpilos suavemente con una goma de borrar en los contactos dorados</li>
+<li>Vuelve a insertarlos firmemente hasta que hagan clic</li>
+<li>Si tienes dos módulos, prueba con solo uno a la vez para descartar cuál está dañado</li>
+</ol>
+
+<h2>Paso 5: Revisa la fuente de poder</h2>
+<p>La fuente de poder (PSU) es la que convierte la corriente de la pared en energía para los componentes. Si falló, el equipo no enciende. Señales de fuente dañada:</p>
+<ul>
+<li>No hay ninguna reacción al presionar el botón de encendido, ni siquiera un "clic"</li>
+<li>Olor a quemado cerca del equipo</li>
+<li>El LED de la placa madre no enciende cuando el equipo está enchufado</li>
+</ul>
+<p>La fuente de poder no se puede reparar en casa de forma segura. Requiere reemplazo por un técnico.</p>
+
+<h2>Paso 6: El disco duro no es detectado</h2>
+<p>Si el equipo enciende, los ventiladores corren, pero la pantalla muestra "No bootable device" o "Operating System not found", el disco duro no está siendo detectado:</p>
+<ul>
+<li>Verifica que el cable SATA esté bien conectado al disco y a la tarjeta madre</li>
+<li>Si es un SSD M.2, verifica que esté bien asentado en el slot</li>
+<li>Entra al BIOS (F2, Del, F10 según la marca) y verifica si el disco aparece en la lista de dispositivos</li>
+</ul>
+
+<h2>¿Cuándo llamar a un técnico?</h2>
+<p>Si verificaste todos los puntos anteriores y el equipo sigue sin encender, el problema es de hardware (fuente, tarjeta madre, procesador) y requiere diagnóstico presencial. En FIXDAY hacemos diagnóstico completo a domicilio en toda la Región Metropolitana. Con la visita te decimos exactamente qué falló y cuánto cuesta repararlo, sin compromiso.</p>
+`,
+  },
+  {
+    slug: 'diferencia-ssd-hdd',
+    title: 'SSD vs HDD: diferencias, ventajas y cuál conviene para tu PC',
+    description: 'Descubre la diferencia entre disco SSD y HDD, cuál es más rápido, más duradero y más económico, y cuándo vale la pena cambiar de HDD a SSD en tu computador.',
+    date: '2026-05-22',
+    readTime: 5,
+    category: 'Hardware',
+    content: `
+<p>Si alguna vez escuchaste que cambiar el disco duro por un SSD hace que el computador "vuela", no es exageración. Es probablemente la mejora de rendimiento más notable que puedes hacer a un PC sin comprar uno nuevo. Acá te explicamos todo.</p>
+
+<h2>¿Qué es un HDD?</h2>
+<p>Un HDD (Hard Disk Drive) es el disco duro tradicional, mecánico. Funciona con platos magnéticos que giran a alta velocidad y cabezas de lectura que se mueven para acceder a los datos. Es como un tocadiscos en miniatura dentro de tu equipo.</p>
+<p>Velocidades típicas: 80–160 MB/s de lectura. Tiempo de arranque de Windows: 1–3 minutos.</p>
+
+<h2>¿Qué es un SSD?</h2>
+<p>Un SSD (Solid State Drive) no tiene partes móviles. Almacena datos en chips de memoria flash, como los de un pendrive pero mucho más rápido y confiable. Al no tener partes mecánicas, accede a los datos en microsegundos.</p>
+<p>Velocidades típicas: 500–3500 MB/s de lectura. Tiempo de arranque de Windows: 10–20 segundos.</p>
+
+<h2>Comparativa directa</h2>
+<ul>
+<li><strong>Velocidad:</strong> SSD gana por amplio margen. Windows arranca en 15 segundos vs 2 minutos con HDD.</li>
+<li><strong>Durabilidad:</strong> SSD gana. Sin partes móviles, resiste mejor golpes y caídas.</li>
+<li><strong>Silencio:</strong> SSD gana. Los HDD hacen ruido mecánico; los SSD son completamente silenciosos.</li>
+<li><strong>Precio por GB:</strong> HDD gana. Un HDD de 1 TB cuesta $25.000. Un SSD de 1 TB cuesta $60.000–$80.000.</li>
+<li><strong>Vida útil:</strong> Similar en uso normal. Los SSD tienen un límite de escrituras; los HDD se desgastan mecánicamente.</li>
+<li><strong>Recuperación de datos:</strong> HDD gana. Recuperar datos de un HDD dañado es más predecible que de un SSD.</li>
+</ul>
+
+<h2>Tipos de SSD</h2>
+<p><strong>SSD SATA:</strong> tiene el mismo conector que un HDD. Velocidad: ~500 MB/s. Es el reemplazo directo del HDD en equipos más antiguos. Precio: desde $25.000 (240 GB) hasta $55.000 (1 TB).</p>
+<p><strong>SSD NVMe M.2:</strong> conecta directamente a la tarjeta madre. Velocidad: 2000–7000 MB/s. Es 4 a 10 veces más rápido que el SSD SATA. Requiere slot M.2 en la tarjeta madre (la mayoría de los equipos desde 2016 lo tienen).</p>
+
+<h2>¿Vale la pena cambiar de HDD a SSD?</h2>
+<p>Si tu equipo tiene más de 3 años y tiene HDD, la respuesta es casi siempre sí. El cambio es tan notable que muchos usuarios creen que compraron un computador nuevo después del reemplazo.</p>
+<p>Casos donde más conviene:</p>
+<ul>
+<li>PC con Windows que tarda más de 2 minutos en arrancar</li>
+<li>Programas que tardan 30 segundos o más en abrirse</li>
+<li>Guardado de archivos o instalación de programas muy lenta</li>
+<li>HDD que ya empieza a hacer ruidos o mostrar errores</li>
+</ul>
+
+<h2>¿Se copian todos mis datos al cambiar de disco?</h2>
+<p>Sí. El proceso de reemplazo incluye la clonación del disco: todos tus archivos, el sistema operativo, los programas instalados y tu configuración se copian al SSD nuevo. Enciendes el equipo y todo está exactamente como lo dejaste, solo que mucho más rápido.</p>
+<p>En FIXDAY hacemos el reemplazo de HDD a SSD a domicilio en toda la Región Metropolitana, incluida la migración completa de datos.</p>
+`,
+  },
+  {
+    slug: 'como-limpiar-pc-sin-abrirlo',
+    title: 'Cómo limpiar tu PC sin abrirlo (y cuándo sí hay que abrirlo)',
+    description: 'Guía para limpiar el polvo de tu computador desde afuera y optimizar el software, más cuándo es necesaria una limpieza interna profesional.',
+    date: '2026-05-23',
+    readTime: 4,
+    category: 'Mantención',
+    content: `
+<p>Mantener tu PC limpio es clave para que dure más y funcione mejor. Hay cosas que puedes hacer sin abrir el equipo, y otras que requieren intervención interna. Acá te explicamos ambas.</p>
+
+<h2>Lo que puedes hacer sin abrir el equipo</h2>
+
+<h3>1. Limpieza de ventilación externa</h3>
+<p>Con una lata de aire comprimido (se consigue en ferreterías o tiendas de computación), puedes soplar por las rejillas de ventilación del equipo para expulsar el polvo superficial. Hazlo en un lugar bien ventilado o al aire libre para no respirar el polvo.</p>
+<p>En laptops, las ranuras de ventilación suelen estar en la parte inferior o en los laterales. Sopla en ráfagas cortas para no dañar los ventiladores.</p>
+
+<h3>2. Limpieza del teclado</h3>
+<p>Voltea el teclado y sacúdelo suavemente. Luego usa aire comprimido entre las teclas para sacar miguitas y polvo acumulado. Para una limpieza profunda, usa un hisopo con un poco de alcohol isopropílico (70% o superior) para limpiar entre las teclas.</p>
+
+<h3>3. Limpieza de pantalla</h3>
+<p>Usa un paño de microfibra seco o levemente húmedo. Nunca uses limpiadores con amoníaco en pantallas LCD/OLED, ya que dañan el recubrimiento antirreflejo. Los limpiadores específicos para pantallas son los más seguros.</p>
+
+<h3>4. Limpieza de software (archivos temporales)</h3>
+<p>Presiona <code>Win + R</code>, escribe <code>temp</code> y elimina todos los archivos que aparezcan. Repite con <code>%temp%</code> y luego con <code>prefetch</code>. Estos son archivos temporales que Windows acumula y que pueden liberar varios GB de espacio.</p>
+
+<h3>5. Limpieza del registro y programas</h3>
+<p>Desinstala los programas que no uses desde el Panel de Control. Cada programa instalado ocupa espacio y muchos se ejecutan en segundo plano consumiendo memoria.</p>
+
+<h2>Cuándo sí hay que abrir el equipo</h2>
+<p>La limpieza externa ayuda, pero el polvo que realmente causa problemas está dentro, directamente en el disipador del procesador y los ventiladores. Esta limpieza interna requiere herramientas y cuidado:</p>
+<ul>
+<li><strong>PC lento con ventiladores ruidosos:</strong> el disipador está tapado de polvo y el procesador se sobrecalienta</li>
+<li><strong>Equipo con más de 2 años sin mantención:</strong> el polvo se acumula en capas que el aire comprimido externo no llega a limpiar</li>
+<li><strong>Temperatura mayor a 80°C en reposo:</strong> señal clara de que la limpieza interna es urgente</li>
+<li><strong>Pasta térmica seca:</strong> después de 3–4 años la pasta térmica pierde conductividad y necesita reemplazo</li>
+</ul>
+
+<h2>¿Con qué frecuencia mantener el PC?</h2>
+<p>Como referencia general:</p>
+<ul>
+<li>Limpieza de software (archivos temporales, programas): cada 3–6 meses</li>
+<li>Limpieza externa con aire comprimido: cada 6 meses</li>
+<li>Limpieza interna + reemplazo de pasta térmica: cada 12–18 meses</li>
+</ul>
+<p>En FIXDAY realizamos mantención completa (limpieza interna + pasta térmica + optimización de software) a domicilio en toda la Región Metropolitana.</p>
+`,
+  },
+  {
+    slug: 'senales-de-virus-en-computador',
+    title: '10 señales de que tu computador tiene un virus (y qué hacer)',
+    description: 'Aprende a identificar si tu PC tiene malware, adware o un virus. Síntomas claros y pasos para eliminarlo de forma segura.',
+    date: '2026-05-24',
+    readTime: 5,
+    category: 'Mantención',
+    content: `
+<p>Los virus y malware modernos ya no muestran pantallas de calavera como en las películas. Muchos operan en silencio, robando datos o usando tu equipo para minar criptomonedas sin que te des cuenta. Estas son las señales más comunes.</p>
+
+<h2>1. PC extremadamente lento sin razón aparente</h2>
+<p>Si tu equipo se puso lento de repente y el Administrador de Tareas muestra procesos desconocidos usando el 50–100% de CPU o memoria, puede ser malware. Los mineros de criptomonedas son especialmente agresivos con el procesador.</p>
+
+<h2>2. El navegador hace cosas raras</h2>
+<p>Señales claras de adware o secuestrador de navegador:</p>
+<ul>
+<li>Tu página de inicio cambió sola a un buscador desconocido</li>
+<li>Aparecen barras de herramientas que no instalaste</li>
+<li>Se abren pestañas con publicidad solas</li>
+<li>Las búsquedas te redirigen a otro buscador</li>
+</ul>
+
+<h2>3. Programas que se abren solos</h2>
+<p>Si ves programas abrirse solos, ventanas que aparecen y desaparecen, o el cursor moviéndose solo (esto último puede indicar acceso remoto no autorizado), es una señal grave.</p>
+
+<h2>4. Antivirus desactivado o que no puede actualizarse</h2>
+<p>Algunos malware avanzados desactivan el antivirus del sistema para evitar ser detectados. Si Windows Defender está desactivado y no puedes volver a encenderlo, hay un proceso malicioso que lo está bloqueando.</p>
+
+<h2>5. Espacio en disco que desaparece</h2>
+<p>Si el disco se está llenando rápidamente sin que hayas guardado archivos nuevos, puede haber malware generando archivos o un ransomware cifrando tus datos (en ese caso, los archivos se vuelven inaccesibles y aparece una nota de rescate).</p>
+
+<h2>6. Consumo de internet inusualmente alto</h2>
+<p>Si tu internet está lento y el uso de datos es alto sin que estés descargando nada, puede haber un programa enviando información o siendo parte de una botnet (red de equipos infectados controlados remotamente).</p>
+
+<h2>7. Mensajes de error frecuentes</h2>
+<p>Errores del tipo "Windows Script Host", alertas de seguridad falsas que te piden llamar a un número telefónico, o ventanas que te dicen que tu PC está infectado (y que debes descargar su "antivirus") son señales de malware.</p>
+
+<h2>8. El equipo se sobrecalienta en reposo</h2>
+<p>Si el ventilador suena a máxima velocidad incluso cuando no estás usando el equipo, algo está usando el procesador intensivamente en segundo plano. Puede ser un minero de criptomonedas.</p>
+
+<h2>9. Cuentas con acceso no autorizado</h2>
+<p>Si recibes alertas de inicio de sesión desde ubicaciones desconocidas en tu correo, redes sociales o cuentas bancarias, puede haber un keylogger (programa que registra lo que escribes) en tu equipo.</p>
+
+<h2>10. El PC tarda mucho en apagarse</h2>
+<p>Si Windows tarda varios minutos en apagarse con el mensaje "Esperando a que [proceso desconocido] termine", ese proceso puede ser malware que intenta completar alguna operación antes de que el sistema se cierre.</p>
+
+<h2>Qué hacer si detectas estas señales</h2>
+<ol>
+<li><strong>No ingreses contraseñas ni datos bancarios</strong> hasta limpiar el equipo</li>
+<li>Ejecuta Windows Defender en modo completo: Seguridad de Windows → Protección contra virus → Análisis rápido → Opciones de análisis → Análisis completo</li>
+<li>Descarga e instala Malwarebytes Free y haz un análisis completo</li>
+<li>Si el problema persiste, considera una instalación limpia de Windows</li>
+</ol>
+<p>Si no te sientes cómodo haciendo esto o el problema es grave, un técnico puede eliminar el malware completamente y asegurarse de que el sistema quede limpio. En FIXDAY realizamos este servicio de optimización y eliminación de malware a domicilio en toda la Región Metropolitana.</p>
+`,
+  },
+  {
+    slug: 'como-hacer-respaldo-datos-windows',
+    title: 'Cómo hacer un respaldo de datos en Windows (guía completa)',
+    description: 'Aprende a hacer copias de seguridad de tus archivos en Windows con el Historial de archivos, OneDrive y disco externo. Nunca más pierdas tus datos.',
+    date: '2026-05-25',
+    readTime: 6,
+    category: 'Recuperación de datos',
+    content: `
+<p>La única protección real contra la pérdida de datos es el respaldo. Discos que fallan, virus, formateos accidentales, robos — todos estos eventos son inevitables en algún momento. Esta guía te muestra tres formas de proteger tus archivos en Windows.</p>
+
+<h2>Método 1: Historial de archivos de Windows (recomendado para archivos)</h2>
+<p>El Historial de archivos de Windows copia automáticamente tus carpetas personales (Documentos, Imágenes, Música, Videos, Escritorio) a un disco externo cada hora. Si borras un archivo por accidente, puedes recuperar versiones anteriores.</p>
+
+<h3>Cómo configurarlo:</h3>
+<ol>
+<li>Conecta un disco duro externo o pendrive de al menos 32 GB</li>
+<li>Ve a Configuración → Actualización y seguridad → Copia de seguridad</li>
+<li>Haz clic en "Agregar una unidad" y selecciona tu disco externo</li>
+<li>Activa "Hacer automáticamente una copia de seguridad de mis archivos"</li>
+<li>En "Más opciones" puedes configurar la frecuencia (cada 1 hora recomendado) y cuánto tiempo mantener las versiones</li>
+</ol>
+<p>El respaldo ocurre en segundo plano sin interrumpir tu trabajo.</p>
+
+<h2>Método 2: OneDrive (respaldo en la nube)</h2>
+<p>OneDrive es el servicio de almacenamiento en la nube de Microsoft, incluido en Windows 10 y 11. Con 5 GB gratuitos puedes proteger tus documentos más importantes.</p>
+
+<h3>Cómo activarlo:</h3>
+<ol>
+<li>Busca OneDrive en el menú inicio y ábrelo (ya viene instalado)</li>
+<li>Inicia sesión con tu cuenta Microsoft</li>
+<li>Ve a Configuración de OneDrive → Copia de seguridad → Administrar copia de seguridad</li>
+<li>Activa las carpetas Escritorio, Documentos e Imágenes</li>
+</ol>
+<p>Una vez activo, cualquier archivo que guardes en esas carpetas se sube automáticamente a la nube y está disponible desde cualquier dispositivo.</p>
+
+<h2>Método 3: Imagen del sistema completo</h2>
+<p>Una imagen del sistema es una copia exacta de todo tu disco: sistema operativo, programas y archivos. Si el disco falla completamente o necesitas recuperar todo desde cero, restauras la imagen y el equipo vuelve exactamente al estado en que estaba.</p>
+
+<h3>Cómo crear una imagen en Windows:</h3>
+<ol>
+<li>Ve a Panel de Control → Sistema y seguridad → Copia de seguridad y restauración (Windows 7)</li>
+<li>Selecciona "Crear imagen del sistema"</li>
+<li>Elige el disco externo de destino (necesitas al menos tanto espacio como ocupa tu disco C:)</li>
+<li>Selecciona las unidades a incluir y haz clic en "Iniciar copia de seguridad"</li>
+</ol>
+<p>El proceso puede tardar 30 minutos a 2 horas dependiendo del tamaño del disco.</p>
+
+<h2>Regla del 3-2-1 para respaldos</h2>
+<p>Los profesionales de TI usan la regla 3-2-1 para proteger datos importantes:</p>
+<ul>
+<li><strong>3</strong> copias de los datos (el original + 2 respaldos)</li>
+<li><strong>2</strong> tipos de almacenamiento diferentes (ej: disco externo + nube)</li>
+<li><strong>1</strong> copia fuera del sitio (nube o disco en otro lugar)</li>
+</ul>
+<p>Para uso doméstico, tener el archivo original + una copia en disco externo + sincronización con OneDrive es suficiente para estar bien protegido.</p>
+
+<h2>Con qué frecuencia hacer respaldo</h2>
+<ul>
+<li><strong>Documentos de trabajo:</strong> respaldo automático diario mínimo (OneDrive lo hace en tiempo real)</li>
+<li><strong>Fotos y videos:</strong> respaldo manual mensual a disco externo</li>
+<li><strong>Imagen del sistema:</strong> cada vez que hagas cambios importantes (instalación de programas, actualizaciones mayores)</li>
+</ul>
+
+<h2>¿Y si ya perdí los datos y no tenía respaldo?</h2>
+<p>Si ya ocurrió la pérdida (formateo accidental, disco dañado, archivos borrados), deja de usar el disco inmediatamente y contacta a un técnico. Cada archivo nuevo que guardes puede sobreescribir los datos que quieres recuperar. En FIXDAY realizamos recuperación de datos a domicilio en toda la Región Metropolitana, con diagnóstico previo sin costo.</p>
+`,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {
