@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/zonas`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/paginas-web`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/resenas`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/oferta`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     ...servicePages,
     ...comunaPages,
