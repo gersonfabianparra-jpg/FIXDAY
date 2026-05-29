@@ -622,6 +622,71 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── QUIEN SOY ── */}
+      <section id="quien-soy" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+        <div className="container">
+          <div style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 52, alignItems: 'center' }}>
+
+            {/* Avatar */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, flexShrink: 0 }}>
+              <div style={{ position: 'relative' }}>
+                <div style={{ width: 140, height: 140, borderRadius: '50%', background: 'linear-gradient(135deg,#0071E3,#BF5AF2)', padding: 3 }}>
+                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#0D0D0D', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ fontSize: 52, fontWeight: 900, background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', letterSpacing: '-.03em' }}>G</span>
+                  </div>
+                </div>
+                {/* Badge verificado */}
+                <div style={{ position: 'absolute', bottom: 4, right: 4, width: 32, height: 32, borderRadius: '50%', background: '#30D158', border: '3px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+
+              {/* Credenciales */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 980, padding: '4px 12px', fontSize: 11, fontWeight: 700, color: '#2997FF' }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Técnico IPP
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,159,10,.1)', border: '1px solid rgba(255,159,10,.2)', borderRadius: 980, padding: '4px 12px', fontSize: 11, fontWeight: 700, color: '#FF9F0A' }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FF9F0A" strokeWidth="2.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  Cert. CISCO HW & SW
+                </div>
+              </div>
+            </div>
+
+            {/* Texto */}
+            <div>
+              <span className="chip-l" style={{ display: 'inline-block', marginBottom: 16 }}>El técnico detrás de FIXDAY</span>
+              <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 900, lineHeight: 1.15, letterSpacing: '-.03em', marginBottom: 20, color: '#F5F5F7' }}>
+                Hola, soy <span className="gl">Gerson</span>
+              </h2>
+              <p style={{ fontSize: '0.97rem', color: '#86868B', lineHeight: 1.85, marginBottom: 20 }}>
+                Llevo más de <strong style={{ color: '#F5F5F7' }}>10 años trabajando en informática</strong> — y hace un mes di el paso de crear FIXDAY para llevar ese conocimiento directamente a tu casa. Todo empezó gracias a mi hermano, quien me inspiró a estudiar tecnología. Desde entonces no paré: me certifiqué como Técnico Informático en el IPP y obtuve certificación en Hardware y Software en la academia CISCO.
+              </p>
+              <p style={{ fontSize: '0.97rem', color: '#86868B', lineHeight: 1.85, marginBottom: 28 }}>
+                Lo que más me gusta de este trabajo no es solo reparar el equipo — es ver la cara de la persona cuando vuelve a funcionar. <strong style={{ color: '#F5F5F7' }}>Mientras trabajo, te explico cada paso</strong>: no solo lo arreglo, te enseño para que la próxima vez sepas qué pasó y cómo cuidar tu equipo.
+              </p>
+
+              {/* Pills de diferenciadores */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {[
+                  { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>, label: 'Puntual siempre' },
+                  { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>, label: 'Te explico todo' },
+                  { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>, label: 'Sin letra chica' },
+                  { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, label: 'A domicilio' },
+                  { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>, label: '+10 años de experiencia' },
+                ].map(({ icon, label }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,.05)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 980, padding: '6px 14px', fontSize: 12, fontWeight: 600, color: '#AEAEB2' }}>
+                    {icon} {label}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── PROCESS ── */}
       <section id="process">
         <div className="container">
