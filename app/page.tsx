@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Bix from './components/Bix'
 import DaisySecret from './components/DaisySecret'
 import StatsCounter from './components/StatsCounter'
+import { COMUNAS } from './zonas/comunas'
 
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, necesito ayuda con mi computador 💻')}`
@@ -410,6 +411,13 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
+              {/* Oferta badge */}
+              <a href="/oferta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,59,48,.08)', border: '1px solid rgba(255,59,48,.25)', borderRadius: 980, padding: '7px 16px', fontSize: 12, fontWeight: 700, color: '#FF453A', textDecoration: 'none', marginBottom: 28, letterSpacing: '.02em' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#FF453A', animation: 'pulse 1.5s ease-in-out infinite', flexShrink: 0 }} />
+                Oferta lanzamiento — Visita + diagnóstico solo $10.000
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF453A" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+
               <div className="hstats" id="hstats">
                 <div className="stat-item">
                   <div className="stat-n">+{stats.equipos}</div>
@@ -625,7 +633,7 @@ export default function Home() {
       {/* ── QUIEN SOY ── */}
       <section id="quien-soy" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
         <div className="container">
-          <div style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 52, alignItems: 'center' }}>
+          <div className="qs-grid" style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 52, alignItems: 'center' }}>
 
             {/* Avatar */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, flexShrink: 0 }}>
@@ -714,6 +722,36 @@ export default function Home() {
                 <p>{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── COBERTURA ── */}
+      <section style={{ padding: '72px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+        <div className="container">
+          <div className="sh fu" style={{ marginBottom: 40 }}>
+            <span className="chip-l">Dónde atendemos</span>
+            <h2>38 comunas en la<br /><span className="gl">Región Metropolitana</span></h2>
+            <p>Llevamos el servicio técnico directamente a tu puerta, sin que tengas que trasladar tu equipo.</p>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', maxWidth: 860, margin: '0 auto 32px' }}>
+            {COMUNAS.map(c => (
+              <a
+                key={c.slug}
+                href={`/zonas/${c.slug}`}
+                style={{ background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 980, padding: '6px 14px', fontSize: 12, fontWeight: 600, color: '#AEAEB2', textDecoration: 'none', transition: 'all .2s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(41,151,255,.1)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(41,151,255,.3)'; (e.currentTarget as HTMLElement).style.color = '#2997FF' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,.04)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,.08)'; (e.currentTarget as HTMLElement).style.color = '#AEAEB2' }}
+              >
+                {c.name}
+              </a>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <a href="/zonas" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 980, padding: '10px 22px', fontSize: 13, fontWeight: 700, color: '#2997FF', textDecoration: 'none' }}>
+              Ver mapa interactivo de cobertura
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
       </section>
