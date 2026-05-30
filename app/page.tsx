@@ -59,6 +59,7 @@ export default function Home() {
   const [reviewIdx, setReviewIdx] = useState(0)
   const [reportCount] = useState(100)
   const [faqOpen, setFaqOpen] = useState<number | null>(null)
+  const [carouselMs, setCarouselMs] = useState(6000)
   const equiposTarget = useRef(100)
 
   // Particles + shooting stars + mouse attraction
@@ -245,28 +246,28 @@ export default function Home() {
     })
   }, [])
 
-  // Approved reviews + real report count
+  // Approved reviews + carousel speed + real report count
   useEffect(() => {
     fetch('/api/reviews')
       .then(r => r.json())
       .then(d => setReviews(d.reviews ?? []))
       .catch(() => {})
+    fetch('/api/settings?key=review_carousel_seconds')
+      .then(r => r.json())
+      .then(d => { const s = parseInt(d.value, 10); if (s >= 2) setCarouselMs(s * 1000) })
+      .catch(() => {})
     fetch('/api/stats')
       .then(r => r.json())
-      .then(d => {
-        if (d.count > 0) {
-          void d.count // contador fijo en 100
-        }
-      })
+      .then(d => { if (d.count > 0) void d.count })
       .catch(() => {})
   }, [])
 
   // Auto-avance de reseñas
   useEffect(() => {
     if (reviews.length < 2) return
-    const id = setInterval(() => setReviewIdx(i => (i + 1) % reviews.length), 4500)
+    const id = setInterval(() => setReviewIdx(i => (i + 1) % reviews.length), carouselMs)
     return () => clearInterval(id)
-  }, [reviews.length])
+  }, [reviews.length, carouselMs])
 
   // Stats counter
   useEffect(() => {

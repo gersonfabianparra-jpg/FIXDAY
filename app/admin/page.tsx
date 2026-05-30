@@ -41,6 +41,9 @@ export default function AdminPage() {
   const [filter, setFilter] = useState('Todos')
   const [mascotOn, setMascotOn] = useState(true)
   const [mascotSaving, setMascotSaving] = useState(false)
+  const [carouselSecs, setCarouselSecs] = useState('6')
+  const [reviewLimit, setReviewLimit] = useState('6')
+  const [reviewSettingSaving, setReviewSettingSaving] = useState(false)
 
   const handleLogout = useCallback(async () => {
     await fetch('/api/admin/auth', { method: 'DELETE' })
@@ -70,7 +73,24 @@ export default function AdminPage() {
       .then(r => r.json())
       .then(d => setMascotOn(d.value !== 'false'))
       .catch(() => {})
+    fetch('/api/admin/settings?key=review_carousel_seconds')
+      .then(r => r.json())
+      .then(d => { if (d.value) setCarouselSecs(d.value) })
+      .catch(() => {})
+    fetch('/api/admin/settings?key=review_public_limit')
+      .then(r => r.json())
+      .then(d => { if (d.value) setReviewLimit(d.value) })
+      .catch(() => {})
   }, [])
+
+  const saveReviewSettings = async () => {
+    setReviewSettingSaving(true)
+    await Promise.all([
+      fetch('/api/admin/settings', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: 'review_carousel_seconds', value: carouselSecs }) }),
+      fetch('/api/admin/settings', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: 'review_public_limit', value: reviewLimit }) }),
+    ]).catch(() => {})
+    setReviewSettingSaving(false)
+  }
 
   const toggleMascot = async () => {
     const next = !mascotOn
@@ -142,6 +162,44 @@ export default function AdminPage() {
             }}
           >
             {mascotSaving ? 'Guardando…' : mascotOn ? 'Activa' : 'Inactiva'}
+          </button>
+        </div>
+
+        {/* Reseñas config */}
+        <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,.08)', borderRadius: 16, padding: '20px 24px', marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,159,10,.1)', border: '1px solid rgba(255,159,10,.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>⭐</div>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 2 }}>Configuración de Reseñas</div>
+              <div style={{ fontSize: 12, color: '#636366' }}>Velocidad del carrusel y cantidad de reseñas visibles en el sitio</div>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+            <div>
+              <label style={{ fontSize: 12, color: '#636366', display: 'block', marginBottom: 6, fontWeight: 600 }}>Segundos entre slides</label>
+              <input
+                type="number" min="2" max="30" value={carouselSecs}
+                onChange={e => setCarouselSecs(e.target.value)}
+                style={{ width: '100%', background: '#0A0A0A', border: '1px solid rgba(255,255,255,.12)', borderRadius: 8, padding: '8px 12px', color: '#F5F5F7', fontSize: 14, outline: 'none', boxSizing: 'border-box' }}
+              />
+              <div style={{ fontSize: 11, color: '#3A3A3C', marginTop: 4 }}>Recomendado: 6–10 segundos</div>
+            </div>
+            <div>
+              <label style={{ fontSize: 12, color: '#636366', display: 'block', marginBottom: 6, fontWeight: 600 }}>Reseñas públicas máximas</label>
+              <input
+                type="number" min="1" max="20" value={reviewLimit}
+                onChange={e => setReviewLimit(e.target.value)}
+                style={{ width: '100%', background: '#0A0A0A', border: '1px solid rgba(255,255,255,.12)', borderRadius: 8, padding: '8px 12px', color: '#F5F5F7', fontSize: 14, outline: 'none', boxSizing: 'border-box' }}
+              />
+              <div style={{ fontSize: 11, color: '#3A3A3C', marginTop: 4 }}>Cuántas se muestran en la home</div>
+            </div>
+          </div>
+          <button
+            onClick={saveReviewSettings}
+            disabled={reviewSettingSaving}
+            style={{ background: '#FF9F0A', border: 'none', borderRadius: 980, padding: '8px 20px', color: '#000', fontSize: 13, fontWeight: 700, cursor: reviewSettingSaving ? 'not-allowed' : 'pointer', opacity: reviewSettingSaving ? 0.6 : 1 }}
+          >
+            {reviewSettingSaving ? 'Guardando…' : 'Guardar configuración'}
           </button>
         </div>
 
