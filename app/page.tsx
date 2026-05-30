@@ -630,10 +630,14 @@ export default function Home() {
             {/* Avatar */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, flexShrink: 0 }}>
               <div style={{ position: 'relative' }}>
-                <div style={{ width: 140, height: 140, borderRadius: '50%', background: 'linear-gradient(135deg,#0071E3,#BF5AF2)', padding: 3 }}>
-                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#0D0D0D', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontSize: 52, fontWeight: 900, background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', letterSpacing: '-.03em' }}>G</span>
-                  </div>
+                <div style={{ width: 148, height: 148, borderRadius: '50%', background: 'linear-gradient(135deg,#0071E3,#BF5AF2)', padding: 3 }}>
+                  <img
+                    src="/gerson.jpg"
+                    alt="Gerson — Técnico FIXDAY"
+                    width={142}
+                    height={142}
+                    style={{ width: 142, height: 142, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
+                  />
                 </div>
                 {/* Badge verificado */}
                 <div style={{ position: 'absolute', bottom: 4, right: 4, width: 32, height: 32, borderRadius: '50%', background: '#30D158', border: '3px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
