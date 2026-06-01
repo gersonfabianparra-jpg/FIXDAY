@@ -412,14 +412,7 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
-              {/* Oferta badge */}
-              <a href="/oferta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,59,48,.08)', border: '1px solid rgba(255,59,48,.25)', borderRadius: 980, padding: '7px 16px', fontSize: 12, fontWeight: 700, color: '#FF453A', textDecoration: 'none', marginBottom: 28, letterSpacing: '.02em' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#FF453A', animation: 'pulse 1.5s ease-in-out infinite', flexShrink: 0 }} />
-                Oferta lanzamiento — Visita + diagnóstico solo $10.000
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF453A" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-
-              <div className="hstats" id="hstats">
+<div className="hstats" id="hstats">
                 <div className="stat-item">
                   <div className="stat-n">+{stats.equipos}</div>
                   <div className="stat-l">Equipos reparados</div>
