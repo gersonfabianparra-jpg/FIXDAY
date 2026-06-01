@@ -111,8 +111,8 @@ export const SERVICES: ServicePage[] = [
     slug: 'respaldo-datos',
     title: 'Respaldo de Información a Domicilio en Santiago',
     shortTitle: 'Respaldo de Información',
-    description: 'Protegemos tus documentos, fotos y archivos importantes antes de cualquier intervención. Servicio de respaldo profesional a domicilio en Santiago. Desde $15.000.',
-    price: '$15.000',
+    description: 'Protegemos tus documentos, fotos y archivos importantes antes de cualquier intervención. Servicio de respaldo profesional a domicilio en Santiago. Desde $25.000.',
+    price: '$25.000',
     priceNote: 'Incluye respaldo completo a disco externo o nube. Necesitas proveer el disco externo de destino.',
     includes: [
       'Respaldo completo de documentos, fotos, música y videos',
