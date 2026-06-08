@@ -54,6 +54,36 @@ const TIPOS = [
   { emoji: '🏗️', tipo: 'Construcción y remodelación', ej: 'Proyectos realizados, presupuestos, contacto' },
 ]
 
+const CLIENTES = [
+  {
+    name: 'Stockeo',
+    url: 'https://stockeo.cl',
+    category: 'Software de gestión',
+    desc: 'Sistema para negocios y talleres: inventario, boletas con IVA, cotizaciones en PDF, órdenes de trabajo y reportes para el SII. Todo desde el celular.',
+    screenshot: '/screenshots/stockeo.png',
+    color: '#D4A017',
+    border: 'rgba(212,160,23,.25)',
+  },
+  {
+    name: 'PostMockup',
+    url: 'https://www.postmockup.com',
+    category: 'Herramienta web',
+    desc: 'Crea mockups de comentarios de redes sociales (TikTok, Instagram, WhatsApp y más) de forma rápida y gratis.',
+    screenshot: '/screenshots/postmockup.png',
+    color: '#30D158',
+    border: 'rgba(48,209,88,.2)',
+  },
+  {
+    name: 'Cleans Chile',
+    url: 'https://cleanschile.cl',
+    category: 'Detailing automotriz',
+    desc: 'Detailing premium a domicilio en Santiago. Nanotecnología y precisión para transformar tu vehículo.',
+    screenshot: '/screenshots/cleanschile.png',
+    color: '#2997FF',
+    border: 'rgba(41,151,255,.2)',
+  },
+]
+
 const PASOS = [
   {
     n: '01',
@@ -230,8 +260,52 @@ export default function PaginasWebPage() {
         </div>
       </section>
 
-      {/* Precios */}
+      {/* Proyectos realizados */}
       <section style={{ padding: '80px 0', background: '#050505' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <span style={{ display: 'inline-block', background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 980, padding: '6px 16px', fontSize: 11, fontWeight: 600, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 16 }}>Portafolio</span>
+            <h2 style={{ fontSize: 'clamp(1.6rem,4vw,2.6rem)', fontWeight: 800, letterSpacing: '-.03em', lineHeight: 1.1, color: '#F5F5F7', margin: '0 0 14px' }}>
+              Proyectos realizados
+            </h2>
+            <p style={{ color: '#636366', fontSize: '0.95rem', margin: 0 }}>Negocios chilenos que ya tienen su presencia digital con FIXDAY.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, maxWidth: 780, margin: '0 auto' }}>
+            {CLIENTES.map(({ name, url, category, desc, screenshot, color, border }) => (
+              <a key={name} href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+                <div style={{ background: '#0D0D0D', border: `1px solid ${border}`, borderRadius: 20, overflow: 'hidden' }}>
+                  {/* Browser chrome */}
+                  <div style={{ background: '#1A1A1A', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57', flexShrink: 0 }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBC2E', flexShrink: 0 }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840', flexShrink: 0 }} />
+                    <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{url.replace('https://', '')}</div>
+                  </div>
+                  {/* Screenshot */}
+                  <div style={{ height: 190, overflow: 'hidden' }}>
+                    <img src={screenshot} alt={`${name} - captura de pantalla`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                  </div>
+                  {/* Info */}
+                  <div style={{ padding: '18px 20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontWeight: 800, fontSize: '1rem', color: '#F5F5F7' }}>{name}</span>
+                      <span style={{ background: `${color}18`, border: `1px solid ${border}`, borderRadius: 980, padding: '3px 10px', fontSize: 10, fontWeight: 700, color, letterSpacing: '.07em', textTransform: 'uppercase' }}>{category}</span>
+                    </div>
+                    <p style={{ fontSize: '0.82rem', color: '#636366', lineHeight: 1.65, margin: '0 0 14px' }}>{desc}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.8rem', color, fontWeight: 600 }}>
+                      Ver sitio
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Precios */}
+      <section style={{ padding: '80px 0', background: '#000' }}>
         <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <span style={{ display: 'inline-block', background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 980, padding: '6px 16px', fontSize: 11, fontWeight: 600, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 16 }}>Tarifas</span>

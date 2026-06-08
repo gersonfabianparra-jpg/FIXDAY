@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { getSupabase } from '@/lib/supabase'
 import { rateLimit, getIP } from '@/lib/rateLimit'
+import { sendLeadEvent } from '@/lib/meta-capi'
 
 interface ContactPayload {
   name: string
@@ -86,6 +87,17 @@ export async function POST(req: NextRequest) {
       `,
     }).catch(err => console.error('Resend error:', err))
   }
+
+  // Fire Meta CAPI Lead event server-side (maximizes EMQ for post-iOS tracking)
+  sendLeadEvent({
+    name,
+    phone,
+    email,
+    service,
+    sourceUrl: req.headers.get('referer') ?? 'https://fixday.cl',
+    clientIp: getIP(req),
+    clientUserAgent: req.headers.get('user-agent') ?? undefined,
+  }).catch(() => {})
 
   return NextResponse.json({ success: true })
 }

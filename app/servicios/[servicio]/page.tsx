@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Logo from '@/app/components/Logo'
+import MetaPixelEvent from '@/app/components/MetaPixelEvent'
 import { SERVICES, getServiceBySlug } from '../services'
 import { getPostBySlug } from '@/app/blog/posts'
 
@@ -38,6 +39,7 @@ export default function ServicioPage({ params }: { params: { servicio: string } 
 
   return (
     <div style={{ minHeight: '100vh', background: '#000', color: '#F5F5F7', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}>
+      <MetaPixelEvent event="ViewContent" params={{ content_name: s.shortTitle, content_category: 'Servicio técnico', currency: 'CLP', value: parseInt(s.price.replace(/\D/g, ''), 10) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

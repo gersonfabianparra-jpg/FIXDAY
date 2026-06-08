@@ -693,6 +693,124 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── PORTAFOLIO WEB ── */}
+      <section style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 52 }}>
+            <span style={{ display: 'inline-block', background: 'rgba(191,90,242,.08)', border: '1px solid rgba(191,90,242,.22)', borderRadius: 980, padding: '6px 18px', fontSize: 11, fontWeight: 700, color: '#BF5AF2', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 18 }}>Diseño web</span>
+            <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.2rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-.03em', color: '#F5F5F7', margin: '0 0 14px' }}>
+              Páginas web que<br />hemos creado
+            </h2>
+            <p style={{ color: '#636366', fontSize: '0.9rem', margin: 0 }}>Negocios chilenos con presencia profesional en internet, diseñadas desde cero.</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, maxWidth: 860, margin: '0 auto' }}>
+
+            {/* Stockeo */}
+            <a href="https://stockeo.cl" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ background: '#0D0D0D', border: '1px solid rgba(212,160,23,.2)', borderRadius: 20, overflow: 'hidden', transition: 'border-color .2s' }}>
+                {/* Browser chrome */}
+                <div style={{ background: '#1A1A1A', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBC2E', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840', flexShrink: 0 }} />
+                  <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>stockeo.cl</div>
+                </div>
+                {/* Screenshot */}
+                <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
+                  <img
+                    src="/screenshots/stockeo.png"
+                    alt="Stockeo - Sistema de gestión para negocios"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                    loading="lazy"
+                  />
+                </div>
+                {/* Info */}
+                <div style={{ padding: '20px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontWeight: 800, fontSize: '1rem', color: '#F5F5F7' }}>Stockeo</span>
+                    <span style={{ background: 'rgba(212,160,23,.1)', border: '1px solid rgba(212,160,23,.25)', borderRadius: 980, padding: '3px 10px', fontSize: 10, fontWeight: 700, color: '#D4A017', letterSpacing: '.07em', textTransform: 'uppercase' }}>Software</span>
+                  </div>
+                  <p style={{ fontSize: '0.82rem', color: '#636366', lineHeight: 1.65, margin: '0 0 14px' }}>Gestión para negocios y talleres: inventario, boletas, cotizaciones y reportes para el SII desde el celular.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.8rem', color: '#D4A017', fontWeight: 600 }}>
+                    Ver sitio
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D4A017" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* PostMockup */}
+            <a href="https://www.postmockup.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ background: '#0D0D0D', border: '1px solid rgba(48,209,88,.2)', borderRadius: 20, overflow: 'hidden' }}>
+                <div style={{ background: '#1A1A1A', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBC2E', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840', flexShrink: 0 }} />
+                  <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>postmockup.com</div>
+                </div>
+                <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
+                  <img src="/screenshots/postmockup.png" alt="PostMockup - Generador de comentarios falsos" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                </div>
+                <div style={{ padding: '20px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontWeight: 800, fontSize: '1rem', color: '#F5F5F7' }}>PostMockup</span>
+                    <span style={{ background: 'rgba(48,209,88,.1)', border: '1px solid rgba(48,209,88,.25)', borderRadius: 980, padding: '3px 10px', fontSize: 10, fontWeight: 700, color: '#30D158', letterSpacing: '.07em', textTransform: 'uppercase' }}>Herramienta web</span>
+                  </div>
+                  <p style={{ fontSize: '0.82rem', color: '#636366', lineHeight: 1.65, margin: '0 0 14px' }}>Crea mockups de comentarios de redes sociales (TikTok, Instagram, WhatsApp y más) de forma rápida y gratis.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.8rem', color: '#30D158', fontWeight: 600 }}>
+                    Ver sitio
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* Cleans Chile */}
+            <a href="https://cleanschile.cl" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ background: '#0D0D0D', border: '1px solid rgba(41,151,255,.2)', borderRadius: 20, overflow: 'hidden' }}>
+                {/* Browser chrome */}
+                <div style={{ background: '#1A1A1A', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBC2E', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840', flexShrink: 0 }} />
+                  <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>cleanschile.cl</div>
+                </div>
+                {/* Screenshot */}
+                <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
+                  <img
+                    src="/screenshots/cleanschile.png"
+                    alt="Cleans Chile - Detailing automotriz premium"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                    loading="lazy"
+                  />
+                </div>
+                {/* Info */}
+                <div style={{ padding: '20px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontWeight: 800, fontSize: '1rem', color: '#F5F5F7' }}>Cleans Chile</span>
+                    <span style={{ background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.25)', borderRadius: 980, padding: '3px 10px', fontSize: 10, fontWeight: 700, color: '#2997FF', letterSpacing: '.07em', textTransform: 'uppercase' }}>Detailing</span>
+                  </div>
+                  <p style={{ fontSize: '0.82rem', color: '#636366', lineHeight: 1.65, margin: '0 0 14px' }}>Detailing automotriz premium en Santiago. Nanotecnología y precisión para transformar tu vehículo.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.8rem', color: '#2997FF', fontWeight: 600 }}>
+                    Ver sitio
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+          </div>
+
+          {/* CTA hacia página web */}
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <a href="/paginas-web" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.05)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '11px 24px', fontSize: 13, fontWeight: 600, color: '#86868B', textDecoration: 'none' }}>
+              ¿Quieres tu página web? Ver planes y precios →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── PROCESS ── */}
       <section id="process">
         <div className="container">
