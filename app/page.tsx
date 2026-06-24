@@ -800,6 +800,32 @@ export default function Home() {
               </div>
             </a>
 
+            {/* Aceros Cumbres */}
+            <a href="https://aceroscumbres.cl" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ background: '#0D0D0D', border: '1px solid rgba(255,107,53,.2)', borderRadius: 20, overflow: 'hidden' }}>
+                <div style={{ background: '#1A1A1A', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBC2E', flexShrink: 0 }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840', flexShrink: 0 }} />
+                  <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>aceroscumbres.cl</div>
+                </div>
+                <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
+                  <img src="/screenshots/aceroscumbres.png" alt="Aceros Cumbres - Paneles y materiales de acero" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                </div>
+                <div style={{ padding: '20px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontWeight: 800, fontSize: '1rem', color: '#F5F5F7' }}>Aceros Cumbres</span>
+                    <span style={{ background: 'rgba(255,107,53,.1)', border: '1px solid rgba(255,107,53,.25)', borderRadius: 980, padding: '3px 10px', fontSize: 10, fontWeight: 700, color: '#FF6B35', letterSpacing: '.07em', textTransform: 'uppercase' }}>Tienda online</span>
+                  </div>
+                  <p style={{ fontSize: '0.82rem', color: '#636366', lineHeight: 1.65, margin: '0 0 14px' }}>Venta de paneles aislados, perfiles y materiales de acero a medida para proyectos de construcción. Cotización directa por WhatsApp.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.8rem', color: '#FF6B35', fontWeight: 600 }}>
+                    Ver sitio
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+
             {/* IT Parra */}
             <a href="https://itparra.online/es/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
               <div style={{ background: '#0D0D0D', border: '1px solid rgba(0,210,180,.2)', borderRadius: 20, overflow: 'hidden' }}>

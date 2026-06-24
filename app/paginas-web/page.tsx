@@ -91,6 +91,15 @@ const CLIENTES = [
     color: '#00D2B4',
     border: 'rgba(0,210,180,.2)',
   },
+  {
+    name: 'Aceros Cumbres',
+    url: 'https://aceroscumbres.cl',
+    category: 'Tienda online',
+    desc: 'Venta de paneles aislados, perfiles y materiales de acero a medida para proyectos de construcción. Cotización directa por WhatsApp.',
+    screenshot: '/screenshots/aceroscumbres.png',
+    color: '#FF6B35',
+    border: 'rgba(255,107,53,.2)',
+  },
 ]
 
 const PASOS = [
