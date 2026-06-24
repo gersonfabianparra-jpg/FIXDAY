@@ -82,6 +82,15 @@ const CLIENTES = [
     color: '#2997FF',
     border: 'rgba(41,151,255,.2)',
   },
+  {
+    name: 'IT Parra',
+    url: 'https://itparra.online/es/',
+    category: 'CV / Portafolio',
+    desc: 'Portafolio profesional de ingeniero en telecomunicaciones e infraestructura IT con más de 15 años de experiencia en Europa y Latinoamérica.',
+    screenshot: '/screenshots/itparra.png',
+    color: '#00D2B4',
+    border: 'rgba(0,210,180,.2)',
+  },
 ]
 
 const PASOS = [
