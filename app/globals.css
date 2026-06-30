@@ -274,28 +274,39 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(20px); -webkit-backdr
 
 /* Title line reveal */
 .hero-title {
-  font-size:clamp(2.4rem,6.5vw,5.8rem); font-weight:900;
-  line-height:1.02; letter-spacing:-0.045em; margin-bottom:28px;
+  font-size:clamp(3.2rem,8vw,7rem); font-weight:900;
+  line-height:1.0; letter-spacing:-0.05em; margin-bottom:16px;
 }
 .line-wrap { display:block; overflow:hidden; }
 .line-inner {
   display:block; color:#F5F5F7;
   animation: lineUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.li1 { animation-delay: 0.1s; }
-.li2 { animation-delay: 0.3s; }
-.li3 { animation-delay: 0.52s; }
+.li1 { animation-delay: 0.15s; }
+.li2 { animation-delay: 0.38s; }
+.li3 { animation-delay: 0.58s; }
+
+/* Tech stack tags below title */
+.hero-stack {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  animation: tagIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.72s both;
+}
+.hs-tag {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 6px;
+  padding: 4px 14px 5px;
+  color: rgba(255,255,255,.45);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 /* ── Hero title enhanced components ── */
-.ht-pre {
-  font-size: 0.38em;
-  font-weight: 600;
-  color: #48484A;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 2px;
-}
 .ht-mega {
   background: linear-gradient(90deg, #2997FF 0%, #5E5CE6 28%, #BF5AF2 55%, #FF6B35 78%, #2997FF 100%);
   background-size: 300% 100%;
@@ -306,7 +317,7 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(20px); -webkit-backdr
   display: inline-block;
 }
 .ht-outline {
-  -webkit-text-stroke: 2px rgba(255,255,255,.28);
+  -webkit-text-stroke: 3px rgba(255,255,255,.35);
   color: transparent;
   letter-spacing: -0.055em;
 }
@@ -346,7 +357,7 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(20px); -webkit-backdr
 /* Sub + buttons */
 .hero-sub {
   font-size:1.13rem; color:var(--ml); max-width:500px; line-height:1.8;
-  margin-bottom:44px; animation:fadeInUp .8s ease both; animation-delay:.72s;
+  margin-bottom:44px; animation:fadeInUp .8s ease both; animation-delay:.92s;
 }
 .hbtns {
   display:flex; gap:14px; flex-wrap:wrap; margin-bottom:64px;
