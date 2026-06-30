@@ -389,9 +389,23 @@ export default function Home() {
                 Diseño web profesional para negocios chilenos
               </div>
               <h1 className="hero-title">
-                <span className="line-wrap"><span className="line-inner li1">Tu página web,</span></span>
-                <span className="line-wrap"><span className="line-inner li2 gd">lista para crecer.</span></span>
-                <span className="line-wrap"><span className="line-inner li3">Sin complicaciones.</span></span>
+                <span className="line-wrap">
+                  <span className="line-inner li1">
+                    <span className="ht-pre">diseño web · wordpress · tiendas online</span>
+                  </span>
+                </span>
+                <span className="line-wrap">
+                  <span className="line-inner li2">
+                    <span className="ht-mega">Páginas web</span>
+                  </span>
+                </span>
+                <span className="line-wrap">
+                  <span className="line-inner li3">
+                    que <span className="ht-word">venden</span>{' '}
+                    <span className="ht-outline">solas.</span>
+                    <span className="ht-tag">WordPress · Next.js</span>
+                  </span>
+                </span>
               </h1>
               <p className="hero-sub">
                 Creamos tu sitio desde cero o reorganizamos tu WordPress desordenado. Diseño moderno, entrega en 5–7 días y soporte incluido.
