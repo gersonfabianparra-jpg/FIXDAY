@@ -7,7 +7,7 @@ import StatsCounter from './components/StatsCounter'
 import { COMUNAS } from './zonas/comunas'
 
 const WA_NUMBER = '56936649332'
-const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, necesito ayuda con mi computador 💻')}`
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, me interesa crear o mejorar mi página web 🌐')}`
 
 function LogoSVG({ id }: { id: string }) {
   return (
@@ -328,13 +328,12 @@ export default function Home() {
       {/* Mobile nav */}
       <div className={`mnav ${mnavOpen ? 'open' : ''}`}>
         <button className="mclose" onClick={() => setMnavOpen(false)}>&times;</button>
+        <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
         <a href="#services" onClick={() => setMnavOpen(false)}>Servicios</a>
         <a href="#precios" onClick={() => setMnavOpen(false)}>Precios</a>
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
-        <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
-        <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
         <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
-        <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Agendar visita</a>
+        <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Cotizar proyecto</a>
       </div>
 
       {/* NAV */}
@@ -346,7 +345,7 @@ export default function Home() {
                 <LogoSVG id="lg-nav" />
                 <div>
                   <div className="logo-name">FIXDAY</div>
-                  <div className="logo-tag">Técnico a Domicilio</div>
+                  <div className="logo-tag">Diseño Web</div>
                 </div>
               </a>
               <a href="/admin" title="Admin" style={{ opacity: 0.18, color: 'inherit', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', transition: 'opacity .2s', marginTop: 1 }}
@@ -358,13 +357,12 @@ export default function Home() {
               </a>
             </div>
             <ul className="nav-links">
+              <li><a href="/paginas-web">Páginas Web</a></li>
               <li><a href="#services">Servicios</a></li>
               <li><a href="#precios">Precios</a></li>
               <li><a href="#why">Por qué nosotros</a></li>
-              <li><a href="/zonas">Zonas</a></li>
-              <li><a href="/paginas-web">Páginas Web</a></li>
               <li><a href="/blog">Blog</a></li>
-              <li><a href="#contact" className="btn btn-dp">Agendar visita</a></li>
+              <li><a href="#contact" className="btn btn-dp">Cotizar proyecto</a></li>
             </ul>
             <button className="burger" onClick={() => setMnavOpen(true)} aria-label="Abrir menú">
               <span /><span /><span />
@@ -388,25 +386,25 @@ export default function Home() {
             <div className="hero-content">
               <div className="hbadge">
                 <div className="hdot" />
-                Disponible en toda la Región Metropolitana
+                Diseño web profesional para negocios chilenos
               </div>
               <h1 className="hero-title">
-                <span className="line-wrap"><span className="line-inner li1">Tu computador</span></span>
-                <span className="line-wrap"><span className="line-inner li2 gd">reparado hoy.</span></span>
-                <span className="line-wrap"><span className="line-inner li3">En tu casa.</span></span>
+                <span className="line-wrap"><span className="line-inner li1">Tu página web,</span></span>
+                <span className="line-wrap"><span className="line-inner li2 gd">lista para crecer.</span></span>
+                <span className="line-wrap"><span className="line-inner li3">Sin complicaciones.</span></span>
               </h1>
               <p className="hero-sub">
-                Servicio técnico profesional a domicilio. Diagnóstico rápido, soluciones reales y sin vueltas. Llevamos el taller directamente donde tú estás.
+                Creamos tu sitio desde cero o reorganizamos tu WordPress desordenado. Diseño moderno, entrega en 5–7 días y soporte incluido.
               </p>
               <div className="hbtns">
                 <a
-                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, quiero agendar una visita técnica')}`}
+                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, me interesa crear o mejorar mi página web 🌐')}`}
                   className="btn btn-dp" target="_blank" rel="noopener noreferrer"
                 >
-                  <WAIcon /> Agendar por WhatsApp
+                  <WAIcon /> Cotizar por WhatsApp
                 </a>
-                <a href="#services" className="btn btn-do">
-                  Ver servicios
+                <a href="/paginas-web" className="btn btn-do">
+                  Ver mi trabajo
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -415,15 +413,15 @@ export default function Home() {
 <div className="hstats" id="hstats">
                 <div className="stat-item">
                   <div className="stat-n">+{stats.equipos}</div>
-                  <div className="stat-l">Equipos reparados</div>
+                  <div className="stat-l">Proyectos realizados</div>
                 </div>
                 <div className="stat-item">
                   <div className="stat-n">{stats.satisfaccion}%</div>
-                  <div className="stat-l">Satisfacción</div>
+                  <div className="stat-l">Clientes satisfechos</div>
                 </div>
                 <div className="stat-item">
-                  <div className="stat-n">&lt;24h</div>
-                  <div className="stat-l">Tiempo de respuesta</div>
+                  <div className="stat-n">5–7</div>
+                  <div className="stat-l">Días de entrega</div>
                 </div>
               </div>
             </div>
@@ -432,12 +430,12 @@ export default function Home() {
             <div className="hero-visual">
               <div className="tcards">
                 {[
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="18" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M12 25v4M24 25v4M9 29h18" stroke="#2997FF" strokeWidth="1.8" strokeLinecap="round"/><path d="M9 14h10M9 18h6" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round"/></svg>, label: 'PC & Laptop' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="5" y="5" width="26" height="26" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M12 18h5M12 23h8M12 13h12" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round"/><circle cx="25" cy="13" r="2.5" fill="#2997FF"/></svg>, label: 'Windows' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="15" rx="10" ry="6" stroke="#2997FF" strokeWidth="1.8"/><path d="M8 15v6c0 3.3 4.5 6 10 6s10-2.7 10-6v-6" stroke="#5E5CE6" strokeWidth="1.8"/><path d="M8 21v6c0 3.3 4.5 6 10 6s10-2.7 10-6v-6" stroke="#2997FF" strokeWidth="1.8" opacity=".5"/></svg>, label: 'Datos' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M5 14c7.2-7.2 18.8-7.2 26 0" stroke="#2997FF" strokeWidth="1.8" strokeLinecap="round"/><path d="M9 18c4.97-4.97 13.03-4.97 18 0" stroke="#5E5CE6" strokeWidth="1.8" strokeLinecap="round"/><path d="M13 22c2.76-2.76 7.24-2.76 10 0" stroke="#2997FF" strokeWidth="1.8" strokeLinecap="round"/><circle cx="18" cy="27" r="2.5" fill="#2997FF"/></svg>, label: 'WiFi' },
+                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M5 8h26M5 8v20h26V8" stroke="#2997FF" strokeWidth="1.8" strokeLinejoin="round"/><path d="M10 14l4 4-4 4" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M18 22h8" stroke="#2997FF" strokeWidth="1.5" strokeLinecap="round"/></svg>, label: 'Desarrollo' },
+                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="20" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M4 12h28" stroke="#5E5CE6" strokeWidth="1.5"/><circle cx="8" cy="9" r="1.2" fill="#2997FF"/><circle cx="12" cy="9" r="1.2" fill="#5E5CE6"/><circle cx="16" cy="9" r="1.2" fill="#BF5AF2"/><path d="M10 18h16M10 22h10" stroke="#2997FF" strokeWidth="1.5" strokeLinecap="round"/></svg>, label: 'WordPress' },
+                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="6" width="24" height="24" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M6 14h24" stroke="#5E5CE6" strokeWidth="1.5"/><path d="M6 20h24" stroke="#5E5CE6" strokeWidth="1.5" opacity=".5"/><path d="M14 6v24" stroke="#5E5CE6" strokeWidth="1.5"/></svg>, label: 'Diseño' },
+                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="13" stroke="#2997FF" strokeWidth="1.8"/><path d="M5 18h26M18 5c-4 4-6 8-6 13s2 9 6 13M18 5c4 4 6 8 6 13s-2 9-6 13" stroke="#5E5CE6" strokeWidth="1.5"/></svg>, label: 'Online' },
                   { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4l3.5 9h9.5l-7.5 5.5 3 9.5L18 23 9.5 28l3-9.5L5 13h9.5z" stroke="#2997FF" strokeWidth="1.8" strokeLinejoin="round"/></svg>, label: 'Premium' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="7" y="15" width="22" height="14" rx="2" stroke="#2997FF" strokeWidth="1.8"/><path d="M13 15V11a5 5 0 0 1 10 0v4" stroke="#5E5CE6" strokeWidth="1.8" strokeLinecap="round"/><circle cx="18" cy="22" r="2.5" fill="#2997FF"/></svg>, label: 'Seguro' },
+                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><polyline points="4,26 12,16 18,21 26,10 32,14" stroke="#2997FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><polyline points="26,10 32,10 32,16" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, label: 'SEO' },
                 ].map(({ icon, label }) => (
                   <div key={label} className="tc">{icon}<div className="tc-lbl">{label}</div></div>
                 ))}
@@ -450,19 +448,22 @@ export default function Home() {
       {/* ── SERVICE SLIDER ── */}
       <section id="slider">
         <div className="chip-wrap">
-          <span className="chip-d">Todos nuestros servicios</span>
+          <span className="chip-d">Todo lo que hacemos por ti</span>
         </div>
         <div className="slider-wrap">
           <div className="strack">
             {[...Array(2)].map((_, set) =>
               [
+                { title: 'Creación de Páginas Web', desc: 'Sitios modernos y profesionales diseñados desde cero para tu negocio.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 9l2 2-2 2" strokeLinecap="round" strokeLinejoin="round"/><path d="M13 13h4" strokeLinecap="round"/></svg> },
+                { title: 'Personalización WordPress', desc: 'Modificamos, personalizamos y optimizamos tu sitio WordPress a fondo.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-3.5 19.4M12 2a10 10 0 0 1 3.5 19.4M2 12h20"/></svg> },
+                { title: 'Reorganización de WordPress', desc: 'Ordenamos tu sitio WordPress desordenado: secciones, menús y diseño.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
+                { title: 'Tiendas Online', desc: 'E-commerce y tiendas WooCommerce para vender en internet.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> },
                 { title: 'Mantención Física y Lógica', desc: 'Limpieza interna, pasta térmica y actualización completa.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M6 10h12v2H6z"/></svg> },
                 { title: 'Respaldo de Información', desc: 'Copia de seguridad de todos tus datos antes de cualquier intervención.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
                 { title: 'Recuperación de Datos', desc: 'Recuperamos archivos de discos dañados o formateados.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg> },
                 { title: 'Instalación de Windows', desc: 'Windows 10 u 11 con todos los drivers y programas esenciales.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
                 { title: 'Optimización del Sistema', desc: 'Tu PC como nuevo: eliminamos malware, basura y procesos lentos.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
                 { title: 'WiFi y Repetidores', desc: 'Routers, access points y repetidores para cobertura total.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
-                { title: 'Servicio a Domicilio', desc: 'Vamos donde tú estás. Sin traslados. Toda la Región Metropolitana.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> },
               ].map(({ title, desc, icon }) => (
                 <div key={`${set}-${title}`} className="si">
                   <div className="si-icon">{icon}</div>
@@ -1094,14 +1095,17 @@ export default function Home() {
                     <label htmlFor="f-service">Servicio que necesitas *</label>
                     <select id="f-service" required {...field('service')}>
                       <option value="" disabled>Selecciona un servicio</option>
+                      <option>Creación de página web</option>
+                      <option>Personalización WordPress</option>
+                      <option>Reorganización de sitio WordPress</option>
+                      <option>Tienda online / WooCommerce</option>
                       <option>Mantención lógica y física</option>
                       <option>Respaldo de información</option>
                       <option>Recuperación de datos</option>
                       <option>Instalación de Windows</option>
                       <option>Optimización del sistema</option>
                       <option>Instalación WiFi / Repetidores</option>
-                      <option>Diseño de página web</option>
-                      <option>Otro / No sé qué tiene</option>
+                      <option>Otro</option>
                     </select>
                   </div>
                   <div className="fg">
@@ -1235,9 +1239,9 @@ export default function Home() {
             <div className="fbrand">
               <a href="#" className="logo">
                 <LogoSVG id="lg-footer" />
-                <div><div className="logo-name">FIXDAY</div><div className="logo-tag">Técnico a Domicilio</div></div>
+                <div><div className="logo-name">FIXDAY</div><div className="logo-tag">Diseño Web</div></div>
               </a>
-              <p>Servicio técnico profesional a domicilio en la Región Metropolitana de Santiago. Rápido, confiable y transparente.</p>
+              <p>Creamos y personalizamos páginas web para negocios chilenos. También reorganizamos WordPress y ofrecemos soporte técnico a domicilio.</p>
               <a href={WA_LINK} className="btn btn-dp" style={{ padding: '11px 22px', fontSize: '0.88rem' }} target="_blank" rel="noopener noreferrer">
                 <WAIcon /> +56 9 3664 9332
               </a>
@@ -1245,7 +1249,7 @@ export default function Home() {
             <div className="fcol">
               <h5>Servicios</h5>
               <ul>
-                {['Mantención de PC','Respaldo de datos','Recuperación de datos','Instalación Windows','Optimización PC','Redes WiFi'].map(s => (
+                {['Creación de páginas web','Personalización WordPress','Reorganización WordPress','Tiendas online','Mantención de PC','Soporte técnico a domicilio'].map(s => (
                   <li key={s}><a href="#services">{s}</a></li>
                 ))}
               </ul>

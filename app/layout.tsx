@@ -21,11 +21,11 @@ const SITE_URL = 'https://fixday.cl'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'FIXDAY – Técnico Computadores a Domicilio | Región Metropolitana',
+  title: 'FIXDAY – Diseño y Personalización de Páginas Web | Santiago, Chile',
   description:
-    'Servicio técnico de computadores a domicilio en Santiago y Región Metropolitana. Mantención, recuperación de datos, instalación de Windows, optimización y WiFi. Rápido, confiable y profesional.',
+    'Creamos y personalizamos páginas web profesionales para negocios chilenos. También reorganizamos y limpiamos sitios WordPress desordenados. Diseño moderno, entrega rápida y sin letra chica.',
   keywords:
-    'técnico computadores domicilio santiago, reparación pc domicilio, mantención computador santiago, recuperación datos santiago, instalación windows domicilio, optimización pc santiago, instalación wifi domicilio, técnico pc región metropolitana, servicio técnico a domicilio santiago, arreglo computador santiago',
+    'diseño páginas web santiago, creación sitios web chile, personalización wordpress santiago, reorganizar wordpress, páginas web para negocios chile, diseño web profesional santiago, tiendas online chile, páginas web económicas santiago, técnico wordpress chile, arreglar página web wordpress',
   authors: [{ name: 'FIXDAY' }],
   alternates: {
     canonical: '/',
@@ -33,16 +33,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'FIXDAY – Técnico Computadores a Domicilio',
+    title: 'FIXDAY – Diseño y Personalización de Páginas Web',
     description:
-      'Tu computador reparado en casa. Servicio técnico profesional a domicilio en la Región Metropolitana.',
+      'Creamos tu página web desde cero o reorganizamos tu WordPress. Diseño profesional para negocios chilenos.',
     siteName: 'FIXDAY',
     locale: 'es_CL',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FIXDAY – Técnico Computadores a Domicilio',
-    description: 'Tu computador reparado en casa. Profesional, rápido y a domicilio en Santiago.',
+    title: 'FIXDAY – Diseño y Personalización de Páginas Web',
+    description: 'Páginas web profesionales y reorganización de WordPress para negocios en Chile.',
   },
   verification: {
     google: 'b2iejJ6TyvO27tVj4_4kwJZ_Jyzq6QhrxfNuV8qv2lY',
@@ -62,11 +62,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': ['LocalBusiness', 'ComputerRepairService'],
+              '@type': ['LocalBusiness', 'ProfessionalService'],
               '@id': `${SITE_URL}/#business`,
               name: 'FIXDAY',
-              alternateName: 'FIXDAY Técnico a Domicilio',
-              description: 'Servicio técnico de computadores a domicilio en la Región Metropolitana de Santiago. Mantención, recuperación de datos, instalación de Windows, optimización y WiFi. Rápido, confiable y profesional.',
+              alternateName: 'FIXDAY Diseño Web',
+              description: 'Creamos y personalizamos páginas web profesionales para negocios chilenos. Especialistas en reorganización y limpieza de sitios WordPress desordenados. También ofrecemos soporte técnico a domicilio en la Región Metropolitana.',
               url: SITE_URL,
               logo: `${SITE_URL}/icon.svg`,
               image: `${SITE_URL}/icon.svg`,
