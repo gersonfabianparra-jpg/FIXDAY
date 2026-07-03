@@ -61,6 +61,11 @@ export default function Home() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null)
   const [carouselMs, setCarouselMs] = useState(6000)
   const equiposTarget = useRef(100)
+  const sliderRef = useRef<HTMLDivElement>(null)
+  const sliderDrag = useRef({ dragging: false, startX: 0, startScroll: 0 })
+  const [sliderIndex, setSliderIndex] = useState(0)
+  const [sliderCanPrev, setSliderCanPrev] = useState(false)
+  const [sliderCanNext, setSliderCanNext] = useState(true)
 
   // Particles + shooting stars + mouse attraction
   useEffect(() => {
@@ -269,6 +274,59 @@ export default function Home() {
     return () => clearInterval(id)
   }, [reviews.length, carouselMs])
 
+  // Services slider: track scroll position for arrows/dots
+  useEffect(() => {
+    const el = sliderRef.current
+    if (!el) return
+    const update = () => {
+      setSliderCanPrev(el.scrollLeft > 8)
+      setSliderCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 8)
+      let closest = 0
+      let minDist = Infinity
+      Array.from(el.children).forEach((child, i) => {
+        const dist = Math.abs((child as HTMLElement).offsetLeft - el.scrollLeft)
+        if (dist < minDist) { minDist = dist; closest = i }
+      })
+      setSliderIndex(closest)
+    }
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      el.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  const scrollSliderToCard = (i: number) => {
+    const el = sliderRef.current
+    const child = el?.children[i] as HTMLElement | undefined
+    if (el && child) el.scrollTo({ left: child.offsetLeft, behavior: 'smooth' })
+  }
+  const scrollSliderBy = (dir: 1 | -1) => {
+    const el = sliderRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior: 'smooth' })
+  }
+  const onSliderPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return
+    const el = sliderRef.current
+    if (!el) return
+    sliderDrag.current = { dragging: true, startX: e.clientX, startScroll: el.scrollLeft }
+    el.setPointerCapture(e.pointerId)
+    el.classList.add('dragging')
+  }
+  const onSliderPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!sliderDrag.current.dragging) return
+    const el = sliderRef.current
+    if (!el) return
+    el.scrollLeft = sliderDrag.current.startScroll - (e.clientX - sliderDrag.current.startX)
+  }
+  const onSliderPointerUp = () => {
+    sliderDrag.current.dragging = false
+    sliderRef.current?.classList.remove('dragging')
+  }
+
   // Stats counter
   useEffect(() => {
     const el = document.getElementById('hstats')
@@ -464,27 +522,61 @@ export default function Home() {
           <span className="chip-d">Todo lo que hacemos por ti</span>
         </div>
         <div className="slider-wrap">
-          <div className="strack">
-            {[...Array(2)].map((_, set) =>
-              [
-                { title: 'Creación de Páginas Web', desc: 'Sitios modernos y profesionales diseñados desde cero para tu negocio.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 9l2 2-2 2" strokeLinecap="round" strokeLinejoin="round"/><path d="M13 13h4" strokeLinecap="round"/></svg> },
-                { title: 'Personalización WordPress', desc: 'Modificamos, personalizamos y optimizamos tu sitio WordPress a fondo.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-3.5 19.4M12 2a10 10 0 0 1 3.5 19.4M2 12h20"/></svg> },
-                { title: 'Reorganización de WordPress', desc: 'Ordenamos tu sitio WordPress desordenado: secciones, menús y diseño.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
-                { title: 'Tiendas Online', desc: 'E-commerce y tiendas WooCommerce para vender en internet.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> },
-                { title: 'Mantención Física y Lógica', desc: 'Limpieza interna, pasta térmica y actualización completa.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M6 10h12v2H6z"/></svg> },
-                { title: 'Respaldo de Información', desc: 'Copia de seguridad de todos tus datos antes de cualquier intervención.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
-                { title: 'Recuperación de Datos', desc: 'Recuperamos archivos de discos dañados o formateados.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg> },
-                { title: 'Instalación de Windows', desc: 'Windows 10 u 11 con todos los drivers y programas esenciales.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-                { title: 'Optimización del Sistema', desc: 'Tu PC como nuevo: eliminamos malware, basura y procesos lentos.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
-                { title: 'WiFi y Repetidores', desc: 'Routers, access points y repetidores para cobertura total.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
-              ].map(({ title, desc, icon }) => (
-                <div key={`${set}-${title}`} className="si">
-                  <div className="si-icon">{icon}</div>
-                  <div className="si-content"><h4>{title}</h4><p>{desc}</p></div>
-                </div>
-              ))
-            )}
+          <button
+            type="button"
+            className="slider-arrow prev"
+            onClick={() => scrollSliderBy(-1)}
+            disabled={!sliderCanPrev}
+            aria-label="Servicio anterior"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div
+            className="strack"
+            ref={sliderRef}
+            onPointerDown={onSliderPointerDown}
+            onPointerMove={onSliderPointerMove}
+            onPointerUp={onSliderPointerUp}
+            onPointerLeave={onSliderPointerUp}
+          >
+            {[
+              { title: 'Creación de Páginas Web', desc: 'Sitios modernos y profesionales diseñados desde cero para tu negocio.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 9l2 2-2 2" strokeLinecap="round" strokeLinejoin="round"/><path d="M13 13h4" strokeLinecap="round"/></svg> },
+              { title: 'Personalización WordPress', desc: 'Modificamos, personalizamos y optimizamos tu sitio WordPress a fondo.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-3.5 19.4M12 2a10 10 0 0 1 3.5 19.4M2 12h20"/></svg> },
+              { title: 'Reorganización de WordPress', desc: 'Ordenamos tu sitio WordPress desordenado: secciones, menús y diseño.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
+              { title: 'Tiendas Online', desc: 'E-commerce y tiendas WooCommerce para vender en internet.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> },
+              { title: 'Mantención Física y Lógica', desc: 'Limpieza interna, pasta térmica y actualización completa.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M6 10h12v2H6z"/></svg> },
+              { title: 'Respaldo de Información', desc: 'Copia de seguridad de todos tus datos antes de cualquier intervención.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
+              { title: 'Recuperación de Datos', desc: 'Recuperamos archivos de discos dañados o formateados.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/><line x1="12" y1="7" x2="12" y2="17"/></svg> },
+              { title: 'Instalación de Windows', desc: 'Windows 10 u 11 con todos los drivers y programas esenciales.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 10l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+              { title: 'Optimización del Sistema', desc: 'Tu PC como nuevo: eliminamos malware, basura y procesos lentos.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> },
+              { title: 'WiFi y Repetidores', desc: 'Routers, access points y repetidores para cobertura total.', icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M1 6s4-6 11-6 11 6 11 6"/><path d="M5 10s2.5-4 7-4 7 4 7 4"/><path d="M9 14s1.5-2 3-2 3 2 3 2"/><line x1="12" y1="20" x2="12" y2="18"/></svg> },
+            ].map(({ title, desc, icon }) => (
+              <div key={title} className="si">
+                <div className="si-icon">{icon}</div>
+                <div className="si-content"><h4>{title}</h4><p>{desc}</p></div>
+              </div>
+            ))}
           </div>
+          <button
+            type="button"
+            className="slider-arrow next"
+            onClick={() => scrollSliderBy(1)}
+            disabled={!sliderCanNext}
+            aria-label="Siguiente servicio"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div className="slider-dots">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`sdot${i === sliderIndex ? ' active' : ''}`}
+              onClick={() => scrollSliderToCard(i)}
+              aria-label={`Ir al servicio ${i + 1}`}
+            />
+          ))}
         </div>
       </section>
 
