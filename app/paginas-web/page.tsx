@@ -100,6 +100,15 @@ const CLIENTES = [
     color: '#FF6B35',
     border: 'rgba(255,107,53,.2)',
   },
+  {
+    name: 'RB Contabilidades',
+    url: 'https://rbcontabilidades.cl',
+    category: 'Asesoría contable',
+    desc: 'Contabilidad, remuneraciones y asesoría tributaria para empresas y emprendedores de todo Chile. Servicio 100% digital, cercano y con respuesta rápida.',
+    screenshot: '/screenshots/rbcontabilidades.png',
+    color: '#C9A227',
+    border: 'rgba(201,162,39,.2)',
+  },
 ]
 
 const PASOS = [
