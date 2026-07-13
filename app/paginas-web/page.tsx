@@ -109,6 +109,15 @@ const CLIENTES = [
     color: '#C9A227',
     border: 'rgba(201,162,39,.2)',
   },
+  {
+    name: 'Cueros Galia',
+    url: 'https://www.cuerosgalia.cl',
+    category: 'Marroquinería',
+    desc: 'Carteras, billeteras, mochilas y accesorios de cuero 100% natural, cortados y cosidos a mano en Chile. Grabado personalizado de regalo.',
+    screenshot: '/screenshots/cuerosgalia.png',
+    color: '#B5651D',
+    border: 'rgba(181,101,29,.2)',
+  },
 ]
 
 const PASOS = [
