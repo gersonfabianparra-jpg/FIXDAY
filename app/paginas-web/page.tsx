@@ -118,6 +118,15 @@ const CLIENTES = [
     color: '#B5651D',
     border: 'rgba(181,101,29,.2)',
   },
+  {
+    name: 'NinjaKid',
+    url: 'https://www.ninjakid.cl',
+    category: 'Eventos y fiestas',
+    desc: 'Arriendo de inflables temáticos, máquinas arcade y sonido profesional para cumpleaños infantiles a domicilio en Santiago. Instalación y retiro incluidos.',
+    screenshot: '/screenshots/ninjakid.png',
+    color: '#FF375F',
+    border: 'rgba(255,55,95,.2)',
+  },
 ]
 
 const PASOS = [
