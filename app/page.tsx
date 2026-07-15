@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Bix from './components/Bix'
-import DaisySecret from './components/DaisySecret'
 import StatsCounter from './components/StatsCounter'
 import { COMUNAS } from './zonas/comunas'
 
@@ -1380,7 +1379,6 @@ export default function Home() {
       </footer>
 
       <Bix />
-      <DaisySecret />
     </>
   )
 }
