@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import Script from 'next/script'
+import BusinessSchema from './components/BusinessSchema'
 import './globals.css'
 
 const GA_ID = 'G-YNG34YWWRL'
@@ -30,6 +31,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     url: SITE_URL,
@@ -38,6 +50,7 @@ export const metadata: Metadata = {
       'Creamos tu página web desde cero o reorganizamos tu WordPress. Diseño profesional para negocios chilenos.',
     siteName: 'FIXDAY',
     locale: 'es_CL',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'FIXDAY – Diseño Web y Técnico a Domicilio' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -57,78 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': ['LocalBusiness', 'ProfessionalService'],
-              '@id': `${SITE_URL}/#business`,
-              name: 'FIXDAY',
-              alternateName: 'FIXDAY Diseño Web',
-              description: 'Creamos y personalizamos páginas web profesionales para negocios chilenos. Especialistas en reorganización y limpieza de sitios WordPress desordenados. También ofrecemos soporte técnico a domicilio en la Región Metropolitana.',
-              url: SITE_URL,
-              logo: `${SITE_URL}/icon.svg`,
-              image: `${SITE_URL}/icon.svg`,
-              telephone: '+56936649332',
-              priceRange: '$$',
-              currenciesAccepted: 'CLP',
-              paymentAccepted: 'Efectivo, Transferencia bancaria',
-              geo: {
-                '@type': 'GeoCoordinates',
-                latitude: -33.4569,
-                longitude: -70.6483,
-              },
-              address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'Santiago',
-                addressRegion: 'Región Metropolitana',
-                addressCountry: 'CL',
-              },
-              areaServed: [
-                'Santiago', 'Providencia', 'Las Condes', 'Vitacura', 'Ñuñoa',
-                'La Florida', 'Maipú', 'Puente Alto', 'San Miguel', 'La Reina',
-                'Peñalolén', 'Macul', 'Lo Barnechea', 'Quilicura', 'Huechuraba',
-                'Independencia', 'Recoleta', 'Conchalí', 'Cerro Navia', 'Quinta Normal',
-                'Estación Central', 'San Joaquín', 'La Granja', 'San Ramón',
-                'La Pintana', 'La Cisterna', 'El Bosque', 'Pedro Aguirre Cerda',
-                'Lo Espejo', 'San Bernardo', 'Pudahuel', 'Cerrillos', 'Lo Prado',
-                'Renca', 'Lampa', 'Colina', 'Tiltil', 'Buin',
-              ].map(name => ({ '@type': 'City', name })),
-              openingHoursSpecification: [
-                {
-                  '@type': 'OpeningHoursSpecification',
-                  dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                  opens: '08:00',
-                  closes: '19:00',
-                },
-              ],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                telephone: '+56936649332',
-                contactType: 'customer service',
-                contactOption: 'TollFree',
-                areaServed: 'CL',
-                availableLanguage: 'Spanish',
-              },
-              hasOfferCatalog: {
-                '@type': 'OfferCatalog',
-                name: 'Servicios FIXDAY',
-                itemListElement: [
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Mantención Lógica y Física de Computadores', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Respaldo de Información', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Recuperación de Datos', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Instalación de Windows a Domicilio', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Optimización de Sistema Operativo', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Instalación WiFi y Repetidores', areaServed: 'Región Metropolitana' } },
-                  { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Diseño de Páginas Web Profesionales', areaServed: 'Chile' } },
-                ],
-              },
-              sameAs: [`https://wa.me/56936649332`, `https://www.instagram.com/fixdaycl`],
-              mainEntityOfPage: `${SITE_URL}/blog`,
-            }),
-          }}
-        />
+        <BusinessSchema />
       </head>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
       <Script id="ga4" strategy="afterInteractive">{`

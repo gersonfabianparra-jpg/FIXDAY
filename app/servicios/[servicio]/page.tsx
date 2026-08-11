@@ -24,6 +24,12 @@ export async function generateMetadata({ params }: { params: { servicio: string 
       siteName: 'FIXDAY',
       locale: 'es_CL',
       type: 'website',
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: s.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: s.title,
+      description: s.description,
     },
   }
 }
@@ -45,24 +51,45 @@ export default function ServicioPage({ params }: { params: { servicio: string } 
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: s.shortTitle,
-            description: s.description,
-            provider: {
-              '@type': 'LocalBusiness',
-              name: 'FIXDAY',
-              url: 'https://fixday.cl',
-              telephone: '+56936649332',
-              areaServed: { '@type': 'State', name: 'Región Metropolitana' },
-            },
-            areaServed: { '@type': 'State', name: 'Región Metropolitana' },
-            url: `https://fixday.cl/servicios/${s.slug}`,
-            offers: {
-              '@type': 'Offer',
-              price: s.price.replace(/[^0-9]/g, ''),
-              priceCurrency: 'CLP',
-              availability: 'https://schema.org/InStock',
-            },
+            '@graph': [
+              {
+                '@type': 'Service',
+                name: s.shortTitle,
+                description: s.description,
+                serviceType: s.shortTitle,
+                provider: {
+                  '@type': 'LocalBusiness',
+                  '@id': 'https://fixday.cl/#business',
+                  name: 'FIXDAY',
+                  url: 'https://fixday.cl',
+                  telephone: '+56936649332',
+                  areaServed: { '@type': 'State', name: 'Región Metropolitana' },
+                },
+                areaServed: { '@type': 'State', name: 'Región Metropolitana' },
+                url: `https://fixday.cl/servicios/${s.slug}`,
+                offers: {
+                  '@type': 'Offer',
+                  price: s.price.replace(/[^0-9]/g, ''),
+                  priceCurrency: 'CLP',
+                  availability: 'https://schema.org/InStock',
+                },
+              },
+              {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                  { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://fixday.cl' },
+                  { '@type': 'ListItem', position: 2, name: s.shortTitle, item: `https://fixday.cl/servicios/${s.slug}` },
+                ],
+              },
+              {
+                '@type': 'FAQPage',
+                mainEntity: s.faq.map(({ q, a }) => ({
+                  '@type': 'Question',
+                  name: q,
+                  acceptedAnswer: { '@type': 'Answer', text: a },
+                })),
+              },
+            ],
           }),
         }}
       />

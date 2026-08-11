@@ -18,6 +18,16 @@ export async function generateMetadata({ params }: { params: { comuna: string } 
     openGraph: {
       title: `Técnico a Domicilio en ${c.name} | FIXDAY`,
       description: `Reparación de computadores en ${c.name}. Servicio profesional, rápido y transparente.`,
+      url: `https://fixday.cl/zonas/${c.slug}`,
+      siteName: 'FIXDAY',
+      locale: 'es_CL',
+      type: 'website',
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: `Técnico a domicilio en ${c.name}` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Técnico a Domicilio en ${c.name} | FIXDAY`,
+      description: `Reparación de computadores en ${c.name}. Servicio profesional, rápido y transparente.`,
     },
   }
 }
@@ -39,19 +49,48 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
 
   const waMsg = encodeURIComponent(`Hola FIXDAY, necesito un técnico a domicilio en ${c.name}`)
 
+  const faqs = [
+    { q: `¿Cuánto cuesta la visita de un técnico a domicilio en ${c.name}?`, a: `La visita a domicilio en ${c.name} más el diagnóstico tiene un valor de $15.000. Si realizas la reparación con nosotros, ese monto se descuenta del total del servicio.` },
+    { q: `¿En cuánto tiempo llegan a ${c.name}?`, a: `Coordinamos la visita técnica en ${c.name} para el mismo día o el día siguiente según disponibilidad. Atendemos de lunes a viernes de 08:00 a 19:00.` },
+    { q: `¿Tengo que llevar mi computador o van a mi casa en ${c.name}?`, a: `No necesitas trasladar tu equipo. El servicio es completamente a domicilio: el técnico llega a tu casa u oficina en ${c.name} con todas las herramientas necesarias.` },
+    { q: `¿Qué computadores reparan en ${c.name}?`, a: `Atendemos computadores de escritorio y notebooks de todas las marcas con Windows. Hacemos mantención, instalación de Windows, recuperación de datos, optimización, respaldo y configuración de WiFi.` },
+    { q: `¿Ofrecen garantía por el servicio en ${c.name}?`, a: `Sí. Todos nuestros servicios en ${c.name} incluyen 7 días de garantía: si el mismo problema vuelve a aparecer, regresamos sin costo adicional.` },
+  ]
+
   return (
     <div style={{ minHeight: '100vh', background: '#000', color: '#F5F5F7', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}>
       {/* Schema.org */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        name: 'FIXDAY',
-        description: `Servicio técnico de computadores a domicilio en ${c.name}, ${c.sector}.`,
-        url: `https://fixday.cl/zonas/${c.slug}`,
-        telephone: '+56936649332',
-        areaServed: { '@type': 'City', name: c.name, containedInPlace: { '@type': 'State', name: 'Región Metropolitana' } },
-        openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:00', closes: '19:00' }],
-        priceRange: '$$',
+        '@graph': [
+          {
+            '@type': 'LocalBusiness',
+            name: `FIXDAY — Técnico a domicilio en ${c.name}`,
+            description: `Servicio técnico de computadores a domicilio en ${c.name}, ${c.sector}.`,
+            url: `https://fixday.cl/zonas/${c.slug}`,
+            telephone: '+56936649332',
+            image: 'https://fixday.cl/opengraph-image',
+            areaServed: { '@type': 'City', name: c.name, containedInPlace: { '@type': 'State', name: 'Región Metropolitana' } },
+            openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:00', closes: '19:00' }],
+            priceRange: '$$',
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://fixday.cl' },
+              { '@type': 'ListItem', position: 2, name: 'Zonas', item: 'https://fixday.cl/zonas' },
+              { '@type': 'ListItem', position: 3, name: c.name, item: `https://fixday.cl/zonas/${c.slug}` },
+            ],
+          },
+          {
+            '@type': 'FAQPage',
+            mainEntity: faqs.map(({ q, a }) => ({
+              '@type': 'Question',
+              name: q,
+              acceptedAnswer: { '@type': 'Answer', text: a },
+            })),
+          },
+        ],
       })}} />
 
       {/* Top bar */}
@@ -164,6 +203,26 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ padding: '0 0 80px' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px' }}>
+          <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 28 }}>
+            Preguntas frecuentes sobre el servicio en {c.name}
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {faqs.map(({ q, a }) => (
+              <details key={q} style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, overflow: 'hidden' }}>
+                <summary style={{ padding: '16px 20px', fontWeight: 700, fontSize: '0.92rem', color: '#F5F5F7', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  {q}
+                  <span style={{ color: '#2997FF', fontSize: 18, flexShrink: 0, marginLeft: 12 }}>+</span>
+                </summary>
+                <div style={{ padding: '0 20px 16px', fontSize: '0.86rem', color: '#86868B', lineHeight: 1.7 }}>{a}</div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
