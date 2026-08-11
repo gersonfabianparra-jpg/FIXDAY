@@ -370,6 +370,10 @@ export default function Home() {
       setFormData(prev => ({ ...prev, [key]: e.target.value })),
   })
 
+  const avgRating = reviews.length
+    ? reviews.reduce((a, r) => a + (r.rating || 0), 0) / reviews.length
+    : 4.9
+
   return (
     <>
       <div id="progress-bar" />
@@ -441,9 +445,16 @@ export default function Home() {
         <div className="container">
           <div className="hero-inner">
             <div className="hero-content">
+              <div className="hero-glow" />
               <div className="hbadge">
                 <div className="hdot" />
                 Diseño web + Técnico a domicilio · Región Metropolitana
+              </div>
+              <div className="htrust">
+                <span className="htrust-stars" aria-hidden>★★★★★</span>
+                <strong>{avgRating.toFixed(1)}</strong>
+                <span className="htrust-sep">·</span>
+                <span>+100 clientes felices en la Región Metropolitana</span>
               </div>
               <h1 className="hero-title">
                 <span className="line-wrap">
