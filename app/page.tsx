@@ -8,6 +8,9 @@ import { COMUNAS } from './zonas/comunas'
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY 👋, me interesa una página web o servicio técnico para mi computador')}`
 
+const WEB_VERBS = ['venden.', 'convierten.', 'enamoran.']
+const PC_VERBS = ['rinden.', 'vuelan.', 'renacen.']
+
 function LogoSVG({ id }: { id: string }) {
   return (
     <svg className="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,6 +68,13 @@ export default function Home() {
   const [sliderIndex, setSliderIndex] = useState(0)
   const [sliderCanPrev, setSliderCanPrev] = useState(false)
   const [sliderCanNext, setSliderCanNext] = useState(true)
+  const [verbIdx, setVerbIdx] = useState(0)
+
+  // Rotación de verbos del titular (venden/convierten/enamoran · rinden/vuelan/renacen)
+  useEffect(() => {
+    const id = setInterval(() => setVerbIdx(i => (i + 1) % WEB_VERBS.length), 2600)
+    return () => clearInterval(id)
+  }, [])
 
   // Particles + shooting stars + mouse attraction
   useEffect(() => {
@@ -460,13 +470,13 @@ export default function Home() {
                 <span className="line-wrap">
                   <span className="line-inner li1">
                     <span className="ht-lead">Páginas web que</span>
-                    <span className="ht-mega">venden.</span>
+                    <span key={verbIdx} className="ht-mega ht-rotate">{WEB_VERBS[verbIdx]}</span>
                   </span>
                 </span>
                 <span className="line-wrap">
                   <span className="line-inner li2">
                     <span className="ht-lead">Computadores que</span>
-                    <span className="ht-mega ht-mega-2">rinden.</span>
+                    <span key={verbIdx} className="ht-mega ht-mega-2 ht-rotate">{PC_VERBS[verbIdx]}</span>
                   </span>
                 </span>
               </h1>
@@ -481,16 +491,20 @@ export default function Home() {
               <div className="hbtns">
                 <a
                   href={WA_LINK}
-                  className="btn btn-dp" target="_blank" rel="noopener noreferrer"
+                  className="btn btn-dp btn-xl" target="_blank" rel="noopener noreferrer"
                 >
                   <WAIcon /> Cotizar por WhatsApp
                 </a>
-                <a href="/paginas-web" className="btn btn-do">
+                <a href="/paginas-web" className="btn btn-do btn-xl">
                   Ver mi trabajo
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </a>
+              </div>
+              <div className="hurgency">
+                <span className="hu-dot" />
+                Agenda hoy · Respondemos en minutos por WhatsApp
               </div>
 <div className="hstats" id="hstats">
                 <div className="stat-item">
@@ -508,19 +522,39 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tech cards visual */}
+            {/* Dual animated mockups: web + técnico */}
             <div className="hero-visual">
-              <div className="tcards">
-                {[
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M5 8h26M5 8v20h26V8" stroke="#2997FF" strokeWidth="1.8" strokeLinejoin="round"/><path d="M10 14l4 4-4 4" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M18 22h8" stroke="#2997FF" strokeWidth="1.5" strokeLinecap="round"/></svg>, label: 'Desarrollo' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="20" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M4 12h28" stroke="#5E5CE6" strokeWidth="1.5"/><circle cx="8" cy="9" r="1.2" fill="#2997FF"/><circle cx="12" cy="9" r="1.2" fill="#5E5CE6"/><circle cx="16" cy="9" r="1.2" fill="#BF5AF2"/><path d="M10 18h16M10 22h10" stroke="#2997FF" strokeWidth="1.5" strokeLinecap="round"/></svg>, label: 'WordPress' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="6" width="24" height="24" rx="3" stroke="#2997FF" strokeWidth="1.8"/><path d="M6 14h24" stroke="#5E5CE6" strokeWidth="1.5"/><path d="M6 20h24" stroke="#5E5CE6" strokeWidth="1.5" opacity=".5"/><path d="M14 6v24" stroke="#5E5CE6" strokeWidth="1.5"/></svg>, label: 'Diseño' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="13" stroke="#2997FF" strokeWidth="1.8"/><path d="M5 18h26M18 5c-4 4-6 8-6 13s2 9 6 13M18 5c4 4 6 8 6 13s-2 9-6 13" stroke="#5E5CE6" strokeWidth="1.5"/></svg>, label: 'Online' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4l3.5 9h9.5l-7.5 5.5 3 9.5L18 23 9.5 28l3-9.5L5 13h9.5z" stroke="#2997FF" strokeWidth="1.8" strokeLinejoin="round"/></svg>, label: 'Premium' },
-                  { icon: <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><polyline points="4,26 12,16 18,21 26,10 32,14" stroke="#2997FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><polyline points="26,10 32,10 32,16" stroke="#5E5CE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, label: 'SEO' },
-                ].map(({ icon, label }) => (
-                  <div key={label} className="tc">{icon}<div className="tc-lbl">{label}</div></div>
-                ))}
+              <div className="hv-stage">
+                {/* Navegador / web publicada */}
+                <div className="hv-browser">
+                  <div className="hv-bar">
+                    <span className="hv-tl r" /><span className="hv-tl y" /><span className="hv-tl g" />
+                    <div className="hv-url">https://tunegocio.cl</div>
+                  </div>
+                  <div className="hv-screen">
+                    <div className="hv-badge">Publicado ✓</div>
+                    <div className="hv-herobar" />
+                    <div className="hv-line w85" />
+                    <div className="hv-line w65" />
+                    <div className="hv-line w45" />
+                    <div className="hv-cta" />
+                  </div>
+                </div>
+                {/* Equipo / técnico en optimización */}
+                <div className="hv-laptop">
+                  <div className="hv-lscreen">
+                    <div className="hv-gear">
+                      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+                    </div>
+                    <div className="hv-status">Optimizando equipo…</div>
+                    <div className="hv-progress"><span /></div>
+                    <div className="hv-check">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      Rendimiento +100%
+                    </div>
+                  </div>
+                  <div className="hv-base" />
+                </div>
               </div>
             </div>
           </div>
