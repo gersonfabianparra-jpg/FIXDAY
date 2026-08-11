@@ -315,6 +315,19 @@ nav.sc { background:rgba(0,0,0,0.82); backdrop-filter:blur(20px); -webkit-backdr
   animation: shimmerText 7s linear infinite, glowPulse 4s ease-in-out 1s infinite;
   display: inline-block;
 }
+.ht-lead {
+  display: block;
+  font-size: 0.34em;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: 0.004em;
+  color: rgba(245,245,247,.74);
+  margin-bottom: 0.14em;
+}
+.ht-mega-2 {
+  background-image: linear-gradient(90deg, #00C8FF 0%, #2997FF 30%, #5E5CE6 60%, #30D158 88%, #00C8FF 100%);
+  background-size: 300% 100%;
+}
 .ht-outline {
   -webkit-text-stroke: 3px rgba(255,255,255,.35);
   color: transparent;

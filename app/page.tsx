@@ -6,7 +6,7 @@ import StatsCounter from './components/StatsCounter'
 import { COMUNAS } from './zonas/comunas'
 
 const WA_NUMBER = '56936649332'
-const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, me interesa crear o mejorar mi página web 🌐')}`
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY 👋, me interesa una página web o servicio técnico para mi computador')}`
 
 function LogoSVG({ id }: { id: string }) {
   return (
@@ -402,7 +402,7 @@ export default function Home() {
                 <LogoSVG id="lg-nav" />
                 <div>
                   <div className="logo-name">FIXDAY</div>
-                  <div className="logo-tag">Diseño Web</div>
+                  <div className="logo-tag">Web + Técnico PC</div>
                 </div>
               </a>
               <a href="/admin" title="Admin" style={{ opacity: 0.18, color: 'inherit', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', transition: 'opacity .2s', marginTop: 1 }}
@@ -443,32 +443,33 @@ export default function Home() {
             <div className="hero-content">
               <div className="hbadge">
                 <div className="hdot" />
-                Diseño web profesional para negocios chilenos
+                Diseño web + Técnico a domicilio · Región Metropolitana
               </div>
               <h1 className="hero-title">
                 <span className="line-wrap">
                   <span className="line-inner li1">
-                    <span className="ht-mega">Páginas web</span>
+                    <span className="ht-lead">Páginas web que</span>
+                    <span className="ht-mega">venden.</span>
                   </span>
                 </span>
                 <span className="line-wrap">
                   <span className="line-inner li2">
-                    que <span className="ht-word">venden</span>{' '}
-                    <span className="ht-outline">solas.</span>
+                    <span className="ht-lead">Computadores que</span>
+                    <span className="ht-mega ht-mega-2">rinden.</span>
                   </span>
                 </span>
               </h1>
               <div className="hero-stack">
-                <span className="hs-tag">WordPress</span>
-                <span className="hs-tag">Next.js</span>
-                <span className="hs-tag">WooCommerce</span>
+                <span className="hs-tag">Páginas Web</span>
+                <span className="hs-tag">Tiendas Online</span>
+                <span className="hs-tag">Soporte a Domicilio</span>
               </div>
               <p className="hero-sub">
-                Creamos tu sitio desde cero o reorganizamos tu WordPress desordenado. Diseño moderno, entrega en 5–7 días y soporte incluido.
+                Creamos tu página web profesional y dejamos tu computador como nuevo. Diseño moderno con entrega en 5–7 días, y servicio técnico a domicilio en toda la Región Metropolitana.
               </p>
               <div className="hbtns">
                 <a
-                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY, me interesa crear o mejorar mi página web 🌐')}`}
+                  href={WA_LINK}
                   className="btn btn-dp" target="_blank" rel="noopener noreferrer"
                 >
                   <WAIcon /> Cotizar por WhatsApp

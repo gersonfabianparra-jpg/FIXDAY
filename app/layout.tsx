@@ -22,11 +22,11 @@ const SITE_URL = 'https://fixday.cl'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'FIXDAY – Diseño y Personalización de Páginas Web | Santiago, Chile',
+  title: 'FIXDAY – Diseño Web y Técnico de Computadores a Domicilio | Santiago',
   description:
-    'Creamos y personalizamos páginas web profesionales para negocios chilenos. También reorganizamos y limpiamos sitios WordPress desordenados. Diseño moderno, entrega rápida y sin letra chica.',
+    'Páginas web profesionales que venden y servicio técnico de computadores a domicilio en Santiago. Diseño moderno con entrega en 5–7 días y técnico a domicilio en toda la Región Metropolitana. Sin letra chica.',
   keywords:
-    'diseño páginas web santiago, creación sitios web chile, personalización wordpress santiago, reorganizar wordpress, páginas web para negocios chile, diseño web profesional santiago, tiendas online chile, páginas web económicas santiago, técnico wordpress chile, arreglar página web wordpress',
+    'diseño páginas web santiago, creación sitios web chile, tiendas online woocommerce, técnico computadores a domicilio santiago, reparación de computadores región metropolitana, mantención de pc a domicilio, recuperación de datos santiago, instalación de windows a domicilio, personalización wordpress santiago, diseño web profesional santiago',
   authors: [{ name: 'FIXDAY' }],
   alternates: {
     canonical: '/',
@@ -45,17 +45,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'FIXDAY – Diseño y Personalización de Páginas Web',
+    title: 'FIXDAY – Páginas web que venden. Computadores que rinden.',
     description:
-      'Creamos tu página web desde cero o reorganizamos tu WordPress. Diseño profesional para negocios chilenos.',
+      'Diseño web profesional y servicio técnico de computadores a domicilio en Santiago y toda la Región Metropolitana.',
     siteName: 'FIXDAY',
     locale: 'es_CL',
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'FIXDAY – Diseño Web y Técnico a Domicilio' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FIXDAY – Diseño y Personalización de Páginas Web',
-    description: 'Páginas web profesionales y reorganización de WordPress para negocios en Chile.',
+    title: 'FIXDAY – Páginas web que venden. Computadores que rinden.',
+    description: 'Diseño web profesional y técnico de computadores a domicilio en la Región Metropolitana.',
   },
   verification: {
     google: 'b2iejJ6TyvO27tVj4_4kwJZ_Jyzq6QhrxfNuV8qv2lY',
