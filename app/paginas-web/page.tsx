@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Logo from '@/app/components/Logo'
+import JsonLd from '@/app/components/JsonLd'
 
 export const metadata: Metadata = {
   title: 'Diseño de Páginas Web Profesionales | FIXDAY Santiago',
@@ -60,7 +61,7 @@ const CLIENTES = [
     url: 'https://stockeo.cl',
     category: 'Software de gestión',
     desc: 'Sistema para negocios y talleres: inventario, boletas con IVA, cotizaciones en PDF, órdenes de trabajo y reportes para el SII. Todo desde el celular.',
-    screenshot: '/screenshots/stockeo.png',
+    screenshot: '/screenshots/stockeo.jpg',
     color: '#D4A017',
     border: 'rgba(212,160,23,.25)',
   },
@@ -69,7 +70,7 @@ const CLIENTES = [
     url: 'https://www.postmockup.com',
     category: 'Herramienta web',
     desc: 'Crea mockups de comentarios de redes sociales (TikTok, Instagram, WhatsApp y más) de forma rápida y gratis.',
-    screenshot: '/screenshots/postmockup.png',
+    screenshot: '/screenshots/postmockup.jpg',
     color: '#30D158',
     border: 'rgba(48,209,88,.2)',
   },
@@ -78,7 +79,7 @@ const CLIENTES = [
     url: 'https://cleanschile.cl',
     category: 'Detailing automotriz',
     desc: 'Detailing premium a domicilio en Santiago. Nanotecnología y precisión para transformar tu vehículo.',
-    screenshot: '/screenshots/cleanschile.png',
+    screenshot: '/screenshots/cleanschile.jpg',
     color: '#2997FF',
     border: 'rgba(41,151,255,.2)',
   },
@@ -87,7 +88,7 @@ const CLIENTES = [
     url: 'https://itparra.online/es/',
     category: 'CV / Portafolio',
     desc: 'Portafolio profesional de ingeniero en telecomunicaciones e infraestructura IT con más de 15 años de experiencia en Europa y Latinoamérica.',
-    screenshot: '/screenshots/itparra.png',
+    screenshot: '/screenshots/itparra.jpg',
     color: '#00D2B4',
     border: 'rgba(0,210,180,.2)',
   },
@@ -96,7 +97,7 @@ const CLIENTES = [
     url: 'https://aceroscumbres.cl',
     category: 'Tienda online',
     desc: 'Venta de paneles aislados, perfiles y materiales de acero a medida para proyectos de construcción. Cotización directa por WhatsApp.',
-    screenshot: '/screenshots/aceroscumbres.png',
+    screenshot: '/screenshots/aceroscumbres.jpg',
     color: '#FF6B35',
     border: 'rgba(255,107,53,.2)',
   },
@@ -105,7 +106,7 @@ const CLIENTES = [
     url: 'https://rbcontabilidades.cl',
     category: 'Asesoría contable',
     desc: 'Contabilidad, remuneraciones y asesoría tributaria para empresas y emprendedores de todo Chile. Servicio 100% digital, cercano y con respuesta rápida.',
-    screenshot: '/screenshots/rbcontabilidades.png',
+    screenshot: '/screenshots/rbcontabilidades.jpg',
     color: '#C9A227',
     border: 'rgba(201,162,39,.2)',
   },
@@ -114,7 +115,7 @@ const CLIENTES = [
     url: 'https://www.cuerosgalia.cl',
     category: 'Marroquinería',
     desc: 'Carteras, billeteras, mochilas y accesorios de cuero 100% natural, cortados y cosidos a mano en Chile. Grabado personalizado de regalo.',
-    screenshot: '/screenshots/cuerosgalia.png',
+    screenshot: '/screenshots/cuerosgalia.jpg',
     color: '#B5651D',
     border: 'rgba(181,101,29,.2)',
   },
@@ -123,7 +124,7 @@ const CLIENTES = [
     url: 'https://www.ninjakid.cl',
     category: 'Eventos y fiestas',
     desc: 'Arriendo de inflables temáticos, máquinas arcade y sonido profesional para cumpleaños infantiles a domicilio en Santiago. Instalación y retiro incluidos.',
-    screenshot: '/screenshots/ninjakid.png',
+    screenshot: '/screenshots/ninjakid.jpg',
     color: '#FF375F',
     border: 'rgba(255,55,95,.2)',
   },
@@ -173,6 +174,52 @@ const PREGUNTAS = [
 export default function PaginasWebPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#000', color: '#F5F5F7', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}>
+
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'Service',
+              '@id': 'https://fixday.cl/paginas-web/#service',
+              name: 'Diseño de Páginas Web Profesionales',
+              serviceType: 'Diseño y desarrollo de sitios web',
+              description:
+                'Creación de páginas web profesionales en Santiago: diseño moderno, optimizado para Google (SEO), responsive, con dominio y hosting incluido el primer año.',
+              provider: {
+                '@type': 'LocalBusiness',
+                '@id': 'https://fixday.cl/#business',
+                name: 'FIXDAY',
+                url: 'https://fixday.cl',
+                telephone: '+56936649332',
+              },
+              areaServed: { '@type': 'State', name: 'Región Metropolitana' },
+              url: 'https://fixday.cl/paginas-web',
+              offers: {
+                '@type': 'Offer',
+                price: '150000',
+                priceCurrency: 'CLP',
+                availability: 'https://schema.org/InStock',
+              },
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://fixday.cl' },
+                { '@type': 'ListItem', position: 2, name: 'Diseño de Páginas Web', item: 'https://fixday.cl/paginas-web' },
+              ],
+            },
+            {
+              '@type': 'FAQPage',
+              mainEntity: PREGUNTAS.map(({ q, a }) => ({
+                '@type': 'Question',
+                name: q,
+                acceptedAnswer: { '@type': 'Answer', text: a },
+              })),
+            },
+          ],
+        }}
+      />
 
       {/* Top bar */}
       <div style={{ height: 3, background: 'linear-gradient(90deg,#0071E3,#2997FF,#BF5AF2,#2997FF,#0071E3)' }} />

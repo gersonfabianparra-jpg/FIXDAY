@@ -582,6 +582,82 @@ export const POSTS: Post[] = [
 <p>Si ya ocurrió la pérdida (formateo accidental, disco dañado, archivos borrados), deja de usar el disco inmediatamente y contacta a un técnico. Cada archivo nuevo que guardes puede sobreescribir los datos que quieres recuperar. En FIXDAY realizamos recuperación de datos a domicilio en toda la Región Metropolitana, con diagnóstico previo sin costo.</p>
 `,
   },
+  {
+    slug: 'cuanto-cuesta-pagina-web-chile',
+    title: '¿Cuánto cuesta una página web en Chile en 2026?',
+    description: 'Guía real de precios de páginas web en Chile: desde landing pages hasta tiendas online. Qué incluye cada rango, qué evitar y cómo saber si te están cobrando de más.',
+    date: '2026-08-05',
+    readTime: 7,
+    category: 'Diseño Web',
+    content: `
+<p>Es la primera pregunta que hace todo negocio que quiere tener presencia online: <strong>¿cuánto cuesta una página web?</strong> La respuesta honesta es "depende", pero eso no ayuda a nadie a presupuestar. En esta guía te damos rangos reales del mercado chileno en 2026 y, más importante, qué deberías recibir por cada precio.</p>
+
+<h2>Los rangos de precio en Chile (2026)</h2>
+<p>Estos son los tramos habituales para un negocio pequeño o mediano:</p>
+<p><strong>Landing page (una sola página): $80.000 – $200.000.</strong> Ideal para un profesional, un servicio o una campaña puntual. Una página larga y bien diseñada con tu propuesta, servicios, testimonios y un botón de contacto o WhatsApp.</p>
+<p><strong>Sitio web corporativo (varias páginas): $150.000 – $500.000.</strong> Inicio, servicios, nosotros, blog y contacto. Es lo que necesita la mayoría de los negocios para verse profesionales y aparecer en Google.</p>
+<p><strong>Tienda online (e-commerce): $400.000 – $1.500.000+.</strong> Catálogo de productos, carrito, pasarela de pago (Transbank, MercadoPago, Flow) y gestión de pedidos. El precio sube con la cantidad de productos y las integraciones.</p>
+
+<h2>¿Por qué hay tanta diferencia de precio?</h2>
+<p>Dos páginas que "se ven parecidas" pueden costar muy distinto. Lo que realmente cambia el precio es:</p>
+<p><strong>Diseño a medida vs. plantilla.</strong> Una plantilla genérica es más barata pero se parece a miles de otros sitios. Un diseño pensado para tu marca convierte más visitas en clientes.</p>
+<p><strong>Optimización para Google (SEO).</strong> Muchos sitios baratos se ven bien pero son invisibles en las búsquedas. El trabajo de SEO técnico (velocidad, estructura, datos estructurados) es lo que hace que te encuentren.</p>
+<p><strong>Velocidad de carga.</strong> Una web lenta pierde clientes y posiciona peor. Optimizar imágenes y código lleva tiempo, y se nota.</p>
+<p><strong>Adaptación a celular.</strong> Más del 70% del tráfico en Chile es desde el teléfono. Un sitio que no se ve bien en móvil está perdiendo a la mayoría de sus visitas.</p>
+
+<h2>Lo que casi nadie te dice: los costos que siguen después</h2>
+<p>El precio de "hacer" la web no es el único gasto. Pregunta siempre por:</p>
+<p><strong>Dominio</strong> (tu dirección .cl o .com): alrededor de $10.000 al año.</p>
+<p><strong>Hosting</strong> (el servidor donde vive tu sitio): entre $30.000 y $120.000 al año según la calidad.</p>
+<p><strong>Mantención y soporte:</strong> algunos cobran una mensualidad, otros cobran por cambios puntuales. No hay una opción "correcta", pero debes saberlo desde el principio para no llevarte sorpresas.</p>
+
+<h2>Señales de que te están cobrando de más (o de menos)</h2>
+<p><strong>De más:</strong> te cobran una mensualidad alta "obligatoria" sin explicar qué incluye, o te amarran a una plataforma de la que no puedes salir con tu dominio y contenido.</p>
+<p><strong>De menos:</strong> un precio sospechosamente bajo suele significar plantilla genérica, cero SEO, sin optimización móvil y sin soporte. Terminas pagando dos veces cuando tienes que rehacerlo.</p>
+
+<h2>¿Cuánto cobra FIXDAY?</h2>
+<p>En FIXDAY una página web profesional parte en <strong>$150.000</strong>, e incluye diseño moderno a medida, optimización para Google (SEO), adaptación a celular, y <strong>dominio y hosting incluidos el primer año</strong> — sin letra chica ni mensualidades obligatorias. Para tiendas online o proyectos más complejos, cotizamos según lo que necesitas.</p>
+<p>Si quieres saber cuánto costaría exactamente tu proyecto, escríbenos por WhatsApp y te damos un valor claro sin compromiso. Atendemos negocios de todo Chile.</p>
+`,
+  },
+  {
+    slug: 'por-que-mi-pagina-web-carga-lenta',
+    title: 'Por qué tu página web carga lenta (y cómo acelerarla)',
+    description: 'Una web lenta pierde clientes y posiciona peor en Google. Descubre las causas más comunes de la lentitud y cómo solucionarlas para mejorar ventas y SEO.',
+    date: '2026-08-12',
+    readTime: 6,
+    category: 'Diseño Web',
+    content: `
+<p>Si tu página web tarda más de 3 segundos en cargar, es muy probable que estés perdiendo clientes sin darte cuenta. Los estudios son consistentes: cada segundo extra de carga aumenta el porcentaje de visitantes que se van antes de ver tu sitio. Y desde 2021, la velocidad es un factor directo de posicionamiento en Google. Estas son las causas más comunes y cómo resolverlas.</p>
+
+<h2>1. Imágenes pesadas sin optimizar</h2>
+<p>Es, de lejos, el problema número uno. Muchas webs suben fotos directamente desde el celular o la cámara, que pueden pesar 3, 5 o hasta 10 MB cada una. El navegador tiene que descargar todo ese peso antes de mostrar la página.</p>
+<p><strong>Solución:</strong> redimensionar las imágenes al tamaño real en que se muestran y comprimirlas (formatos modernos como WebP o AVIF, o JPG bien optimizado). Una foto puede pasar de 4 MB a menos de 100 KB sin pérdida visible de calidad. Solo con esto muchas webs cargan el doble de rápido.</p>
+
+<h2>2. Demasiados plugins o scripts</h2>
+<p>Especialmente en sitios WordPress, cada plugin agrega código que el navegador debe cargar. Tener 30 plugins activos —muchos que ni usas— hace que la página se arrastre.</p>
+<p><strong>Solución:</strong> auditar y eliminar los plugins innecesarios, y reemplazar varios plugins pequeños por soluciones más eficientes. Menos es más rápido.</p>
+
+<h2>3. Hosting de baja calidad</h2>
+<p>Un hosting compartido muy barato pone tu sitio en un servidor con cientos de otras webs peleando por los mismos recursos. Cuando otra web del servidor recibe tráfico, la tuya se ralentiza.</p>
+<p><strong>Solución:</strong> migrar a un hosting de mejor calidad o con recursos garantizados. La diferencia de precio suele ser pequeña y el impacto en velocidad, enorme.</p>
+
+<h2>4. Falta de caché</h2>
+<p>Sin caché, tu servidor reconstruye la página completa cada vez que alguien la visita. Con caché, guarda una versión lista para entregar al instante.</p>
+<p><strong>Solución:</strong> activar caché a nivel de servidor o con un plugin de caché bien configurado. Es una de las mejoras más rápidas de implementar.</p>
+
+<h2>5. Código y diseño sobrecargado</h2>
+<p>Animaciones excesivas, fuentes que cargan desde muchos lugares, sliders pesados en la portada… todo suma peso. Un diseño elegante no necesita cargar 20 recursos externos.</p>
+<p><strong>Solución:</strong> simplificar, cargar solo lo necesario y diferir lo que no es urgente (imágenes que están más abajo se cargan solo al hacer scroll).</p>
+
+<h2>Cómo medir la velocidad de tu web</h2>
+<p>Usa <strong>PageSpeed Insights</strong> de Google (es gratis): te da una nota de 0 a 100 en móvil y escritorio, y te dice exactamente qué está frenando tu sitio. Apunta a estar sobre 90 en móvil, que es lo que Google premia.</p>
+
+<h2>Velocidad = más ventas y mejor SEO</h2>
+<p>Acelerar tu web no es solo un tema técnico: es una de las inversiones con mejor retorno. Retienes a más visitantes, mejoras tu posición en Google y das una impresión de profesionalismo desde el primer segundo.</p>
+<p>En FIXDAY diseñamos páginas rápidas desde el inicio y también optimizamos sitios existentes que van lentos. Si tu web se arrastra, escríbenos por WhatsApp y revisamos qué la está frenando. Trabajamos con negocios de todo Chile.</p>
+`,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {

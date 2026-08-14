@@ -3,7 +3,19 @@
 import { useEffect, useRef, useState } from 'react'
 import Bix from './components/Bix'
 import StatsCounter from './components/StatsCounter'
+import JsonLd from './components/JsonLd'
 import { COMUNAS } from './zonas/comunas'
+import { HOME_FAQ } from './faq-home'
+
+// Iconos de la FAQ (paralelos a HOME_FAQ por índice)
+const FAQ_ICONS: React.ReactNode[] = [
+  <svg key="f0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+  <svg key="f1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+  <svg key="f2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  <svg key="f3" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  <svg key="f4" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>,
+  <svg key="f5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+]
 
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY 👋, me interesa una página web o servicio técnico para mi computador')}`
@@ -870,7 +882,7 @@ export default function Home() {
                 {/* Screenshot */}
                 <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
                   <img
-                    src="/screenshots/stockeo.png"
+                    src="/screenshots/stockeo.jpg"
                     alt="Stockeo - Sistema de gestión para negocios"
                     style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
                     loading="lazy"
@@ -901,7 +913,7 @@ export default function Home() {
                   <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>postmockup.com</div>
                 </div>
                 <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
-                  <img src="/screenshots/postmockup.png" alt="PostMockup - Generador de comentarios falsos" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                  <img src="/screenshots/postmockup.jpg" alt="PostMockup - Generador de comentarios falsos" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
                 </div>
                 <div style={{ padding: '20px 22px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -930,7 +942,7 @@ export default function Home() {
                 {/* Screenshot */}
                 <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
                   <img
-                    src="/screenshots/cleanschile.png"
+                    src="/screenshots/cleanschile.jpg"
                     alt="Cleans Chile - Detailing automotriz premium"
                     style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
                     loading="lazy"
@@ -961,7 +973,7 @@ export default function Home() {
                   <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>aceroscumbres.cl</div>
                 </div>
                 <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
-                  <img src="/screenshots/aceroscumbres.png" alt="Aceros Cumbres - Paneles y materiales de acero" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                  <img src="/screenshots/aceroscumbres.jpg" alt="Aceros Cumbres - Paneles y materiales de acero" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
                 </div>
                 <div style={{ padding: '20px 22px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -987,7 +999,7 @@ export default function Home() {
                   <div style={{ flex: 1, background: '#2C2C2E', borderRadius: 6, padding: '4px 10px', fontSize: 11, color: '#636366', marginLeft: 6, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>itparra.online</div>
                 </div>
                 <div style={{ position: 'relative', overflow: 'hidden', height: 200 }}>
-                  <img src="/screenshots/itparra.png" alt="IT Parra - Portafolio profesional IT" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
+                  <img src="/screenshots/itparra.jpg" alt="IT Parra - Portafolio profesional IT" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} loading="lazy" />
                 </div>
                 <div style={{ padding: '20px 22px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -1072,6 +1084,18 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          '@id': 'https://fixday.cl/#faq',
+          mainEntity: HOME_FAQ.map(({ q, a }) => ({
+            '@type': 'Question',
+            name: q,
+            acceptedAnswer: { '@type': 'Answer', text: a },
+          })),
+        }}
+      />
       <section id="faq" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-60%)', width: 800, height: 500, background: 'radial-gradient(ellipse, rgba(41,151,255,.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div className="container" style={{ position: 'relative' }}>
@@ -1080,38 +1104,8 @@ export default function Home() {
             <h2>Todo lo que necesitas<br /><span className="gl">saber antes de llamar</span></h2>
           </div>
           <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {([
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
-                q: '¿Cuánto cuesta la visita a domicilio?',
-                a: 'La visita + diagnóstico técnico tiene un valor especial de $10.000 (precio normal $15.000) durante nuestra oferta de lanzamiento. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.',
-              },
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-                q: '¿En cuánto tiempo llegan?',
-                a: 'Atendemos el mismo día o al día siguiente, de lunes a viernes de 8:00 a 19:00 hrs. Respondemos en menos de 1 hora para coordinar la visita.',
-              },
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
-                q: '¿En qué comunas atienden?',
-                a: 'Cubrimos 38 comunas de la Región Metropolitana: Santiago, Providencia, Las Condes, Ñuñoa, La Florida, Maipú, Puente Alto, Vitacura, La Reina, Peñalolén, Macul y muchas más. Consulta el listado completo en nuestra sección de zonas.',
-              },
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
-                q: '¿Qué pasa si no pueden reparar mi equipo?',
-                a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($10.000). Sin presiones ni costos adicionales.',
-              },
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>,
-                q: '¿Qué medios de pago aceptan?',
-                a: 'Aceptamos efectivo y transferencia bancaria. El pago se realiza una vez terminado el trabajo, nunca antes.',
-              },
-              {
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
-                q: '¿Pueden recuperar datos de un disco dañado?',
-                a: 'Sí. Ofrecemos recuperación de datos de discos con daño lógico (virus, formateo, partición corrupta) y en muchos casos de daño físico. El diagnóstico inicial determina el porcentaje de recuperación posible.',
-              },
-            ] as { icon: React.ReactNode; q: string; a: string }[]).map(({ icon, q, a }, i) => {
+            {HOME_FAQ.map(({ q, a }, i) => {
+              const icon = FAQ_ICONS[i]
               const open = faqOpen === i
               return (
                 <div

@@ -111,10 +111,27 @@ export default async function BusinessSchema() {
     }
   }
 
+  const website = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: 'FIXDAY',
+    alternateName: 'FIXDAY Diseño Web y Técnico a Domicilio',
+    inLanguage: 'es-CL',
+    publisher: { '@id': `${SITE_URL}/#business` },
+  }
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+    </>
   )
 }
