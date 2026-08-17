@@ -616,7 +616,7 @@ export const POSTS: Post[] = [
 <p><strong>De menos:</strong> un precio sospechosamente bajo suele significar plantilla genérica, cero SEO, sin optimización móvil y sin soporte. Terminas pagando dos veces cuando tienes que rehacerlo.</p>
 
 <h2>¿Cuánto cobra FIXDAY?</h2>
-<p>En FIXDAY una página web profesional parte en <strong>$150.000</strong>, e incluye diseño moderno a medida, optimización para Google (SEO), adaptación a celular, y <strong>dominio y hosting incluidos el primer año</strong> — sin letra chica ni mensualidades obligatorias. Para tiendas online o proyectos más complejos, cotizamos según lo que necesitas.</p>
+<p>En FIXDAY una página web profesional parte en <strong>$200.000</strong>, e incluye diseño moderno a medida, optimización para Google (SEO), adaptación a celular, y <strong>dominio y hosting incluidos el primer año</strong> — sin letra chica ni mensualidades obligatorias. Para tiendas online o proyectos más complejos, cotizamos según lo que necesitas.</p>
 <p>Si quieres saber cuánto costaría exactamente tu proyecto, escríbenos por WhatsApp y te damos un valor claro sin compromiso. Atendemos negocios de todo Chile.</p>
 `,
   },
