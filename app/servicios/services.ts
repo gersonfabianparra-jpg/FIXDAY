@@ -17,7 +17,7 @@ export const SERVICES: ServicePage[] = [
     shortTitle: 'Mantención de PC',
     description: 'Servicio de mantención lógica y física de computadores a domicilio en Santiago y Región Metropolitana. Limpieza interna, pasta térmica, drivers y sistema operativo. Desde $25.000.',
     price: '$25.000',
-    priceNote: 'La visita + diagnóstico ($10.000 oferta lanzamiento) se aplica al total si realizas la mantención.',
+    priceNote: 'La visita + diagnóstico ($20.000) se aplica al total si realizas la mantención.',
     includes: [
       'Limpieza interna con aire comprimido (polvo del disipador, ventiladores y tarjeta madre)',
       'Reemplazo de pasta térmica del procesador',

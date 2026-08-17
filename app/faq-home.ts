@@ -7,7 +7,7 @@
 export const HOME_FAQ: { q: string; a: string }[] = [
   {
     q: '¿Cuánto cuesta la visita a domicilio?',
-    a: 'La visita + diagnóstico técnico tiene un valor especial de $10.000 (precio normal $15.000) durante nuestra oferta de lanzamiento. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.',
+    a: 'La visita + diagnóstico técnico a domicilio tiene un valor de $20.000. Si realizas la reparación, ese valor se descuenta del total. No hay cargos ocultos.',
   },
   {
     q: '¿En cuánto tiempo llegan?',
@@ -19,7 +19,7 @@ export const HOME_FAQ: { q: string; a: string }[] = [
   },
   {
     q: '¿Qué pasa si no pueden reparar mi equipo?',
-    a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($10.000). Sin presiones ni costos adicionales.',
+    a: 'Si después del diagnóstico no es posible reparar tu equipo o el costo no te conviene, solo pagas la visita ($20.000). Sin presiones ni costos adicionales.',
   },
   {
     q: '¿Qué medios de pago aceptan?',

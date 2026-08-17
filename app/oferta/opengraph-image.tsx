@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'FIXDAY — Visita + Diagnóstico $10.000'
+export const alt = 'FIXDAY — Visita + Diagnóstico a domicilio $20.000'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -34,22 +34,22 @@ export default function OgImage() {
           display: 'flex',
         }} />
 
-        {/* Badge oferta */}
+        {/* Badge */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          background: 'rgba(255,59,48,0.15)',
-          border: '1px solid rgba(255,59,48,0.4)',
+          background: 'rgba(41,151,255,0.15)',
+          border: '1px solid rgba(41,151,255,0.4)',
           borderRadius: 980,
           padding: '8px 24px',
           fontSize: 18,
           fontWeight: 700,
-          color: '#FF3B30',
+          color: '#2997FF',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           marginBottom: 28,
         }}>
-          ⏳ OFERTA DE LANZAMIENTO
+          🔧 TÉCNICO A DOMICILIO
         </div>
 
         {/* Título */}
@@ -71,8 +71,7 @@ export default function OgImage() {
 
         {/* Precio */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 36 }}>
-          <span style={{ fontSize: 32, color: '#444', textDecoration: 'line-through', fontWeight: 600 }}>$15.000</span>
-          <span style={{ fontSize: 88, fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1 }}>$10.000</span>
+          <span style={{ fontSize: 88, fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1 }}>$20.000</span>
         </div>
 
         {/* Subtítulo */}

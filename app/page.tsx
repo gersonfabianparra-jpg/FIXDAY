@@ -675,10 +675,10 @@ export default function Home() {
           <div className="sh fu">
             <span className="chip-d">Tarifas</span>
             <h2>Precios claros,<br /><span className="gl">sin sorpresas</span></h2>
-            <p>Visita a domicilio + diagnóstico técnico: <strong>$15.000</strong>. Si realizamos la reparación, ese valor se aplica al total del servicio.</p>
+            <p>Visita a domicilio + diagnóstico técnico: <strong>$20.000</strong>. Si realizamos la reparación, ese valor se aplica al total del servicio.</p>
             <div className="price-banner fu">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              Visita a domicilio + diagnóstico — <strong style={{ marginLeft: 5, color: '#2997FF' }}>$15.000</strong><span style={{ marginLeft: 8, color: '#636366', fontWeight: 400, fontSize: '0.85em' }}>(se aplica al servicio si hay reparación)</span>
+              Visita a domicilio + diagnóstico — <strong style={{ marginLeft: 5, color: '#2997FF' }}>$20.000</strong><span style={{ marginLeft: 8, color: '#636366', fontWeight: 400, fontSize: '0.85em' }}>(se aplica al servicio si hay reparación)</span>
             </div>
           </div>
           <div className="pgrid">
@@ -704,7 +704,7 @@ export default function Home() {
           </div>
           <p className="price-note fu">
             Los precios son referenciales e incluyen mano de obra. Repuestos o materiales adicionales se cotizan aparte.<br />
-            Visita + diagnóstico: $15.000 — se aplica al total si realizamos la reparación.
+            Visita + diagnóstico: $20.000 — se aplica al total si realizamos la reparación.
           </p>
           <div style={{ textAlign: 'center', marginTop: 40 }} className="fu">
             <a href="#contact" className="btn btn-dp">Solicitar visita técnica</a>

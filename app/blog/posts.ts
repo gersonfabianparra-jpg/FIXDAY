@@ -55,7 +55,7 @@ export const POSTS: Post[] = [
 
 <h2>¿Cuándo llamar a un técnico?</h2>
 <p>Si identificaste el problema pero no te sientes cómodo interviniendo el equipo, o si el PC sigue lento después de los ajustes básicos, lo mejor es una revisión profesional en casa. Un diagnóstico completo puede determinar si el problema es software (más económico) o hardware (requiere cambio de componentes).</p>
-<p>En FIXDAY atendemos en toda la Región Metropolitana. La visita a domicilio + diagnóstico tiene un valor especial de $10.000 en nuestra oferta de lanzamiento, que se descuenta si realizas la reparación.</p>
+<p>En FIXDAY atendemos en toda la Región Metropolitana. La visita a domicilio + diagnóstico tiene un valor de $20.000, que se descuenta si realizas la reparación.</p>
 `,
   },
   {
@@ -184,7 +184,7 @@ export const POSTS: Post[] = [
 
 <h2>Recuperación de datos de disco dañado</h2>
 <p>Si tu disco duro tiene daño físico (caída, humedad, golpe) o daño lógico severo (virus, formateo múltiple), la recuperación requiere equipos especializados. En estos casos, un técnico puede usar herramientas de clonación de disco para recuperar los datos antes de intentar cualquier reparación.</p>
-<p>En FIXDAY ofrecemos servicio de recuperación de datos a domicilio en toda la Región Metropolitana. El diagnóstico inicial tiene un costo de $10.000 y te informamos el porcentaje de recuperación posible antes de proceder.</p>
+<p>En FIXDAY ofrecemos servicio de recuperación de datos a domicilio en toda la Región Metropolitana. El diagnóstico inicial tiene un costo de $20.000 y te informamos el porcentaje de recuperación posible antes de proceder.</p>
 
 <h2>Cómo evitar perder datos en el futuro</h2>
 <p>La única protección real contra la pérdida de datos es el respaldo regular:</p>
