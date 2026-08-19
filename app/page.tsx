@@ -573,6 +573,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── SALUDO AIEP MARKETING DIGITAL ── */}
+      <section id="aiep" style={{ padding: '64px 0', borderTop: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 900, height: 500, background: 'radial-gradient(ellipse, rgba(191,90,242,.14) 0%, rgba(41,151,255,.10) 40%, transparent 70%)', pointerEvents: 'none' }} />
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{
+            maxWidth: 760, margin: '0 auto', textAlign: 'center',
+            background: 'linear-gradient(135deg, rgba(41,151,255,.10), rgba(191,90,242,.10))',
+            border: '1px solid rgba(191,90,242,.30)',
+            borderRadius: 28,
+            padding: 'clamp(32px,5vw,56px) clamp(20px,4vw,48px)',
+            boxShadow: '0 0 60px rgba(191,90,242,.15), inset 0 1px 0 rgba(255,255,255,.06)',
+          }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(191,90,242,.14)', border: '1px solid rgba(191,90,242,.35)', borderRadius: 980, padding: '7px 18px', fontSize: 12, fontWeight: 800, color: '#D9A6F7', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 24 }}>
+              🎓 AIEP · Marketing Digital
+            </div>
+            <h2 style={{ fontSize: 'clamp(2rem,5.5vw,3.4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-.03em', marginBottom: 20 }}>
+              A mis compañeros de curso:<br />
+              <span style={{ background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                ¡son geniales! 🎉
+              </span>
+            </h2>
+            <p style={{ fontSize: 'clamp(1rem,2.2vw,1.2rem)', color: '#C7C7CC', lineHeight: 1.8, maxWidth: 560, margin: '0 auto' }}>
+              A todos mis compañeros de <strong style={{ color: '#F5F5F7' }}>Marketing Digital del AIEP</strong>: son un equipo increíble, talentoso y lleno de buenas ideas. ¡Gracias por tanto! 🚀✨
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── SERVICE SLIDER ── */}
       <section id="slider">
         <div className="chip-wrap">
