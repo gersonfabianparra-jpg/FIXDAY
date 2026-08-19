@@ -595,7 +595,7 @@ export default function Home() {
               </span>
             </h2>
             <p style={{ fontSize: 'clamp(1rem,2.2vw,1.2rem)', color: '#C7C7CC', lineHeight: 1.8, maxWidth: 560, margin: '0 auto' }}>
-              A todos mis compañeros de <strong style={{ color: '#F5F5F7' }}>Marketing Digital del AIEP</strong>: son un equipo increíble, talentoso y lleno de buenas ideas. ¡Gracias por tanto! 🚀✨
+              A todos mis compañeros de <strong style={{ color: '#F5F5F7' }}>Marketing Digital del AIEP</strong> y a nuestro <strong style={{ color: '#F5F5F7' }}>profe Ricci</strong>: son un equipo increíble, talentoso y lleno de buenas ideas. ¡Gracias por tanto! 🚀✨
             </p>
           </div>
         </div>
