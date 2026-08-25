@@ -27,7 +27,7 @@ const SECTORS = [
   {
     name: 'Sector Poniente',
     desc: 'Atendemos Maipú y todas las comunas del poniente con rapidez y profesionalismo.',
-    comunas: ['Maipú','Pudahuel','Cerrillos','Lo Prado','Renca','Pudahuel','Quilicura','Lampa'],
+    comunas: ['Maipú','Pudahuel','Cerrillos','Lo Prado','Renca','Quilicura','Lampa'],
   },
   {
     name: 'Sector Norte',
