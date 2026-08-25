@@ -32,13 +32,39 @@ export async function generateMetadata({ params }: { params: { comuna: string } 
   }
 }
 
+const stroke = { fill: 'none', stroke: '#2997FF', strokeWidth: 1.7, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+
 const SERVICES = [
-  { title: 'Mantención de PC', desc: 'Limpieza interna, pasta térmica, drivers y sistema operativo.', price: '$25.000' },
-  { title: 'Instalación de Windows', desc: 'Windows 10 u 11, drivers, antivirus y programas esenciales.', price: '$30.000' },
-  { title: 'Recuperación de datos', desc: 'Discos dañados, formateados o con particiones corruptas.', price: '$35.000' },
-  { title: 'Optimización del sistema', desc: 'Eliminamos malware y procesos que frenan tu equipo.', price: '$20.000' },
-  { title: 'Respaldo de información', desc: 'Copia segura de tus archivos, fotos y documentos.', price: '$15.000' },
-  { title: 'WiFi y repetidores', desc: 'Configuración de router y cobertura completa en tu hogar.', price: '$30.000' },
+  {
+    title: 'Mantención de PC', desc: 'Limpieza interna, pasta térmica, drivers y sistema operativo.', price: '$25.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  },
+  {
+    title: 'Instalación de Windows', desc: 'Windows 10 u 11, drivers, antivirus y programas esenciales.', price: '$30.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M12 7v6M9 10h6"/></svg>,
+  },
+  {
+    title: 'Recuperación de datos', desc: 'Discos dañados, formateados o con particiones corruptas.', price: '$35.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>,
+  },
+  {
+    title: 'Optimización del sistema', desc: 'Eliminamos malware y procesos que frenan tu equipo.', price: '$20.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+  },
+  {
+    title: 'Respaldo de información', desc: 'Copia segura de tus archivos, fotos y documentos.', price: '$15.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>,
+  },
+  {
+    title: 'WiFi y repetidores', desc: 'Configuración de router y cobertura completa en tu hogar.', price: '$30.000',
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>,
+  },
+]
+
+const STEPS = [
+  { n: '1', title: 'Escríbenos por WhatsApp', desc: 'Cuéntanos qué le pasa a tu equipo. Te respondemos en menos de una hora.' },
+  { n: '2', title: 'Coordinamos la visita', desc: 'Agendamos el mismo día o al día siguiente, en el horario que te acomode.' },
+  { n: '3', title: 'Reparamos en tu casa', desc: 'Diagnóstico claro, presupuesto sin sorpresas y solución en el lugar.' },
 ]
 
 const WA_BASE = 'https://wa.me/56936649332?text='
@@ -48,6 +74,11 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
   if (!c) notFound()
 
   const waMsg = encodeURIComponent(`Hola FIXDAY, necesito un técnico a domicilio en ${c.name}`)
+
+  // Comunas cercanas que tienen su propia página → chips clicables (interlinking)
+  const nearbyLinks = c.nearby
+    .map(name => COMUNAS.find(x => x.name === name))
+    .filter((x): x is (typeof COMUNAS)[number] => Boolean(x))
 
   const faqs = [
     { q: `¿Cuánto cuesta la visita de un técnico a domicilio en ${c.name}?`, a: `La visita a domicilio en ${c.name} más el diagnóstico tiene un valor de $20.000. Si realizas la reparación con nosotros, ese monto se descuenta del total del servicio.` },
@@ -59,6 +90,18 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
 
   return (
     <div style={{ minHeight: '100vh', background: '#000', color: '#F5F5F7', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}>
+      {/* Hover styles (server-safe, scoped con prefijo cz-) */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .cz-svc{transition:transform .22s ease,border-color .22s ease,background .22s ease}
+        .cz-svc:hover{transform:translateY(-3px);border-color:rgba(41,151,255,.35);background:#141414}
+        .cz-chip{transition:background .2s ease,border-color .2s ease,color .2s ease}
+        .cz-chip:hover{background:rgba(41,151,255,.14);border-color:rgba(41,151,255,.4);color:#fff}
+        .cz-cta{transition:transform .2s ease,box-shadow .2s ease}
+        .cz-cta:hover{transform:translateY(-2px)}
+        .cz-faq[open] .cz-faq-plus{transform:rotate(45deg)}
+        .cz-faq summary::-webkit-details-marker{display:none}
+      `}} />
+
       {/* Schema.org */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
@@ -116,31 +159,57 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         </div>
       </nav>
 
+      {/* Breadcrumb */}
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '18px 24px 0' }}>
+        <nav aria-label="Ruta de navegación" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: '#636366', flexWrap: 'wrap' }}>
+          <Link href="/" style={{ color: '#86868B', textDecoration: 'none' }}>Inicio</Link>
+          <span aria-hidden>/</span>
+          <Link href="/zonas" style={{ color: '#86868B', textDecoration: 'none' }}>Zonas</Link>
+          <span aria-hidden>/</span>
+          <span style={{ color: '#2997FF', fontWeight: 600 }}>{c.name}</span>
+        </nav>
+      </div>
+
       {/* Hero */}
-      <section style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 700, height: 400, background: 'radial-gradient(ellipse, rgba(41,151,255,.1) 0%, transparent 65%)', pointerEvents: 'none' }} />
+      <section style={{ padding: '40px 0 48px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: 760, height: 420, background: 'radial-gradient(ellipse, rgba(41,151,255,.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', position: 'relative' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 980, padding: '6px 16px', fontSize: 11, fontWeight: 600, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 24 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 980, padding: '6px 16px', fontSize: 11, fontWeight: 600, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 22 }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#2997FF" style={{ marginRight: 2 }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
             {c.sector} · Santiago
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-.03em', marginBottom: 20, maxWidth: 700 }}>
+          <h1 style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-.03em', marginBottom: 20, maxWidth: 720 }}>
             Técnico de computadores<br />
             <span style={{ background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
               a domicilio en {c.name}
             </span>
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#86868B', lineHeight: 1.8, maxWidth: 600, marginBottom: 16 }}>
+          <p style={{ fontSize: '1.1rem', color: '#86868B', lineHeight: 1.8, maxWidth: 600, marginBottom: 24 }}>
             Servicio técnico profesional en <strong style={{ color: '#F5F5F7' }}>{c.name}</strong>. Vamos a tu casa u oficina, revisamos tu equipo y lo dejamos funcionando. Sin traslados, sin esperas.
           </p>
-          <p style={{ fontSize: '0.95rem', color: '#636366', marginBottom: 36 }}>
-            También atendemos: {c.nearby.join(', ')} y toda la Región Metropolitana.
-          </p>
+
+          {/* Trust badges */}
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
+            {[
+              { t: 'Visita el mismo día' },
+              { t: '7 días de garantía' },
+              { t: 'Sin traslados' },
+              { t: 'Diagnóstico transparente' },
+            ].map(b => (
+              <span key={b.t} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#C7C7CC', fontWeight: 500 }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                {b.t}
+              </span>
+            ))}
+          </div>
+
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2997FF', color: '#fff', borderRadius: 980, padding: '14px 28px', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className="cz-cta"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', borderRadius: 980, padding: '14px 28px', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 8px 24px rgba(37,211,102,.28)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
               Agendar visita en {c.name}
             </a>
-            <Link href="/#contact"
+            <Link href="/#contact" className="cz-cta"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', borderRadius: 980, padding: '14px 28px', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
               Formulario de contacto
             </Link>
@@ -149,18 +218,42 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
       </section>
 
       {/* Precio visita */}
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px 48px' }}>
-        <div style={{ background: 'rgba(41,151,255,.06)', border: '1px solid rgba(41,151,255,.18)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          <span style={{ fontSize: 14, color: '#C7C7CC' }}>
-            <strong style={{ color: '#F5F5F7' }}>Visita a domicilio en {c.name} + diagnóstico: $20.000</strong>
-            {' '}— si realizamos la reparación, ese valor se aplica al total del servicio.
-          </span>
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px 56px' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(41,151,255,.09), rgba(191,90,242,.06))', border: '1px solid rgba(41,151,255,.2)', borderRadius: 18, padding: '22px 28px', display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1, minWidth: 260 }}>
+            <div style={{ width: 46, height: 46, borderRadius: 12, background: 'rgba(41,151,255,.14)', border: '1px solid rgba(41,151,255,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#F5F5F7' }}>Visita a domicilio + diagnóstico en {c.name}</div>
+              <div style={{ fontSize: 13, color: '#86868B', marginTop: 2 }}>Si realizamos la reparación, el valor se aplica al total.</div>
+            </div>
+          </div>
+          <div style={{ fontSize: 30, fontWeight: 900, color: '#F5F5F7', letterSpacing: '-.03em', whiteSpace: 'nowrap' }}>$20.000</div>
         </div>
       </div>
 
+      {/* Cómo funciona */}
+      <section style={{ padding: '0 0 72px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+          <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 8 }}>
+            Cómo agendar en {c.name}
+          </h2>
+          <p style={{ color: '#636366', fontSize: 15, marginBottom: 36 }}>Tres pasos simples y tu equipo queda funcionando.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {STEPS.map(s => (
+              <div key={s.n} style={{ background: '#0C0C0C', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, padding: '26px 24px', position: 'relative' }}>
+                <div style={{ width: 38, height: 38, borderRadius: 11, background: 'linear-gradient(135deg,#0071E3,#BF5AF2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, fontWeight: 900, color: '#fff', marginBottom: 16 }}>{s.n}</div>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#F5F5F7', marginBottom: 7 }}>{s.title}</h3>
+                <p style={{ fontSize: 13, color: '#636366', lineHeight: 1.7 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Servicios */}
-      <section style={{ padding: '0 0 80px' }}>
+      <section style={{ padding: '0 0 72px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
           <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 8 }}>
             Servicios técnicos en {c.name}
@@ -170,12 +263,18 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
             {SERVICES.map(s => (
-              <div key={s.title} style={{ background: '#111', border: '1px solid rgba(255,255,255,.07)', borderRadius: 16, padding: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                  <h3 style={{ fontSize: 15, fontWeight: 700, color: '#F5F5F7' }}>{s.title}</h3>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: '#2997FF', whiteSpace: 'nowrap', marginLeft: 12 }}>Desde {s.price}</span>
+              <div key={s.title} className="cz-svc" style={{ background: '#111', border: '1px solid rgba(255,255,255,.07)', borderRadius: 16, padding: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {s.icon}
+                  </div>
+                  <h3 style={{ fontSize: 15, fontWeight: 700, color: '#F5F5F7', lineHeight: 1.3 }}>{s.title}</h3>
                 </div>
-                <p style={{ fontSize: 13, color: '#636366', lineHeight: 1.7 }}>{s.desc}</p>
+                <p style={{ fontSize: 13, color: '#8A8A8F', lineHeight: 1.7, marginBottom: 16 }}>{s.desc}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,.06)', paddingTop: 14 }}>
+                  <span style={{ fontSize: 12, color: '#636366' }}>Desde</span>
+                  <span style={{ fontSize: 16, fontWeight: 800, color: '#2997FF' }}>{s.price}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -183,21 +282,21 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
       </section>
 
       {/* Por qué FIXDAY en esta comuna */}
-      <section style={{ padding: '0 0 80px' }}>
+      <section style={{ padding: '0 0 72px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ background: '#0A0A0A', border: '1px solid rgba(255,255,255,.07)', borderRadius: 20, padding: '40px' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 24 }}>
+          <div style={{ background: '#0A0A0A', border: '1px solid rgba(255,255,255,.07)', borderRadius: 20, padding: 'clamp(28px,5vw,44px)' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 28 }}>
               ¿Por qué elegir FIXDAY en {c.name}?
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 28 }}>
               {[
-                { icon: '📍', title: `Llegamos a ${c.name}`, desc: 'Vamos directo a tu dirección. Sin que tengas que movilizar tu equipo.' },
-                { icon: '⚡', title: 'Respuesta rápida', desc: 'Coordinamos visita el mismo día o al día siguiente según disponibilidad.' },
-                { icon: '🛡️', title: '7 días de garantía', desc: 'Si el problema vuelve en 7 días, regresamos sin costo adicional.' },
-                { icon: '💬', title: 'Diagnóstico claro', desc: 'Te explicamos el problema antes de cobrar cualquier reparación.' },
+                { title: `Llegamos a ${c.name}`, desc: 'Vamos directo a tu dirección. Sin que tengas que movilizar tu equipo.', icon: <svg width="20" height="20" viewBox="0 0 24 24" {...stroke}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> },
+                { title: 'Respuesta rápida', desc: 'Coordinamos visita el mismo día o al día siguiente según disponibilidad.', icon: <svg width="20" height="20" viewBox="0 0 24 24" {...stroke}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> },
+                { title: '7 días de garantía', desc: 'Si el problema vuelve en 7 días, regresamos sin costo adicional.', icon: <svg width="20" height="20" viewBox="0 0 24 24" {...stroke}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> },
+                { title: 'Diagnóstico claro', desc: 'Te explicamos el problema antes de cobrar cualquier reparación.', icon: <svg width="20" height="20" viewBox="0 0 24 24" {...stroke}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> },
               ].map(f => (
                 <div key={f.title}>
-                  <div style={{ fontSize: 24, marginBottom: 10 }}>{f.icon}</div>
+                  <div style={{ width: 42, height: 42, borderRadius: 12, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>{f.icon}</div>
                   <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 6, color: '#F5F5F7' }}>{f.title}</h4>
                   <p style={{ fontSize: 13, color: '#636366', lineHeight: 1.7 }}>{f.desc}</p>
                 </div>
@@ -208,17 +307,17 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
       </section>
 
       {/* FAQ */}
-      <section style={{ padding: '0 0 80px' }}>
+      <section style={{ padding: '0 0 72px' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px' }}>
           <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 28 }}>
             Preguntas frecuentes sobre el servicio en {c.name}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {faqs.map(({ q, a }) => (
-              <details key={q} style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, overflow: 'hidden' }}>
-                <summary style={{ padding: '16px 20px', fontWeight: 700, fontSize: '0.92rem', color: '#F5F5F7', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <details key={q} className="cz-faq" style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, overflow: 'hidden' }}>
+                <summary style={{ padding: '16px 20px', fontWeight: 700, fontSize: '0.92rem', color: '#F5F5F7', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                   {q}
-                  <span style={{ color: '#2997FF', fontSize: 18, flexShrink: 0, marginLeft: 12 }}>+</span>
+                  <span className="cz-faq-plus" style={{ color: '#2997FF', fontSize: 20, flexShrink: 0, transition: 'transform .22s ease', lineHeight: 1 }}>+</span>
                 </summary>
                 <div style={{ padding: '0 20px 16px', fontSize: '0.86rem', color: '#86868B', lineHeight: 1.7 }}>{a}</div>
               </details>
@@ -227,20 +326,47 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         </div>
       </section>
 
+      {/* Comunas cercanas — interlinking */}
+      {nearbyLinks.length > 0 && (
+        <section style={{ padding: '0 0 72px' }}>
+          <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, letterSpacing: '-.01em', marginBottom: 6, color: '#F5F5F7' }}>
+              También atendemos cerca de {c.name}
+            </h2>
+            <p style={{ color: '#636366', fontSize: 13.5, marginBottom: 20 }}>Estás en {c.sector.toLowerCase()}. Revisa el servicio en las comunas vecinas:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+              {nearbyLinks.map(n => (
+                <Link key={n.slug} href={`/zonas/${n.slug}`} className="cz-chip"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '9px 18px', fontSize: 13.5, color: '#C7C7CC', textDecoration: 'none', fontWeight: 500 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  {n.name}
+                </Link>
+              ))}
+              <Link href="/zonas" className="cz-chip"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.25)', borderRadius: 980, padding: '9px 18px', fontSize: 13.5, color: '#2997FF', textDecoration: 'none', fontWeight: 600 }}>
+                Ver todas las comunas →
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* CTA final */}
       <section style={{ padding: '0 0 100px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, marginBottom: 12 }}>
-            ¿Tu computador tiene problemas en {c.name}?
-          </h2>
-          <p style={{ color: '#636366', fontSize: 15, marginBottom: 32, maxWidth: 480, margin: '0 auto 32px' }}>
-            Escríbenos y agendamos una visita técnica a domicilio en {c.name} para el horario que más te acomode.
-          </p>
-          <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#25D366', color: '#fff', borderRadius: 980, padding: '16px 36px', fontSize: 16, fontWeight: 700, textDecoration: 'none', boxShadow: '0 8px 28px rgba(37,211,102,.3)' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-            Contactar por WhatsApp
-          </a>
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ background: 'linear-gradient(135deg, rgba(41,151,255,.08), rgba(191,90,242,.06))', border: '1px solid rgba(255,255,255,.09)', borderRadius: 24, padding: 'clamp(36px,6vw,56px) 24px', textAlign: 'center' }}>
+            <h2 style={{ fontSize: 'clamp(1.5rem,3.5vw,2.2rem)', fontWeight: 900, letterSpacing: '-.02em', marginBottom: 12 }}>
+              ¿Tu computador tiene problemas en {c.name}?
+            </h2>
+            <p style={{ color: '#86868B', fontSize: 15, marginBottom: 32, maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>
+              Escríbenos y agendamos una visita técnica a domicilio en {c.name} para el horario que más te acomode.
+            </p>
+            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className="cz-cta"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#25D366', color: '#fff', borderRadius: 980, padding: '16px 36px', fontSize: 16, fontWeight: 700, textDecoration: 'none', boxShadow: '0 8px 28px rgba(37,211,102,.3)' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              Contactar por WhatsApp
+            </a>
+          </div>
         </div>
       </section>
 
