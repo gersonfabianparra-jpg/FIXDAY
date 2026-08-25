@@ -100,6 +100,36 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         .cz-cta:hover{transform:translateY(-2px)}
         .cz-faq[open] .cz-faq-plus{transform:rotate(45deg)}
         .cz-faq summary::-webkit-details-marker{display:none}
+
+        /* ── Hero animado ── */
+        .cz-hero{position:relative;overflow:hidden}
+        .cz-aurora{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;opacity:.55;will-change:transform}
+        .cz-aurora.a1{width:520px;height:520px;top:-160px;left:-80px;background:radial-gradient(circle,rgba(41,151,255,.5),transparent 65%);animation:czFloat1 14s ease-in-out infinite}
+        .cz-aurora.a2{width:460px;height:460px;top:-120px;right:-60px;background:radial-gradient(circle,rgba(191,90,242,.45),transparent 65%);animation:czFloat2 18s ease-in-out infinite}
+        .cz-aurora.a3{width:380px;height:380px;bottom:-180px;left:38%;background:radial-gradient(circle,rgba(0,200,255,.35),transparent 65%);animation:czFloat3 16s ease-in-out infinite}
+        @keyframes czFloat1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,40px) scale(1.12)}}
+        @keyframes czFloat2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,30px) scale(1.08)}}
+        @keyframes czFloat3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.15)}}
+
+        .cz-shimmer{background:linear-gradient(90deg,#2997FF 0%,#5E5CE6 30%,#BF5AF2 55%,#00C8FF 80%,#2997FF 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:czShimmer 6s linear infinite}
+        @keyframes czShimmer{0%{background-position:0% 50%}100%{background-position:250% 50%}}
+
+        .cz-rise{opacity:0;transform:translateY(16px);animation:czRise .7s cubic-bezier(.16,1,.3,1) forwards}
+        .cz-d1{animation-delay:.05s}.cz-d2{animation-delay:.15s}.cz-d3{animation-delay:.28s}.cz-d4{animation-delay:.4s}.cz-d5{animation-delay:.52s}
+        @keyframes czRise{to{opacity:1;transform:translateY(0)}}
+
+        .cz-pin{position:relative;display:inline-flex}
+        .cz-pin::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(41,151,255,.6);animation:czPulse 2s ease-out infinite}
+        @keyframes czPulse{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+
+        .cz-dot{width:8px;height:8px;border-radius:50%;background:#30D158;box-shadow:0 0 0 0 rgba(48,209,88,.6);animation:czBlink 1.8s ease-out infinite}
+        @keyframes czBlink{0%{box-shadow:0 0 0 0 rgba(48,209,88,.6)}70%{box-shadow:0 0 0 7px rgba(48,209,88,0)}100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}}
+
+        @media (prefers-reduced-motion: reduce){
+          .cz-aurora,.cz-shimmer,.cz-rise,.cz-pin::after,.cz-dot{animation:none!important}
+          .cz-rise{opacity:1;transform:none}
+          .cz-shimmer{-webkit-text-fill-color:transparent}
+        }
       `}} />
 
       {/* Schema.org */}
@@ -170,47 +200,53 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         </nav>
       </div>
 
-      {/* Hero */}
-      <section style={{ padding: '40px 0 48px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: 760, height: 420, background: 'radial-gradient(ellipse, rgba(41,151,255,.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', position: 'relative' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(41,151,255,.08)', border: '1px solid rgba(41,151,255,.2)', borderRadius: 980, padding: '6px 16px', fontSize: 11, fontWeight: 600, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 22 }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#2997FF" style={{ marginRight: 2 }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+      {/* Hero animado */}
+      <section className="cz-hero" style={{ padding: '48px 0 56px' }}>
+        {/* Auroras animadas de fondo */}
+        <div className="cz-aurora a1" />
+        <div className="cz-aurora a2" />
+        <div className="cz-aurora a3" />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%)', pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>
+          <div className="cz-rise cz-d1" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.28)', borderRadius: 980, padding: '7px 18px', fontSize: 11, fontWeight: 700, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 24 }}>
+            <span className="cz-pin" style={{ alignItems: 'center' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#2997FF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            </span>
             {c.sector} · Santiago
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-.03em', marginBottom: 20, maxWidth: 720 }}>
+
+          <h1 className="cz-rise cz-d2" style={{ fontSize: 'clamp(2.1rem,5.6vw,3.6rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-.035em', marginBottom: 20, maxWidth: 760 }}>
             Técnico de computadores<br />
-            <span style={{ background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              a domicilio en {c.name}
-            </span>
+            <span className="cz-shimmer">a domicilio en {c.name}</span>
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#86868B', lineHeight: 1.8, maxWidth: 600, marginBottom: 24 }}>
+
+          <p className="cz-rise cz-d3" style={{ fontSize: '1.12rem', color: '#9A9AA0', lineHeight: 1.8, maxWidth: 600, marginBottom: 26 }}>
             Servicio técnico profesional en <strong style={{ color: '#F5F5F7' }}>{c.name}</strong>. Vamos a tu casa u oficina, revisamos tu equipo y lo dejamos funcionando. Sin traslados, sin esperas.
           </p>
 
           {/* Trust badges */}
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
-            {[
-              { t: 'Visita el mismo día' },
-              { t: '7 días de garantía' },
-              { t: 'Sin traslados' },
-              { t: 'Diagnóstico transparente' },
-            ].map(b => (
-              <span key={b.t} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#C7C7CC', fontWeight: 500 }}>
+          <div className="cz-rise cz-d4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32, alignItems: 'center' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(48,209,88,.08)', border: '1px solid rgba(48,209,88,.28)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#7EE29B', fontWeight: 600 }}>
+              <span className="cz-dot" />
+              Disponibles hoy en {c.name}
+            </span>
+            {['7 días de garantía', 'Sin traslados', 'Diagnóstico transparente'].map(t => (
+              <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#C7C7CC', fontWeight: 500 }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                {b.t}
+                {t}
               </span>
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+          <div className="cz-rise cz-d5" style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className="cz-cta"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', borderRadius: 980, padding: '14px 28px', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 8px 24px rgba(37,211,102,.28)' }}>
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', borderRadius: 980, padding: '15px 30px', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 10px 30px rgba(37,211,102,.32)' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
               Agendar visita en {c.name}
             </a>
             <Link href="/#contact" className="cz-cta"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', borderRadius: 980, padding: '14px 28px', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', borderRadius: 980, padding: '15px 30px', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
               Formulario de contacto
             </Link>
           </div>
