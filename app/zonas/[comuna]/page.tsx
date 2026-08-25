@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { comuna: string } 
   if (!c) return {}
   return {
     title: `Técnico Computadores a Domicilio en ${c.name} | FIXDAY`,
-    description: `Servicio técnico de computadores a domicilio en ${c.name}. Mantención, recuperación de datos, instalación de Windows, optimización y WiFi. Visita + diagnóstico $20.000. Rápido, confiable y profesional.`,
+    description: `Servicio técnico de computadores a domicilio en ${c.name}. Mantención, recuperación de datos, instalación de Windows, optimización y WiFi. Visita + diagnóstico $25.000. Rápido, confiable y profesional.`,
     alternates: { canonical: `/zonas/${c.slug}` },
     openGraph: {
       title: `Técnico a Domicilio en ${c.name} | FIXDAY`,
@@ -81,7 +81,7 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
     .filter((x): x is (typeof COMUNAS)[number] => Boolean(x))
 
   const faqs = [
-    { q: `¿Cuánto cuesta la visita de un técnico a domicilio en ${c.name}?`, a: `La visita a domicilio en ${c.name} más el diagnóstico tiene un valor de $20.000. Si realizas la reparación con nosotros, ese monto se descuenta del total del servicio.` },
+    { q: `¿Cuánto cuesta la visita de un técnico a domicilio en ${c.name}?`, a: `La visita a domicilio en ${c.name} más el diagnóstico tiene un valor de $25.000. Si realizas la reparación con nosotros, ese monto se descuenta del total del servicio.` },
     { q: `¿En cuánto tiempo llegan a ${c.name}?`, a: `Coordinamos la visita técnica en ${c.name} para el mismo día o el día siguiente según disponibilidad. Atendemos de lunes a viernes de 08:00 a 19:00.` },
     { q: `¿Tengo que llevar mi computador o van a mi casa en ${c.name}?`, a: `No necesitas trasladar tu equipo. El servicio es completamente a domicilio: el técnico llega a tu casa u oficina en ${c.name} con todas las herramientas necesarias.` },
     { q: `¿Qué computadores reparan en ${c.name}?`, a: `Atendemos computadores de escritorio y notebooks de todas las marcas con Windows. Hacemos mantención, instalación de Windows, recuperación de datos, optimización, respaldo y configuración de WiFi.` },
@@ -229,7 +229,7 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
               <div style={{ fontSize: 13, color: '#86868B', marginTop: 2 }}>Si realizamos la reparación, el valor se aplica al total.</div>
             </div>
           </div>
-          <div style={{ fontSize: 30, fontWeight: 900, color: '#F5F5F7', letterSpacing: '-.03em', whiteSpace: 'nowrap' }}>$20.000</div>
+          <div style={{ fontSize: 30, fontWeight: 900, color: '#F5F5F7', letterSpacing: '-.03em', whiteSpace: 'nowrap' }}>$25.000</div>
         </div>
       </div>
 
