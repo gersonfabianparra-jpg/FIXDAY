@@ -20,8 +20,8 @@ const FAQ_ICONS: React.ReactNode[] = [
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY 👋, me interesa una página web o servicio técnico para mi computador')}`
 
-const WEB_VERBS = ['venden.', 'convierten.', 'enamoran.']
-const PC_VERBS = ['rinden.', 'vuelan.', 'renacen.']
+const WEB_VERBS = ['en 5 días.', 'que convierte.', 'que enamora.']
+const PC_VERBS = ['el mismo día.', 'sin fallas.', 'como nuevo.']
 
 function LogoSVG({ id }: { id: string }) {
   return (
@@ -481,13 +481,13 @@ export default function Home() {
               <h1 className="hero-title">
                 <span className="line-wrap">
                   <span className="line-inner li1">
-                    <span className="ht-lead">Páginas web que</span>
+                    <span className="ht-lead">Tu negocio online</span>
                     <span key={verbIdx} className="ht-mega ht-rotate">{WEB_VERBS[verbIdx]}</span>
                   </span>
                 </span>
                 <span className="line-wrap">
                   <span className="line-inner li2">
-                    <span className="ht-lead">Computadores que</span>
+                    <span className="ht-lead">Tu PC listo</span>
                     <span key={verbIdx} className="ht-mega ht-mega-2 ht-rotate">{PC_VERBS[verbIdx]}</span>
                   </span>
                 </span>
@@ -569,34 +569,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SALUDO AIEP MARKETING DIGITAL ── */}
-      <section id="aiep" style={{ padding: '64px 0', borderTop: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 900, height: 500, background: 'radial-gradient(ellipse, rgba(191,90,242,.14) 0%, rgba(41,151,255,.10) 40%, transparent 70%)', pointerEvents: 'none' }} />
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            maxWidth: 760, margin: '0 auto', textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(41,151,255,.10), rgba(191,90,242,.10))',
-            border: '1px solid rgba(191,90,242,.30)',
-            borderRadius: 28,
-            padding: 'clamp(32px,5vw,56px) clamp(20px,4vw,48px)',
-            boxShadow: '0 0 60px rgba(191,90,242,.15), inset 0 1px 0 rgba(255,255,255,.06)',
-          }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(191,90,242,.14)', border: '1px solid rgba(191,90,242,.35)', borderRadius: 980, padding: '7px 18px', fontSize: 12, fontWeight: 800, color: '#D9A6F7', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 24 }}>
-              🎓 AIEP · Marketing Digital
-            </div>
-            <h2 style={{ fontSize: 'clamp(2rem,5.5vw,3.4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-.03em', marginBottom: 20 }}>
-              A mis compañeros de curso:<br />
-              <span style={{ background: 'linear-gradient(135deg,#2997FF,#BF5AF2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                ¡son geniales! 🎉
-              </span>
-            </h2>
-            <p style={{ fontSize: 'clamp(1rem,2.2vw,1.2rem)', color: '#C7C7CC', lineHeight: 1.8, maxWidth: 560, margin: '0 auto' }}>
-              A todos mis compañeros de <strong style={{ color: '#F5F5F7' }}>Marketing Digital del AIEP</strong> y a nuestro <strong style={{ color: '#F5F5F7' }}>profe Ricci</strong>: son un equipo increíble, talentoso y lleno de buenas ideas. ¡Gracias por tanto! 🚀✨
-            </p>
           </div>
         </div>
       </section>
