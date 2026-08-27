@@ -28,6 +28,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
+  // Servicio × comuna: 6 servicios × 40 comunas = 240 landing pages long-tail
+  const servicioComunaPages: MetadataRoute.Sitemap = SERVICES.flatMap(s =>
+    COMUNAS.map(c => ({
+      url: `${base}/servicios/${s.slug}/${c.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    })),
+  )
+
   return [
     { url: base, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${base}/zonas`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
@@ -36,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/resenas`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/oferta`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     ...servicePages,
+    ...servicioComunaPages,
     ...comunaPages,
     ...blogPages,
   ]
