@@ -413,6 +413,7 @@ export default function Home() {
         <button className="mclose" onClick={() => setMnavOpen(false)}>&times;</button>
         <a href="/paginas-web" onClick={() => setMnavOpen(false)}>Páginas Web</a>
         <a href="#services" onClick={() => setMnavOpen(false)}>Servicios</a>
+        <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="#precios" onClick={() => setMnavOpen(false)}>Precios</a>
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
@@ -442,6 +443,7 @@ export default function Home() {
             <ul className="nav-links">
               <li><a href="/paginas-web">Páginas Web</a></li>
               <li><a href="#services">Servicios</a></li>
+              <li><a href="/zonas">Zonas</a></li>
               <li><a href="#precios">Precios</a></li>
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/blog">Blog</a></li>
