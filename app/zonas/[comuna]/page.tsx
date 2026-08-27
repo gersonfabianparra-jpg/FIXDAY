@@ -101,32 +101,37 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         .cz-faq[open] .cz-faq-plus{transform:rotate(45deg)}
         .cz-faq summary::-webkit-details-marker{display:none}
 
-        /* ── Hero animado ── */
+        /* ── Hero animado (alto impacto) ── */
         .cz-hero{position:relative;overflow:hidden}
-        .cz-aurora{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;opacity:.55;will-change:transform}
-        .cz-aurora.a1{width:520px;height:520px;top:-160px;left:-80px;background:radial-gradient(circle,rgba(41,151,255,.5),transparent 65%);animation:czFloat1 14s ease-in-out infinite}
-        .cz-aurora.a2{width:460px;height:460px;top:-120px;right:-60px;background:radial-gradient(circle,rgba(191,90,242,.45),transparent 65%);animation:czFloat2 18s ease-in-out infinite}
-        .cz-aurora.a3{width:380px;height:380px;bottom:-180px;left:38%;background:radial-gradient(circle,rgba(0,200,255,.35),transparent 65%);animation:czFloat3 16s ease-in-out infinite}
-        @keyframes czFloat1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,40px) scale(1.12)}}
-        @keyframes czFloat2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,30px) scale(1.08)}}
-        @keyframes czFloat3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.15)}}
+        .cz-aurora{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;opacity:.9;will-change:transform,opacity;mix-blend-mode:screen}
+        .cz-aurora.a1{width:640px;height:640px;top:-200px;left:-120px;background:radial-gradient(circle,rgba(41,151,255,.95),transparent 62%);animation:czFloat1 8s ease-in-out infinite}
+        .cz-aurora.a2{width:600px;height:600px;top:-160px;right:-100px;background:radial-gradient(circle,rgba(191,90,242,.9),transparent 62%);animation:czFloat2 9.5s ease-in-out infinite}
+        .cz-aurora.a3{width:520px;height:520px;bottom:-240px;left:34%;background:radial-gradient(circle,rgba(0,200,255,.8),transparent 62%);animation:czFloat3 7.5s ease-in-out infinite}
+        @keyframes czFloat1{0%,100%{transform:translate(0,0) scale(1);opacity:.75}50%{transform:translate(150px,90px) scale(1.35);opacity:1}}
+        @keyframes czFloat2{0%,100%{transform:translate(0,0) scale(1);opacity:.7}50%{transform:translate(-130px,70px) scale(1.3);opacity:1}}
+        @keyframes czFloat3{0%,100%{transform:translate(0,0) scale(.95);opacity:.65}50%{transform:translate(90px,-90px) scale(1.4);opacity:1}}
 
-        .cz-shimmer{background:linear-gradient(90deg,#2997FF 0%,#5E5CE6 30%,#BF5AF2 55%,#00C8FF 80%,#2997FF 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:czShimmer 6s linear infinite}
-        @keyframes czShimmer{0%{background-position:0% 50%}100%{background-position:250% 50%}}
+        /* Glow que late detrás del título */
+        .cz-glow{position:absolute;top:34%;left:8%;width:min(560px,80%);height:280px;border-radius:50%;filter:blur(80px);background:radial-gradient(circle,rgba(94,92,230,.55),transparent 68%);pointer-events:none;animation:czBreathe 3.4s ease-in-out infinite}
+        @keyframes czBreathe{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:.85;transform:scale(1.15)}}
 
-        .cz-rise{opacity:0;transform:translateY(16px);animation:czRise .7s cubic-bezier(.16,1,.3,1) forwards}
-        .cz-d1{animation-delay:.05s}.cz-d2{animation-delay:.15s}.cz-d3{animation-delay:.28s}.cz-d4{animation-delay:.4s}.cz-d5{animation-delay:.52s}
+        .cz-shimmer{background:linear-gradient(90deg,#2997FF 0%,#5E5CE6 22%,#BF5AF2 42%,#FF6B9D 60%,#00C8FF 82%,#2997FF 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:czShimmer 3s linear infinite}
+        @keyframes czShimmer{0%{background-position:0% 50%}100%{background-position:220% 50%}}
+
+        .cz-rise{opacity:0;transform:translateY(22px);animation:czRise .6s cubic-bezier(.16,1,.3,1) forwards}
+        .cz-d1{animation-delay:.05s}.cz-d2{animation-delay:.14s}.cz-d3{animation-delay:.26s}.cz-d4{animation-delay:.38s}.cz-d5{animation-delay:.5s}
         @keyframes czRise{to{opacity:1;transform:translateY(0)}}
 
         .cz-pin{position:relative;display:inline-flex}
-        .cz-pin::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(41,151,255,.6);animation:czPulse 2s ease-out infinite}
-        @keyframes czPulse{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+        .cz-pin::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(41,151,255,.75);animation:czPulse 1.5s ease-out infinite}
+        .cz-pin::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(41,151,255,.55);animation:czPulse 1.5s ease-out .75s infinite}
+        @keyframes czPulse{0%{transform:scale(.6);opacity:1}100%{transform:scale(2.6);opacity:0}}
 
-        .cz-dot{width:8px;height:8px;border-radius:50%;background:#30D158;box-shadow:0 0 0 0 rgba(48,209,88,.6);animation:czBlink 1.8s ease-out infinite}
-        @keyframes czBlink{0%{box-shadow:0 0 0 0 rgba(48,209,88,.6)}70%{box-shadow:0 0 0 7px rgba(48,209,88,0)}100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}}
+        .cz-dot{width:9px;height:9px;border-radius:50%;background:#30D158;box-shadow:0 0 8px rgba(48,209,88,.9),0 0 0 0 rgba(48,209,88,.7);animation:czBlink 1.3s ease-out infinite}
+        @keyframes czBlink{0%{box-shadow:0 0 8px rgba(48,209,88,.9),0 0 0 0 rgba(48,209,88,.7)}70%{box-shadow:0 0 8px rgba(48,209,88,.5),0 0 0 12px rgba(48,209,88,0)}100%{box-shadow:0 0 8px rgba(48,209,88,.9),0 0 0 0 rgba(48,209,88,0)}}
 
         @media (prefers-reduced-motion: reduce){
-          .cz-aurora,.cz-shimmer,.cz-rise,.cz-pin::after,.cz-dot{animation:none!important}
+          .cz-aurora,.cz-glow,.cz-shimmer,.cz-rise,.cz-pin::after,.cz-pin::before,.cz-dot{animation:none!important}
           .cz-rise{opacity:1;transform:none}
           .cz-shimmer{-webkit-text-fill-color:transparent}
         }
@@ -206,7 +211,8 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         <div className="cz-aurora a1" />
         <div className="cz-aurora a2" />
         <div className="cz-aurora a3" />
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%)', pointerEvents: 'none' }} />
+        <div className="cz-glow" />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 75% 65% at 50% 25%, rgba(0,0,0,0) 0%, rgba(0,0,0,.42) 100%)', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>
           <div className="cz-rise cz-d1" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(41,151,255,.1)', border: '1px solid rgba(41,151,255,.28)', borderRadius: 980, padding: '7px 18px', fontSize: 11, fontWeight: 700, color: '#2997FF', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 24 }}>
