@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Logo from '@/app/components/Logo'
 import { POSTS, getPostBySlug } from '../posts'
+import ReadingProgress from './ReadingProgress'
+import ShareButtons from './ShareButtons'
+import BlogCover, { getCategoryMeta } from '../BlogCover'
 
 export function generateStaticParams() {
   return POSTS.map(p => ({ slug: p.slug }))
@@ -49,9 +52,21 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   const color = CATEGORY_COLOR[post.category] || '#2997FF'
   const related = POSTS.filter(p => p.slug !== post.slug).slice(0, 3)
+  const postUrl = `https://fixday.cl/blog/${post.slug}`
+
+  // Añade id a cada <h2> y construye la tabla de contenidos
+  const slugify = (t: string) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+  const headings: { id: string; text: string }[] = []
+  const content = post.content.replace(/<h2>(.*?)<\/h2>/g, (_m, inner) => {
+    const text = inner.replace(/<[^>]+>/g, '')
+    const id = slugify(text)
+    headings.push({ id, text })
+    return `<h2 id="${id}">${inner}</h2>`
+  })
 
   return (
     <div style={{ minHeight: '100vh', background: '#000', color: '#F5F5F7', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}>
+      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -67,7 +82,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
                 articleSection: post.category,
                 inLanguage: 'es-CL',
                 image: 'https://fixday.cl/opengraph-image',
-                author: { '@type': 'Organization', name: 'FIXDAY', url: 'https://fixday.cl' },
+                author: { '@type': 'Person', name: 'Gerson Parra', jobTitle: 'Técnico en computación y fundador de FIXDAY', url: 'https://fixday.cl' },
                 publisher: { '@type': 'Organization', name: 'FIXDAY', logo: { '@type': 'ImageObject', url: 'https://fixday.cl/icon.svg' } },
                 mainEntityOfPage: { '@type': 'WebPage', '@id': `https://fixday.cl/blog/${post.slug}` },
                 url: `https://fixday.cl/blog/${post.slug}`,
@@ -103,6 +118,10 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       <article style={{ maxWidth: 720, margin: '0 auto', padding: '52px 24px 80px' }}>
         {/* Header */}
         <header style={{ marginBottom: 40 }}>
+          {/* Portada visual por categoría */}
+          <div style={{ marginBottom: 28, border: '1px solid rgba(255,255,255,.07)', borderRadius: 20, overflow: 'hidden' }}>
+            <BlogCover category={post.category} height={220} />
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color, background: `${color}18`, border: `1px solid ${color}30`, borderRadius: 980, padding: '4px 12px', letterSpacing: '.08em', textTransform: 'uppercase' }}>
               {post.category}
@@ -117,13 +136,40 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <p style={{ fontSize: '1.05rem', color: '#86868B', lineHeight: 1.7 }}>
             {post.description}
           </p>
-          <div style={{ height: 1, background: 'rgba(255,255,255,.07)', marginTop: 32 }} />
+          {/* Autor + compartir */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginTop: 28, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,.07)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <img src="/gerson.jpg" alt="Gerson Parra, técnico de FIXDAY" width={40} height={40} style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top center' }} />
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#F5F5F7' }}>Gerson Parra</div>
+                <div style={{ fontSize: 11.5, color: '#636366' }}>Técnico y fundador de FIXDAY</div>
+              </div>
+            </div>
+            <ShareButtons url={postUrl} title={post.title} />
+          </div>
         </header>
+
+        {/* Tabla de contenidos */}
+        {headings.length >= 3 && (
+          <div role="navigation" aria-label="Tabla de contenidos" style={{ position: 'relative', marginBottom: 40, background: '#0A0A0A', border: '1px solid rgba(255,255,255,.07)', borderRadius: 16, padding: '20px 24px' }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#636366', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 14 }}>En este artículo</div>
+            <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9, counterReset: 'toc' }}>
+              {headings.map(h => (
+                <li key={h.id} style={{ counterIncrement: 'toc' }}>
+                  <a href={`#${h.id}`} className="toc-link" style={{ display: 'flex', gap: 10, alignItems: 'baseline', fontSize: '0.92rem', color: '#C7C7CC', textDecoration: 'none', lineHeight: 1.5 }}>
+                    <span style={{ color, fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{String(headings.indexOf(h) + 1).padStart(2, '0')}</span>
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
 
         {/* Content */}
         <div
           className="post-content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: content }}
           style={{ fontSize: '1rem', lineHeight: 1.8, color: '#D1D1D6' }}
         />
 
@@ -138,9 +184,22 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </a>
         </div>
 
+        {/* Tarjeta de autor (E-E-A-T) */}
+        <div style={{ marginTop: 56, display: 'flex', gap: 18, alignItems: 'flex-start', background: '#0A0A0A', border: '1px solid rgba(255,255,255,.08)', borderRadius: 20, padding: '26px 26px' }}>
+          <img src="/gerson.jpg" alt="Gerson Parra, técnico y fundador de FIXDAY" width={64} height={64} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top center', flexShrink: 0, border: '2px solid rgba(41,151,255,.3)' }} />
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#636366', letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 6 }}>Escrito por</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#F5F5F7', letterSpacing: '-.01em' }}>Gerson Parra</div>
+            <div style={{ fontSize: 13, color: '#2997FF', fontWeight: 600, marginBottom: 10 }}>Técnico en computación y fundador de FIXDAY</div>
+            <p style={{ fontSize: 13.5, color: '#86868B', lineHeight: 1.7, margin: 0 }}>
+              Reparo computadores a domicilio y diseño páginas web para negocios en toda la Región Metropolitana. En este blog comparto lo que aprendo en terreno para que puedas cuidar mejor tu equipo.
+            </p>
+          </div>
+        </div>
+
         {/* Related */}
         {related.length > 0 && (
-          <div style={{ marginTop: 56 }}>
+          <div style={{ marginTop: 48 }}>
             <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#636366', letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 20 }}>Otros artículos</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {related.map(r => (
@@ -155,7 +214,9 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       </article>
 
       <style>{`
-        .post-content h2 { font-size: 1.3rem; font-weight: 800; color: #F5F5F7; margin: 36px 0 14px; letter-spacing: -.02em; }
+        .post-content h2 { font-size: 1.3rem; font-weight: 800; color: #F5F5F7; margin: 36px 0 14px; letter-spacing: -.02em; scroll-margin-top: 80px; }
+        .toc-link:hover { color: #F5F5F7 !important; }
+        html { scroll-behavior: smooth; }
         .post-content h3 { font-size: 1.05rem; font-weight: 700; color: #F5F5F7; margin: 28px 0 10px; }
         .post-content p { margin: 0 0 16px; }
         .post-content ul, .post-content ol { padding-left: 24px; margin: 0 0 16px; }
