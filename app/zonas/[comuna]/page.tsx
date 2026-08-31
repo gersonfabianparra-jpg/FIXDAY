@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { COMUNAS, getComunaBySlug } from '../comunas'
 import Logo from '@/app/components/Logo'
+import LeadMagnet from '@/app/components/LeadMagnet'
 
 export function generateStaticParams() {
   return COMUNAS.map(c => ({ comuna: c.slug }))
@@ -365,6 +366,13 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Lead magnet — captura de correo */}
+      <section style={{ padding: '0 0 72px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+          <LeadMagnet comuna={c.name} />
         </div>
       </section>
 
