@@ -20,8 +20,26 @@ const FAQ_ICONS: React.ReactNode[] = [
 const WA_NUMBER = '56936649332'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola FIXDAY 👋, me interesa una página web o servicio técnico para mi computador')}`
 
-const WEB_VERBS = ['en 5 días.', 'que convierte.', 'que enamora.']
-const PC_VERBS = ['el mismo día.', 'sin fallas.', 'como nuevo.']
+// Titular de la semana: cada semana el hero adopta un tema con su propio gancho y color.
+interface WeekTheme { kicker: string; lead: string; accent: string; color: string; sub: string }
+const WEEKLY_THEMES: WeekTheme[] = [
+  { kicker: 'Reparación a domicilio', lead: 'Tu computador', accent: 'no está para el tacho.', color: '#2997FF', sub: 'Un técnico llega a tu casa y lo deja como nuevo. Sin traslados, sin esperas.' },
+  { kicker: 'Diseño web que vende', lead: 'Tu negocio merece una web', accent: 'que venda sola.', color: '#BF5AF2', sub: 'Sitios profesionales, optimizados para Google, listos en 5 a 7 días.' },
+  { kicker: 'PC lento', lead: 'Deja de esperar', accent: 'a que tu PC reaccione.', color: '#30D158', sub: 'Optimización y mantención a domicilio en toda la Región Metropolitana.' },
+  { kicker: 'Recuperación de datos', lead: 'Tus fotos no están perdidas.', accent: 'Todavía.', color: '#FF9F0A', sub: 'Recuperamos datos de discos dañados, formateados o con errores.' },
+  { kicker: 'Diseño web + SEO', lead: 'Si no estás en Google,', accent: 'no existes.', color: '#5E5CE6', sub: 'Páginas web profesionales, pensadas para que tus clientes te encuentren.' },
+  { kicker: 'Técnico a domicilio', lead: 'El técnico va a ti.', accent: 'Sin traslados, sin filas.', color: '#64D2FF', sub: 'Atendemos en tu casa u oficina el mismo día, en toda la RM.' },
+  { kicker: 'Mantención preventiva', lead: 'Tu PC te avisa antes de fallar.', accent: '¿Lo escuchas?', color: '#2997FF', sub: 'Mantención a domicilio que evita reparaciones caras. Desde $25.000.' },
+  { kicker: 'Tiendas online', lead: 'Vende', accent: 'mientras duermes.', color: '#BF5AF2', sub: 'Tiendas online que trabajan por ti las 24 horas del día.' },
+  { kicker: 'Instalación de Windows', lead: 'Windows nuevo,', accent: 'PC como recién comprado.', color: '#30D158', sub: 'Instalación limpia a domicilio, con todos tus datos a salvo.' },
+  { kicker: 'Segunda opinión gratis', lead: 'Reparamos lo que otros', accent: 'te dijeron que botaras.', color: '#FF9F0A', sub: 'Antes de comprar uno nuevo, deja que revisemos el tuyo.' },
+]
+function currentThemeIndex(): number {
+  const now = new Date()
+  const jan1 = new Date(now.getFullYear(), 0, 1)
+  const week = Math.floor(((now.getTime() - jan1.getTime()) / 86400000 + jan1.getDay()) / 7)
+  return week % WEEKLY_THEMES.length
+}
 
 function LogoSVG({ id }: { id: string }) {
   return (
@@ -105,11 +123,12 @@ export default function Home() {
   const [sliderIndex, setSliderIndex] = useState(0)
   const [sliderCanPrev, setSliderCanPrev] = useState(false)
   const [sliderCanNext, setSliderCanNext] = useState(true)
-  const [verbIdx, setVerbIdx] = useState(0)
-
-  // Rotación de verbos del titular (venden/convierten/enamoran · rinden/vuelan/renacen)
+  // Tema del titular de la semana (default estable para SSR; el real se aplica tras montar)
+  const [theme, setTheme] = useState<WeekTheme>(WEEKLY_THEMES[0])
   useEffect(() => {
-    const id = setInterval(() => setVerbIdx(i => (i + 1) % WEB_VERBS.length), 2600)
+    setTheme(WEEKLY_THEMES[currentThemeIndex()])
+    // Reevalúa por si el navegador queda abierto al cambiar de semana
+    const id = setInterval(() => setTheme(WEEKLY_THEMES[currentThemeIndex()]), 6 * 60 * 60 * 1000)
     return () => clearInterval(id)
   }, [])
 
@@ -510,28 +529,19 @@ export default function Home() {
                   {live.greeting} <span style={{ display: 'inline-block' }}>👋</span>
                 </div>
               )}
-              <h1 className="hero-title">
-                <span className="line-wrap">
-                  <span className="line-inner li1">
-                    <span className="ht-lead">Tu negocio online</span>
-                    <span key={verbIdx} className="ht-mega ht-rotate">{WEB_VERBS[verbIdx]}</span>
-                  </span>
-                </span>
-                <span className="line-wrap">
-                  <span className="line-inner li2">
-                    <span className="ht-lead">Tu PC listo</span>
-                    <span key={verbIdx} className="ht-mega ht-mega-2 ht-rotate">{PC_VERBS[verbIdx]}</span>
-                  </span>
-                </span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `${theme.color}1c`, border: `1px solid ${theme.color}55`, borderRadius: 980, padding: '6px 15px', fontSize: 11.5, fontWeight: 800, color: theme.color, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 16 }}>
+                <span style={{ fontSize: 9 }}>◆</span> Tema de la semana · {theme.kicker}
+              </div>
+              <h1 className="hero-title" key={theme.kicker}>
+                <span style={{ display: 'block', color: '#F5F5F7' }}>{theme.lead}</span>
+                <span className="ht-mega" style={{ display: 'block', backgroundImage: `linear-gradient(90deg, ${theme.color} 0%, #ffffff 42%, ${theme.color} 72%, #ffffff 100%)`, backgroundSize: '250% 100%' }}>{theme.accent}</span>
               </h1>
               <div className="hero-stack">
                 <span className="hs-tag">Páginas Web</span>
                 <span className="hs-tag">Tiendas Online</span>
                 <span className="hs-tag">Soporte a Domicilio</span>
               </div>
-              <p className="hero-sub">
-                Creamos tu página web profesional y dejamos tu computador como nuevo. Diseño moderno con entrega en 5–7 días, y servicio técnico a domicilio en toda la Región Metropolitana.
-              </p>
+              <p className="hero-sub">{theme.sub}</p>
               <div className="hbtns">
                 <a
                   href={WA_LINK}
