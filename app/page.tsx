@@ -62,10 +62,35 @@ interface Review {
   review_text: string
 }
 
+interface LiveInfo { greeting: string; status: string; when: string; open: boolean }
+
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [mnavOpen, setMnavOpen] = useState(false)
   const [navScrolled, setNavScrolled] = useState(false)
+  // Hero "en vivo": saludo + estado según hora/día reales (se recalcula solo)
+  const [live, setLive] = useState<LiveInfo | null>(null)
+  useEffect(() => {
+    const compute = () => {
+      const d = new Date()
+      const h = d.getHours()
+      const day = d.getDay() // 0 dom … 6 sáb
+      const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado']
+      const greeting = h >= 5 && h < 12 ? 'Buenos días' : h >= 12 && h < 20 ? 'Buenas tardes' : 'Buenas noches'
+      const franja = h >= 5 && h < 12 ? 'por la mañana' : h >= 12 && h < 20 ? 'por la tarde' : 'por la noche'
+      const weekday = day >= 1 && day <= 5
+      const open = weekday && h >= 8 && h < 19
+      let status: string, when: string
+      if (open) { status = 'Atendiendo ahora'; when = `${dias[day]} ${franja}` }
+      else if (weekday && h < 8) { status = 'Abrimos hoy a las 8:00'; when = 'déjanos tu mensaje' }
+      else if (weekday && h >= 19) { status = 'Cerramos por hoy'; when = 'agenda para mañana' }
+      else { status = 'Fin de semana'; when = 'agenda para el lunes' }
+      setLive({ greeting, status, when, open })
+    }
+    compute()
+    const id = setInterval(compute, 60000)
+    return () => clearInterval(id)
+  }, [])
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' })
   const [formStatus, setFormStatus] = useState<FormStatus>('idle')
   const [stats, setStats] = useState({ equipos: 0, satisfaccion: 0 })
@@ -470,9 +495,9 @@ export default function Home() {
           <div className="hero-inner">
             <div className="hero-content">
               <div className="hero-glow" />
-              <div className="hbadge">
-                <div className="hdot" />
-                Diseño web + Técnico a domicilio · Región Metropolitana
+              <div className="hbadge" style={live && !live.open ? { borderColor: 'rgba(255,159,10,.35)', background: 'rgba(255,159,10,.08)' } : undefined}>
+                <div className="hdot" style={live && !live.open ? { background: '#FF9F0A', boxShadow: '0 0 0 0 rgba(255,159,10,.5)' } : undefined} />
+                {live ? `${live.status} · ${live.when}` : 'Diseño web + Técnico a domicilio · Región Metropolitana'}
               </div>
               <div className="htrust">
                 <span className="htrust-stars" aria-hidden>★★★★★</span>
@@ -480,6 +505,11 @@ export default function Home() {
                 <span className="htrust-sep">·</span>
                 <span>+100 clientes felices en la Región Metropolitana</span>
               </div>
+              {live && (
+                <div style={{ fontSize: 'clamp(1rem,2.4vw,1.35rem)', fontWeight: 700, color: '#C7C7CC', marginBottom: 6, letterSpacing: '-.01em' }}>
+                  {live.greeting} <span style={{ display: 'inline-block' }}>👋</span>
+                </div>
+              )}
               <h1 className="hero-title">
                 <span className="line-wrap">
                   <span className="line-inner li1">
