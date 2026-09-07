@@ -532,9 +532,30 @@ export default function Home() {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `${theme.color}1c`, border: `1px solid ${theme.color}55`, borderRadius: 980, padding: '6px 15px', fontSize: 11.5, fontWeight: 800, color: theme.color, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 16 }}>
                 <span style={{ fontSize: 9 }}>◆</span> Tema de la semana · {theme.kicker}
               </div>
-              <h1 className="hero-title" key={theme.kicker}>
-                <span style={{ display: 'block', color: '#F5F5F7' }}>{theme.lead}</span>
-                <span className="ht-mega" style={{ display: 'block', backgroundImage: `linear-gradient(90deg, ${theme.color} 0%, #ffffff 42%, ${theme.color} 72%, #ffffff 100%)`, backgroundSize: '250% 100%' }}>{theme.accent}</span>
+              <h1 className="hero-title htv">
+                <span className="htv-line htv-l1">
+                  <svg className="htv-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8" />
+                    <path d="M9.5 21v-6h5v6" />
+                  </svg>
+                  Un técnico
+                </span>
+                <span className="htv-line htv-l2">
+                  en{' '}
+                  <span className="htv-mark">
+                    <span className="htv-mark-bg" aria-hidden />
+                    <span className="htv-mark-t">tu casa</span>
+                  </span>.
+                </span>
+                <span className="htv-line htv-l3">
+                  <span className="htv-ghost" aria-hidden>Hoy mismo.</span>
+                  <span className="htv-mega">Hoy mismo.</span>
+                  <span className="htv-seal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M20 6 9 17l-5-5" /></svg>
+                    Sin traslados
+                  </span>
+                </span>
               </h1>
               <div className="hero-stack">
                 <span className="hs-tag">Páginas Web</span>

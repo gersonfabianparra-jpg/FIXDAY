@@ -870,3 +870,125 @@ footer { position:relative; z-index:1; background:#0a0a0a; border-top:1px solid 
   .qs-grid .qs-avatar{margin:0 auto;}
   footer{padding:44px 0 24px;}
 }
+
+/* ══ HERO TITLE v2 · "Un técnico en tu casa. Hoy mismo." ══════════════════ */
+.htv{
+  position:relative;
+  padding-left:26px;
+  line-height:.98;
+  margin-bottom:20px;
+}
+/* Barra de acento vertical que "crece" al cargar */
+.htv::before{
+  content:'';
+  position:absolute; left:0; top:.06em; bottom:.16em;
+  width:6px; border-radius:99px;
+  background:linear-gradient(180deg,#2997FF 0%,#5E5CE6 45%,#BF5AF2 78%,#FF9F0A 100%);
+  box-shadow:0 0 26px rgba(41,151,255,.55);
+  transform-origin:top;
+  animation:htvBar .85s cubic-bezier(.16,1,.3,1) .08s both;
+}
+.htv-line{ display:block; }
+
+/* Línea 1 — "Un técnico" con ícono de casa */
+.htv-l1{
+  display:flex; align-items:center; gap:.3em;
+  font-size:.4em; font-weight:800; letter-spacing:-.025em;
+  color:#F5F5F7;
+  animation:htvIn .8s cubic-bezier(.16,1,.3,1) .18s both;
+}
+.htv-pin{
+  width:.92em; height:.92em; flex:none;
+  color:#2997FF;
+  filter:drop-shadow(0 0 12px rgba(41,151,255,.6));
+  animation:htvPin 3.4s ease-in-out 1.6s infinite;
+}
+
+/* Línea 2 — "en tu casa." con marcador que se pinta solo */
+.htv-l2{
+  font-size:.4em; font-weight:800; letter-spacing:-.025em;
+  color:#F5F5F7; margin-top:.12em;
+  animation:htvIn .8s cubic-bezier(.16,1,.3,1) .34s both;
+}
+.htv-mark{ position:relative; display:inline-block; padding:0 .16em; }
+.htv-mark-bg{
+  position:absolute; inset:-.06em -.02em -.04em;
+  border-radius:9px;
+  background:linear-gradient(100deg,#2997FF 0%,#64D2FF 100%);
+  box-shadow:0 10px 34px rgba(41,151,255,.45);
+  transform:skewX(-4deg) scaleX(0); transform-origin:left center;
+  animation:htvMark .68s cubic-bezier(.16,1,.3,1) .68s both;
+}
+.htv-mark-t{ position:relative; color:#05070E; }
+
+/* Línea 3 — "Hoy mismo." gigante, con eco y sello */
+.htv-l3{
+  position:relative;
+  display:flex; align-items:center; flex-wrap:wrap; gap:.1em .34em;
+  margin-top:.06em;
+}
+.htv-mega{
+  position:relative; z-index:1;
+  font-size:1em; font-weight:900; letter-spacing:-.055em;
+  background:linear-gradient(90deg,#2997FF 0%,#ffffff 38%,#64D2FF 60%,#ffffff 82%,#2997FF 100%);
+  background-size:250% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 8px 42px rgba(41,151,255,.4));
+  animation:shimmerText 7s linear infinite, htvIn .85s cubic-bezier(.16,1,.3,1) .5s both;
+}
+/* Eco en contorno detrás del texto grande = profundidad */
+.htv-ghost{
+  position:absolute; left:0; top:0; z-index:0; pointer-events:none;
+  font-size:1em; font-weight:900; letter-spacing:-.055em;
+  color:transparent; -webkit-text-stroke:1.5px rgba(41,151,255,.16);
+  transform:translate(5px,6px);
+  animation:htvGhost 6s ease-in-out 1.4s infinite;
+}
+/* Sello inclinado "Sin traslados" */
+.htv-seal{
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.135em; font-weight:800; text-transform:uppercase; letter-spacing:.11em;
+  color:#30D158;
+  background:rgba(48,209,88,.1);
+  border:1.5px solid rgba(48,209,88,.42);
+  border-radius:9px; padding:7px 11px 6px;
+  transform:rotate(-4deg);
+  box-shadow:0 6px 22px rgba(48,209,88,.18);
+  animation:htvSeal .6s cubic-bezier(.34,1.56,.64,1) 1.2s both;
+}
+.htv-seal svg{ width:1.05em; height:1.05em; flex:none; }
+
+@keyframes htvBar{ from{ transform:scaleY(0); opacity:0; } to{ transform:scaleY(1); opacity:1; } }
+@keyframes htvIn{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:translateY(0); } }
+@keyframes htvMark{ from{ transform:skewX(-4deg) scaleX(0); } to{ transform:skewX(-4deg) scaleX(1); } }
+@keyframes htvSeal{ from{ opacity:0; transform:rotate(6deg) scale(.7); } to{ opacity:1; transform:rotate(-4deg) scale(1); } }
+@keyframes htvGhost{ 0%,100%{ transform:translate(5px,6px); opacity:.7; } 50%{ transform:translate(8px,9px); opacity:1; } }
+@keyframes htvPin{ 0%,88%,100%{ transform:translateY(0); } 93%{ transform:translateY(-5px); } }
+
+/* Tablet / móvil */
+@media (max-width:900px){
+  .htv{ padding-left:20px; }
+  .htv::before{ width:5px; }
+  .htv-l1, .htv-l2{ font-size:.42em; }
+  .htv-ghost{ display:none; }
+  .htv-seal{ font-size:.16em; padding:6px 9px 5px; }
+}
+@media (max-width:600px){
+  /* El h1 manda sobre el tamaño global del hero para no perder impacto en móvil */
+  .htv{ font-size:clamp(2.3rem,9.2vw,3rem); padding-left:15px; margin-bottom:16px; }
+  .htv::before{ width:4px; }
+  .htv-l1, .htv-l2{ font-size:.45em; }
+  .htv-l3{ gap:.06em .22em; }
+  .htv-seal{ font-size:.17em; letter-spacing:.07em; padding:5px 8px 4px; }
+}
+@media (max-width:380px){
+  .htv{ font-size:2.15rem; }
+  .htv-seal{ font-size:.19em; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .htv::before, .htv-l1, .htv-l2, .htv-mega, .htv-seal, .htv-mark-bg, .htv-pin, .htv-ghost{
+    animation:none !important;
+  }
+  .htv-mark-bg{ transform:skewX(-4deg) scaleX(1); }
+}
