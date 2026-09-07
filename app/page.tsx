@@ -459,6 +459,7 @@ export default function Home() {
         <a href="#services" onClick={() => setMnavOpen(false)}>Servicios</a>
         <a href="/zonas" onClick={() => setMnavOpen(false)}>Zonas</a>
         <a href="/cotizador" onClick={() => setMnavOpen(false)}>Cotizador</a>
+        <a href="/agendar" onClick={() => setMnavOpen(false)}>Agendar visita</a>
         <a href="#why" onClick={() => setMnavOpen(false)}>Por qué nosotros</a>
         <a href="/blog" onClick={() => setMnavOpen(false)}>Blog</a>
         <a href="#contact" onClick={() => setMnavOpen(false)} className="btn btn-dp">Cotizar proyecto</a>
@@ -489,6 +490,7 @@ export default function Home() {
               <li><a href="#services">Servicios</a></li>
               <li><a href="/zonas">Zonas</a></li>
               <li><a href="/cotizador">Cotizador</a></li>
+              <li><a href="/agendar">Agendar</a></li>
               <li><a href="#why">Por qué nosotros</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="#contact" className="btn btn-dp">Cotizar proyecto</a></li>

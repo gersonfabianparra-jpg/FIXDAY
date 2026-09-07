@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/resenas`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/oferta`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${base}/cotizador`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/agendar`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/referidos`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     ...servicePages,
     ...servicioComunaPages,

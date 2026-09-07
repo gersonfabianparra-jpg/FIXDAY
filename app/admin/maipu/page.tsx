@@ -139,6 +139,7 @@ export default function MaipuPanel() {
           <a href="/admin/reviews" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Reseñas</a>
           <a href="/admin/referidos" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Referidos</a>
           <a href="/admin/maipu" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid #2997FF', paddingBottom: 1 }}>Maipú</a>
+          <a href="/admin/agenda" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Agenda</a>
           <a href="/zonas/maipu" target="_blank" rel="noopener noreferrer" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none', marginLeft: 'auto' }}>Ver la página ↗</a>
         </div>
 

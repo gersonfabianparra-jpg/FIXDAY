@@ -78,3 +78,44 @@ on conflict (key) do nothing;
 insert into settings (key, value) values
   ('zona_cupos_maipu', '{"activo":true,"cuposHoy":3}')
 on conflict (key) do nothing;
+
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- 5. AGENDAMIENTO POR CALENDARIO
+-- ═══════════════════════════════════════════════════════════════════════════
+
+create table if not exists bookings (
+  id           uuid primary key default gen_random_uuid(),
+  created_at   timestamptz not null default now(),
+  fecha        date not null,             -- día de la visita
+  bloque       text not null,             -- franja horaria, ej. '09:00-11:00'
+  name         text not null,
+  phone        text not null,
+  email        text,
+  comuna       text,
+  direccion    text,
+  servicio     text,
+  mensaje      text,
+  status       text not null default 'pendiente', -- pendiente|confirmada|cancelada|realizada
+  confirmed_at timestamptz,
+  admin_note   text,
+  source       text,
+  utm_source   text,
+  device       text
+);
+
+create index if not exists bookings_fecha_idx   on bookings (fecha);
+create index if not exists bookings_status_idx  on bookings (status);
+create index if not exists bookings_created_idx on bookings (created_at desc);
+
+alter table bookings enable row level security;
+
+do $$ begin
+  create policy "service role full access bookings"
+    on bookings for all using (true) with check (true);
+exception when duplicate_object then null; end $$;
+
+-- Configuración de la agenda (editable después desde /admin/agenda)
+insert into settings (key, value) values
+  ('agenda_config', '{"activo":true,"maxPorBloque":2,"diasAnticipacion":21,"diasHabiles":[1,2,3,4,5],"bloques":["09:00-11:00","11:00-13:00","15:00-17:00","17:00-19:00"]}')
+on conflict (key) do nothing;
