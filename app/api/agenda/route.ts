@@ -7,6 +7,7 @@ import {
   AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, diaSemana, sumarDias,
   minutosDeBloque, MARGEN_MINUTOS, formatoLargo,
 } from '@/lib/agenda'
+import { ocupacionEntre, contarEnBloque, crearReserva } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,23 +28,17 @@ export async function GET() {
   const db = getSupabase()
 
   const hasta = sumarDias(hoy, cfg.diasAnticipacion)
-  const ocupacion: Record<string, number> = {}
-  let faltaTabla = false
+  let ocupacion: Record<string, number> = {}
+  let sinAlmacenamiento = false
 
   if (db) {
-    const { data, error } = await db
-      .from('bookings')
-      .select('fecha, bloque')
-      .gte('fecha', hoy).lte('fecha', hasta)
-      .in('status', ['pendiente', 'confirmada'])
-
-    // Sin la tabla no se puede guardar nada: mejor no mostrar un calendario
-    // que después va a fallar al enviar.
-    if (error) {
-      faltaTabla = true
-      console.error('[agenda] No se pudo leer bookings:', error.message)
-    } else {
-      for (const b of data ?? []) ocupacion[`${b.fecha}|${b.bloque}`] = (ocupacion[`${b.fecha}|${b.bloque}`] ?? 0) + 1
+    try {
+      const r = await ocupacionEntre(db, hoy, hasta)
+      ocupacion = r.ocupacion
+    } catch (err) {
+      // Solo si tampoco se puede usar el respaldo se oculta el calendario
+      sinAlmacenamiento = true
+      console.error('[agenda] No se pudo leer la disponibilidad:', err)
     }
   }
 
@@ -65,7 +60,7 @@ export async function GET() {
   // guardar la reserva. En desarrollo sí, para poder revisar el calendario.
   const enDesarrollo = process.env.NODE_ENV !== 'production'
 
-  const noSePuedeGuardar = !db || faltaTabla
+  const noSePuedeGuardar = !db || sinAlmacenamiento
 
   return NextResponse.json(
     {
@@ -116,32 +111,26 @@ export async function POST(req: NextRequest) {
   if (!db) return NextResponse.json({ error: 'La agenda no está disponible en este momento.' }, { status: 503 })
 
   // Verifica el cupo justo antes de guardar, por si alguien reservó mientras tanto
-  const { count } = await db
-    .from('bookings')
-    .select('*', { count: 'exact', head: true })
-    .eq('fecha', fecha).eq('bloque', bloque)
-    .in('status', ['pendiente', 'confirmada'])
+  let creada: { id: string }
+  try {
+    const ocupados = await contarEnBloque(db, fecha, bloque)
+    if (ocupados >= cfg.maxPorBloque) {
+      return NextResponse.json({ error: 'Ese horario se acaba de ocupar. Elige otro, por favor.' }, { status: 409 })
+    }
 
-  if ((count ?? 0) >= cfg.maxPorBloque) {
-    return NextResponse.json({ error: 'Ese horario se acaba de ocupar. Elige otro, por favor.' }, { status: 409 })
-  }
-
-  const { data: creada, error } = await db.from('bookings').insert({
-    fecha, bloque, name, phone, email: email || null, comuna, direccion, servicio, mensaje,
-    status: 'pendiente',
-    source: String(b.source || '').slice(0, 120),
-    utm_source: String(b.utm_source || '').slice(0, 80) || null,
-    device: String(b.device || '').slice(0, 20),
-  }).select('id').single()
-
-  if (error) {
-    console.error('Supabase insert error (bookings):', error)
-    const sinTabla = error.code === '42P01'
+    const r = await crearReserva(db, {
+      fecha, bloque, name, phone, email: email || null, comuna, direccion, servicio, mensaje,
+      status: 'pendiente',
+      source: String(b.source || '').slice(0, 120),
+      utm_source: String(b.utm_source || '').slice(0, 80) || null,
+      device: String(b.device || '').slice(0, 20),
+    })
+    creada = { id: r.id }
+  } catch (err) {
+    console.error('[agenda] No se pudo guardar la reserva:', err)
     return NextResponse.json({
-      error: sinTabla
-        ? 'La agenda en línea aún no está habilitada. Escríbenos por WhatsApp y coordinamos tu visita.'
-        : 'No pudimos guardar tu hora. Intenta de nuevo o escríbenos por WhatsApp.',
-    }, { status: sinTabla ? 503 : 500 })
+      error: 'No pudimos guardar tu hora. Escríbenos por WhatsApp y la coordinamos al tiro.',
+    }, { status: 500 })
   }
 
   const cuando = `${formatoLargo(fecha)}, entre ${bloque.replace('-', ' y ')}`
@@ -189,7 +178,7 @@ export async function POST(req: NextRequest) {
   }).catch(() => {})
 
   return NextResponse.json({
-    success: true, id: creada?.id, cuando,
+    success: true, id: creada.id, cuando,
     avisoCliente,
     dominioVerificado: dominioVerificado(),
   })

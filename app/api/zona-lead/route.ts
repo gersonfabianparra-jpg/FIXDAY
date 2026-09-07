@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { getSupabase } from '@/lib/supabase'
 import { rateLimit, getIP } from '@/lib/rateLimit'
 import { sendLeadEvent } from '@/lib/meta-capi'
+import { guardarLead, registrarEvento } from '@/lib/store'
 
 /**
  * Captura el contacto ANTES de que la persona se vaya a WhatsApp.
@@ -41,30 +42,31 @@ export async function POST(req: NextRequest) {
 
   const db = getSupabase()
   if (db) {
-    const { error } = await db.from('leads').insert({
-      name,
-      phone: phone || '—',
-      service: `🏠 Visita a domicilio · ${comuna}`,
-      message: problema || 'No especificó el problema.',
-      comuna,
-      source: (body.source || '').slice(0, 120) || `/zonas`,
-      device: (body.device || '').slice(0, 20),
-      referrer: (body.referrer || '').slice(0, 300),
-      utm_source: (body.utm_source || '').slice(0, 80) || null,
-      utm_medium: (body.utm_medium || '').slice(0, 80) || null,
-      utm_campaign: (body.utm_campaign || '').slice(0, 120) || null,
-      status: 'nuevo',
-    })
-    if (error) console.error('Supabase insert error (zona-lead):', error)
+    try {
+      await guardarLead(db, {
+        name,
+        phone: phone || '—',
+        service: `🏠 Visita a domicilio · ${comuna}`,
+        message: problema || 'No especificó el problema.',
+        comuna,
+        source: (body.source || '').slice(0, 120) || '/zonas',
+        device: (body.device || '').slice(0, 20),
+        referrer: (body.referrer || '').slice(0, 300),
+        utm_source: (body.utm_source || '').slice(0, 80) || null,
+        utm_medium: (body.utm_medium || '').slice(0, 80) || null,
+        utm_campaign: (body.utm_campaign || '').slice(0, 120) || null,
+      })
+    } catch (err) { console.error('[zona-lead] No se pudo guardar el lead:', err) }
 
-    await db.from('zone_events').insert({
-      comuna,
-      event: 'lead',
-      section: (body.source || '').slice(0, 120),
-      device: (body.device || '').slice(0, 20),
-      utm_source: (body.utm_source || '').slice(0, 80) || null,
-      utm_campaign: (body.utm_campaign || '').slice(0, 120) || null,
-    }).then(({ error: e }) => { if (e) console.error('zone_events (lead):', e) })
+    try {
+      await registrarEvento(db, {
+        comuna, event: 'lead',
+        section: (body.source || '').slice(0, 120),
+        device: (body.device || '').slice(0, 20),
+        utm_source: (body.utm_source || '').slice(0, 80) || null,
+        utm_campaign: (body.utm_campaign || '').slice(0, 120) || null,
+      })
+    } catch (err) { console.error('[zona-lead] No se pudo registrar el evento:', err) }
   }
 
   // Evento de conversión a Meta (para públicos de remarketing y campañas)

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
+import { leerEmbudo, leadsDeComuna } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,38 +21,37 @@ export async function GET(req: NextRequest) {
 
   const desde = new Date(Date.now() - 30 * 86400000).toISOString()
 
-  const [eventsRes, leadsRes] = await Promise.all([
-    db.from('zone_events').select('event, created_at, device, utm_source').eq('comuna', comuna).gte('created_at', desde),
-    db.from('leads').select('*').eq('comuna', comuna).order('created_at', { ascending: false }).limit(300),
-  ])
+  let totales: Record<string, number> = {}
+  let origenes: Record<string, number> = {}
+  let leads: unknown[] = []
+  let modo: string = 'tabla'
 
-  if (eventsRes.error && eventsRes.error.code === '42P01') {
-    return NextResponse.json(
-      { error: 'Falta crear las tablas. Ejecuta supabase-maipu.sql en Supabase → SQL Editor.' },
-      { status: 503 }
-    )
+  try {
+    const e = await leerEmbudo(db, comuna, desde)
+    totales = e.embudo; origenes = e.origenes; modo = e.modo
+  } catch (err) {
+    console.error('[admin zona] No se pudo leer el embudo:', err)
   }
 
-  const events = eventsRes.data ?? []
+  try {
+    const l = await leadsDeComuna(db, comuna)
+    leads = l.leads
+  } catch (err) {
+    console.error('[admin zona] No se pudieron leer los leads:', err)
+  }
+
   const embudo = {
-    wa_click: events.filter(e => e.event === 'wa_click').length,
-    form_open: events.filter(e => e.event === 'form_open').length,
-    form_skip: events.filter(e => e.event === 'form_skip').length,
-    lead: events.filter(e => e.event === 'lead').length,
-    cupon_copiado: events.filter(e => e.event === 'cupon_copiado').length,
-    movil: events.filter(e => e.device === 'movil').length,
-    escritorio: events.filter(e => e.device === 'escritorio').length,
-  }
-
-  // De dónde llega la gente (para saber qué canal invertir)
-  const origenes: Record<string, number> = {}
-  for (const e of events) {
-    const k = e.utm_source || 'directo / orgánico'
-    origenes[k] = (origenes[k] ?? 0) + 1
+    wa_click: totales.wa_click ?? 0,
+    form_open: totales.form_open ?? 0,
+    form_skip: totales.form_skip ?? 0,
+    lead: totales.lead ?? 0,
+    cupon_copiado: totales.cupon_copiado ?? 0,
+    movil: totales.movil ?? 0,
+    escritorio: totales.escritorio ?? 0,
   }
 
   return NextResponse.json(
-    { embudo, origenes, leads: leadsRes.data ?? [], leadsError: leadsRes.error?.message ?? null },
+    { embudo, origenes, leads, modo },
     { headers: { 'Cache-Control': 'no-store' } }
   )
 }
@@ -72,6 +72,13 @@ export async function PATCH(req: NextRequest) {
   if (admin_note !== undefined) patch.admin_note = admin_note
 
   const { error } = await db.from('leads').update(patch).eq('id', id)
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) {
+    const faltaColumna = ['42703', 'PGRST204'].includes(error.code ?? '')
+    return NextResponse.json({
+      error: faltaColumna
+        ? 'Para guardar el estado de seguimiento hay que ejecutar supabase-maipu.sql en Supabase.'
+        : error.message,
+    }, { status: faltaColumna ? 503 : 500 })
+  }
   return NextResponse.json({ ok: true })
 }

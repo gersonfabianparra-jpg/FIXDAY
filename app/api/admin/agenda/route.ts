@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 import { enviarCorreo, plantilla, dominioVerificado } from '@/lib/email'
 import { AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, formatoLargo, TZ } from '@/lib/agenda'
+import { listarReservas, obtenerReserva, actualizarReserva, eliminarReserva } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,17 +32,18 @@ export async function GET() {
 
   const { fecha: hoy } = ahoraEnChile()
 
-  const [reservasRes, cfgRes] = await Promise.all([
-    db.from('bookings').select('*').order('fecha', { ascending: true }).order('bloque', { ascending: true }).limit(400),
-    db.from('settings').select('value').eq('key', 'agenda_config').single(),
-  ])
-
-  if (reservasRes.error && reservasRes.error.code === '42P01') {
-    return NextResponse.json(
-      { error: 'Falta crear la tabla de agenda. Ejecuta supabase-maipu.sql en Supabase → SQL Editor.' },
-      { status: 503 }
-    )
+  let reservas
+  let modo
+  try {
+    const r = await listarReservas(db)
+    reservas = r.reservas
+    modo = r.modo
+  } catch (err) {
+    console.error('[agenda admin] No se pudieron leer las reservas:', err)
+    return NextResponse.json({ error: 'No se pudo leer la agenda.' }, { status: 500 })
   }
+
+  const cfgRes = await db.from('settings').select('value').eq('key', 'agenda_config').single()
 
   let config: AgendaConfig = AGENDA_DEFAULT
   try {
@@ -50,7 +52,7 @@ export async function GET() {
   } catch { /* usa los valores por defecto */ }
 
   return NextResponse.json(
-    { reservas: reservasRes.data ?? [], config, hoy, dominioVerificado: dominioVerificado() },
+    { reservas, config, hoy, modo, dominioVerificado: dominioVerificado() },
     { headers: { 'Cache-Control': 'no-store' } }
   )
 }
@@ -63,8 +65,8 @@ export async function PATCH(req: NextRequest) {
   const db = getSupabase()
   if (!db) return NextResponse.json({ error: 'Supabase no configurado' }, { status: 503 })
 
-  const { data: reserva, error: errLectura } = await db.from('bookings').select('*').eq('id', id).single()
-  if (errLectura || !reserva) return NextResponse.json({ error: 'No se encontró la hora' }, { status: 404 })
+  const reserva = await obtenerReserva(db, id)
+  if (!reserva) return NextResponse.json({ error: 'No se encontró la hora' }, { status: 404 })
 
   const patch: Record<string, unknown> = {}
   if (status) {
@@ -73,8 +75,12 @@ export async function PATCH(req: NextRequest) {
   }
   if (admin_note !== undefined) patch.admin_note = admin_note
 
-  const { error } = await db.from('bookings').update(patch).eq('id', id)
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  try {
+    await actualizarReserva(db, id, patch)
+  } catch (err) {
+    console.error('[agenda admin] No se pudo actualizar:', err)
+    return NextResponse.json({ error: 'No se pudo actualizar la hora.' }, { status: 500 })
+  }
 
   let correoCliente = false
 
@@ -88,7 +94,7 @@ export async function PATCH(req: NextRequest) {
         intro: `Listo, ${String(reserva.name).split(' ')[0]}. Un técnico de FIXDAY llegará a tu domicilio en el horario acordado.`,
         filas: [
           ['Cuándo', cuando],
-          ['Dónde', [reserva.direccion, reserva.comuna].filter(Boolean).join(', ') || reserva.comuna],
+          ['Dónde', [reserva.direccion, reserva.comuna].filter(Boolean).join(', ') || 'La coordinamos contigo'],
           ['Servicio', reserva.servicio || 'Diagnóstico general'],
           ['Valor visita', '$25.000 (se descuenta si haces la reparación)'],
         ],
@@ -115,4 +121,21 @@ export async function PATCH(req: NextRequest) {
   }
 
   return NextResponse.json({ ok: true, correoCliente })
+}
+
+/** Borra una hora definitivamente (por ejemplo, una de prueba). */
+export async function DELETE(req: NextRequest) {
+  const { id } = await req.json().catch(() => ({}))
+  if (!id) return NextResponse.json({ error: 'Falta el id' }, { status: 400 })
+
+  const db = getSupabase()
+  if (!db) return NextResponse.json({ error: 'Supabase no configurado' }, { status: 503 })
+
+  try {
+    await eliminarReserva(db, id)
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error('[agenda admin] No se pudo eliminar:', err)
+    return NextResponse.json({ error: 'No se pudo eliminar la hora.' }, { status: 500 })
+  }
 }

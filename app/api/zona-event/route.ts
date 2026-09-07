@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 import { rateLimit, getIP } from '@/lib/rateLimit'
+import { registrarEvento } from '@/lib/store'
 
 /**
  * Eventos anónimos del embudo de una zona (sin datos personales).
@@ -20,16 +21,17 @@ export async function POST(req: NextRequest) {
 
   const db = getSupabase()
   if (db) {
-    const { error } = await db.from('zone_events').insert({
-      comuna: String(body.comuna || 'Región Metropolitana').slice(0, 60),
-      event,
-      section: String(body.section || '').slice(0, 120),
-      device: String(body.device || '').slice(0, 20),
-      referrer: String(body.referrer || '').slice(0, 300),
-      utm_source: String(body.utm_source || '').slice(0, 80) || null,
-      utm_campaign: String(body.utm_campaign || '').slice(0, 120) || null,
-    })
-    if (error) console.error('Supabase insert error (zona-event):', error)
+    try {
+      await registrarEvento(db, {
+        comuna: String(body.comuna || 'Región Metropolitana').slice(0, 60),
+        event,
+        section: String(body.section || '').slice(0, 120),
+        device: String(body.device || '').slice(0, 20),
+        referrer: String(body.referrer || '').slice(0, 300),
+        utm_source: String(body.utm_source || '').slice(0, 80) || null,
+        utm_campaign: String(body.utm_campaign || '').slice(0, 120) || null,
+      })
+    } catch (err) { console.error('[zona-event] No se pudo registrar:', err) }
   }
 
   return NextResponse.json({ ok: true })

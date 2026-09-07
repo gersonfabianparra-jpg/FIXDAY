@@ -65,6 +65,15 @@ export default function AgendaAdmin() {
     } else avisar('Actualizada ✓')
   }
 
+  const eliminar = async (id: string) => {
+    setReservas(rs => rs.filter(r => r.id !== id))
+    await fetch('/api/admin/agenda', {
+      method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    })
+    avisar('Hora eliminada ✓')
+  }
+
   const guardarConfig = async () => {
     const r = await fetch('/api/admin/settings', {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' },
@@ -195,6 +204,12 @@ export default function AgendaAdmin() {
                             Rechazar
                           </button>
                         </>
+                      )}
+                      {(r.status === 'cancelada' || r.status === 'realizada') && (
+                        <button onClick={() => eliminar(r.id)}
+                          style={{ background: 'transparent', color: '#636366', border: '1px solid #2A2A2E', borderRadius: 999, padding: '10px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+                          Eliminar
+                        </button>
                       )}
                       {r.status === 'confirmada' && (
                         <button onClick={() => cambiar(r.id, 'realizada')}
