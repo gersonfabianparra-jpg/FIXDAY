@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
-import { enviarCorreo, plantilla, dominioVerificado } from '@/lib/email'
+import { enviarCorreo, plantilla, dominioVerificado, correoAdmin } from '@/lib/email'
 import { AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, formatoLargo, TZ } from '@/lib/agenda'
 import { listarReservas, obtenerReserva, actualizarReserva, eliminarReserva } from '@/lib/store'
 
@@ -87,7 +87,7 @@ export async function PATCH(req: NextRequest) {
   if (status === 'confirmada' && reserva.email) {
     const cuando = `${formatoLargo(reserva.fecha)}, entre ${reserva.bloque.replace('-', ' y ')}`
     const r = await enviarCorreo({
-      to: reserva.email, esCliente: true,
+      to: reserva.email, esCliente: true, replyTo: correoAdmin(),
       subject: `✅ Visita confirmada · ${formatoLargo(reserva.fecha)}`,
       html: plantilla({
         titulo: '¡Tu visita está confirmada!',
@@ -107,7 +107,7 @@ export async function PATCH(req: NextRequest) {
 
   if (status === 'cancelada' && reserva.email) {
     const r = await enviarCorreo({
-      to: reserva.email, esCliente: true,
+      to: reserva.email, esCliente: true, replyTo: correoAdmin(),
       subject: 'Sobre tu solicitud de visita · FIXDAY',
       html: plantilla({
         titulo: 'No pudimos tomar esa hora',

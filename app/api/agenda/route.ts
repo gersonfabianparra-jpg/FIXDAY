@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
   let avisoCliente = false
   if (email) {
     const r = await enviarCorreo({
-      to: email, esCliente: true,
+      to: email, esCliente: true, replyTo: correoAdmin(),
       subject: `Recibimos tu solicitud de visita · FIXDAY`,
       html: plantilla({
         titulo: `¡Gracias, ${name.split(' ')[0]}!`,
