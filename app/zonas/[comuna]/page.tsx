@@ -4,6 +4,11 @@ import { notFound } from 'next/navigation'
 import { COMUNAS, getComunaBySlug } from '../comunas'
 import Logo from '@/app/components/Logo'
 import LeadMagnet from '@/app/components/LeadMagnet'
+import { getZonaPlus } from '../zonas-plus'
+import WhatsAppCapture from '@/app/components/zona/WhatsAppCapture'
+import CuposHoy from '@/app/components/zona/CuposHoy'
+import CuponZona from '@/app/components/zona/CuponZona'
+import PruebaSocialLocal from '@/app/components/zona/PruebaSocialLocal'
 
 export function generateStaticParams() {
   return COMUNAS.map(c => ({ comuna: c.slug }))
@@ -68,13 +73,34 @@ const STEPS = [
   { n: '3', title: 'Reparamos en tu casa', desc: 'Diagnóstico claro, presupuesto sin sorpresas y solución en el lugar.' },
 ]
 
-const WA_BASE = 'https://wa.me/56936649332?text='
+const WA_NUMBER = '56936649332'
+const WA_BASE = `https://wa.me/${WA_NUMBER}?text=`
 
 export default function ComunaPage({ params }: { params: { comuna: string } }) {
   const c = getComunaBySlug(params.comuna)
   if (!c) notFound()
 
   const waMsg = encodeURIComponent(`Hola FIXDAY, necesito un técnico a domicilio en ${c.name}`)
+
+  // Comunas reforzadas (hoy Maipú): capturan el contacto antes de ir a WhatsApp
+  // y muestran cupos en vivo, prueba social local y cupón administrable.
+  const plus = getZonaPlus(c.slug)
+
+  /** CTA de WhatsApp: con captura de datos en las comunas reforzadas. */
+  const CTA = ({ section, className, style, children }: {
+    section: string
+    className?: string
+    style?: React.CSSProperties
+    children: React.ReactNode
+  }) => plus ? (
+    <WhatsAppCapture comuna={c.name} waNumber={WA_NUMBER} section={section} label="" className={className} style={{ cursor: 'pointer', ...style }}>
+      {children}
+    </WhatsAppCapture>
+  ) : (
+    <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className={className} style={style}>
+      {children}
+    </a>
+  )
 
   // Comunas cercanas que tienen su propia página → chips clicables (interlinking)
   const nearbyLinks = c.nearby
@@ -187,10 +213,10 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
           </Link>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             <Link href="/zonas" style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>← Todas las zonas</Link>
-            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer"
+            <CTA section="nav"
               style={{ background: '#2997FF', color: '#fff', borderRadius: 980, padding: '10px 20px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               Agendar visita
-            </a>
+            </CTA>
           </div>
         </div>
       </nav>
@@ -247,16 +273,22 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
           </div>
 
           <div className="cz-rise cz-d5" style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className="cz-cta"
+            <CTA section="hero" className="cz-cta"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', borderRadius: 980, padding: '15px 30px', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 10px 30px rgba(37,211,102,.32)' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
               Agendar visita en {c.name}
-            </a>
+            </CTA>
             <Link href="/#contact" className="cz-cta"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', borderRadius: 980, padding: '15px 30px', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
               Formulario de contacto
             </Link>
           </div>
+
+          {plus && (
+            <div className="cz-rise cz-d5" style={{ marginTop: 26, maxWidth: 620 }}>
+              <CuposHoy comuna={c.name} settingKey={plus.cuposKey} />
+            </div>
+          )}
         </div>
       </section>
 
@@ -275,6 +307,15 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
           <div style={{ fontSize: 30, fontWeight: 900, color: '#F5F5F7', letterSpacing: '-.03em', whiteSpace: 'nowrap' }}>$25.000</div>
         </div>
       </div>
+
+      {/* Cupón exclusivo de la comuna (se administra desde /admin/maipu) */}
+      {plus && (
+        <section style={{ padding: '0 0 60px' }}>
+          <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+            <CuponZona comuna={c.name} settingKey={plus.cuponKey} />
+          </div>
+        </section>
+      )}
 
       {/* Cómo funciona */}
       <section style={{ padding: '0 0 72px' }}>
@@ -349,6 +390,15 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
         </div>
       </section>
 
+      {/* Cobertura por sector + opiniones reales de la comuna */}
+      {plus && (
+        <section style={{ padding: '0 0 72px' }}>
+          <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+            <PruebaSocialLocal comuna={c.name} sectores={plus.sectores} hitos={plus.hitos} llegada={plus.llegada} />
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       <section style={{ padding: '0 0 72px' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px' }}>
@@ -411,11 +461,11 @@ export default function ComunaPage({ params }: { params: { comuna: string } }) {
             <p style={{ color: '#86868B', fontSize: 15, marginBottom: 32, maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>
               Escríbenos y agendamos una visita técnica a domicilio en {c.name} para el horario que más te acomode.
             </p>
-            <a href={`${WA_BASE}${waMsg}`} target="_blank" rel="noopener noreferrer" className="cz-cta"
+            <CTA section="cta_final" className="cz-cta"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#25D366', color: '#fff', borderRadius: 980, padding: '16px 36px', fontSize: 16, fontWeight: 700, textDecoration: 'none', boxShadow: '0 8px 28px rgba(37,211,102,.3)' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
               Contactar por WhatsApp
-            </a>
+            </CTA>
           </div>
         </div>
       </section>

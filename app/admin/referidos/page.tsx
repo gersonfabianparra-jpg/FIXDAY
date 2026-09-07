@@ -62,6 +62,7 @@ export default function AdminReferidos() {
           <a href="/admin/reports" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Informes</a>
           <a href="/admin/reviews" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Reseñas</a>
           <a href="/admin/referidos" style={{ color: '#2997FF', fontSize: 14, textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid #2997FF', paddingBottom: 1 }}>Referidos</a>
+          <a href="/admin/maipu" style={{ color: '#636366', fontSize: 14, textDecoration: 'none' }}>Maipú</a>
           <button onClick={logout} style={{ marginLeft: 'auto', background: 'rgba(255,69,58,.12)', border: '1px solid rgba(255,69,58,.3)', borderRadius: 8, padding: '7px 16px', color: '#FF453A', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>Salir</button>
         </div>
         <p style={{ color: '#636366', fontSize: 14, marginTop: 4, marginBottom: 24 }}>Cada persona que recomienda genera un código. Cuando su referido agenda mencionando el código, aplícale el descuento y marca aquí como pagado.</p>
