@@ -10,7 +10,10 @@ import type { SupabaseClient } from '@supabase/supabase-js'
  */
 
 const PREFIJO = 'booking_'
-const TABLA_INEXISTENTE = '42P01'
+
+// Postgres responde 42P01 y PostgREST PGRST205 según por dónde entre la
+// consulta, así que se aceptan ambos y también el texto del mensaje.
+const TABLA_FALTANTE = new Set(['42P01', 'PGRST205'])
 
 export interface Reserva {
   id: string
@@ -34,8 +37,11 @@ export interface Reserva {
 
 export type Modo = 'tabla' | 'respaldo'
 
-function esTablaFaltante(error: { code?: string } | null): boolean {
-  return error?.code === TABLA_INEXISTENTE
+function esTablaFaltante(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false
+  if (error.code && TABLA_FALTANTE.has(error.code)) return true
+  const m = (error.message ?? '').toLowerCase()
+  return m.includes('does not exist') || m.includes('could not find the table') || m.includes('schema cache')
 }
 
 /** Indica si la tabla dedicada ya existe. */
@@ -138,8 +144,11 @@ export async function actualizarReserva(db: SupabaseClient, id: string, patch: P
 
 const COLUMNA_FALTANTE = new Set(['42703', 'PGRST204'])
 
-function esColumnaFaltante(error: { code?: string } | null): boolean {
-  return Boolean(error?.code && COLUMNA_FALTANTE.has(error.code))
+function esColumnaFaltante(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false
+  if (error.code && COLUMNA_FALTANTE.has(error.code)) return true
+  const m = (error.message ?? '').toLowerCase()
+  return m.includes('could not find the') && m.includes('column')
 }
 
 export interface LeadNuevo {
