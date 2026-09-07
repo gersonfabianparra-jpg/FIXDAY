@@ -28,13 +28,23 @@ export async function GET() {
 
   const hasta = sumarDias(hoy, cfg.diasAnticipacion)
   const ocupacion: Record<string, number> = {}
+  let faltaTabla = false
+
   if (db) {
-    const { data } = await db
+    const { data, error } = await db
       .from('bookings')
       .select('fecha, bloque')
       .gte('fecha', hoy).lte('fecha', hasta)
       .in('status', ['pendiente', 'confirmada'])
-    for (const b of data ?? []) ocupacion[`${b.fecha}|${b.bloque}`] = (ocupacion[`${b.fecha}|${b.bloque}`] ?? 0) + 1
+
+    // Sin la tabla no se puede guardar nada: mejor no mostrar un calendario
+    // que después va a fallar al enviar.
+    if (error) {
+      faltaTabla = true
+      console.error('[agenda] No se pudo leer bookings:', error.message)
+    } else {
+      for (const b of data ?? []) ocupacion[`${b.fecha}|${b.bloque}`] = (ocupacion[`${b.fecha}|${b.bloque}`] ?? 0) + 1
+    }
   }
 
   const dias = []
@@ -55,8 +65,15 @@ export async function GET() {
   // guardar la reserva. En desarrollo sí, para poder revisar el calendario.
   const enDesarrollo = process.env.NODE_ENV !== 'production'
 
+  const noSePuedeGuardar = !db || faltaTabla
+
   return NextResponse.json(
-    { activo: cfg.activo, dias, sinConexion: !db && !enDesarrollo, demo: !db && enDesarrollo },
+    {
+      activo: cfg.activo,
+      dias,
+      sinConexion: noSePuedeGuardar && !enDesarrollo,
+      demo: noSePuedeGuardar && enDesarrollo,
+    },
     { headers: { 'Cache-Control': 'no-store' } }
   )
 }
@@ -119,7 +136,12 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     console.error('Supabase insert error (bookings):', error)
-    return NextResponse.json({ error: 'No pudimos guardar tu hora. Intenta de nuevo.' }, { status: 500 })
+    const sinTabla = error.code === '42P01'
+    return NextResponse.json({
+      error: sinTabla
+        ? 'La agenda en línea aún no está habilitada. Escríbenos por WhatsApp y coordinamos tu visita.'
+        : 'No pudimos guardar tu hora. Intenta de nuevo o escríbenos por WhatsApp.',
+    }, { status: sinTabla ? 503 : 500 })
   }
 
   const cuando = `${formatoLargo(fecha)}, entre ${bloque.replace('-', ' y ')}`
