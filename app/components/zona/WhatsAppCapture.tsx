@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { getCtx, trackEvent } from './track'
 
 /**
@@ -35,6 +36,8 @@ export default function WhatsAppCapture({ comuna, waNumber, section, label, clas
   const [phone, setPhone] = useState('')
   const [err, setErr] = useState('')
   const firstRef = useRef<HTMLInputElement>(null)
+  const [montado, setMontado] = useState(false)
+  useEffect(() => setMontado(true), [])
 
   const go = useCallback((msg: string) => {
     window.location.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`
@@ -91,7 +94,7 @@ export default function WhatsAppCapture({ comuna, waNumber, section, label, clas
         {children ?? label}
       </a>
 
-      {open && (
+      {open && montado && createPortal(
         <div
           role="dialog" aria-modal="true" aria-label={`Agendar visita en ${comuna}`}
           onClick={() => setOpen(false)}
@@ -183,7 +186,8 @@ export default function WhatsAppCapture({ comuna, waNumber, section, label, clas
             @keyframes zcFade{from{opacity:0}to{opacity:1}}
             @keyframes zcUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
           ` }} />
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
