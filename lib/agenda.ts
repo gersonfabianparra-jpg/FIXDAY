@@ -88,13 +88,23 @@ export interface CitaMensaje {
  */
 export function mensajeCita(c: CitaMensaje): string {
   const lugar = [c.direccion, c.comuna].filter(Boolean).join(', ')
-  return `¡Hola ${c.name.split(' ')[0]}! 👋 Te confirmo tu visita técnica de FIXDAY:\n\n` +
-    `📅 ${formatoLargo(c.fecha)}\n` +
-    `🕐 Entre ${c.bloque.replace('-', ' y ')}\n` +
-    (lugar ? `📍 ${lugar}\n` : '') +
-    (c.servicio ? `🔧 ${c.servicio}\n` : '') +
-    (c.valor ? `💵 Valor acordado: ${c.valor}\n` : '') +
-    `\nAcá puedes ver tu cita y agregarla a tu calendario:\nhttps://fixday.cl/cita/${c.id}\n\n` +
+
+  // Emojis escritos como escapes y elegidos dentro del plano básico (3 bytes):
+  // WhatsApp de escritorio corrompe los de 4 bytes (📅, 📍…) cuando el mensaje
+  // llega por un enlace wa.me, y el cliente recibe rombos negros.
+  const RELOJ = '\u23F0'   // ⏰
+  const PIN   = '\u27A1'   // ➡
+  const TOOL  = '\u2699'   // ⚙
+  const CHECK = '\u2705'   // ✅
+  const ESTRE = '\u2B50'   // ⭐
+
+  return `¡Hola ${c.name.split(' ')[0]}! Te confirmo tu visita técnica de FIXDAY:\n\n` +
+    `${RELOJ} *Cuándo:* ${formatoLargo(c.fecha)}, entre ${c.bloque.replace('-', ' y ')}\n` +
+    (lugar ? `${PIN} *Dónde:* ${lugar}\n` : '') +
+    (c.servicio ? `${TOOL} *Servicio:* ${c.servicio}\n` : '') +
+    (c.valor ? `${CHECK} *Valor acordado:* ${c.valor}\n` : '') +
+    `\n${ESTRE} Acá puedes ver tu cita y agregarla a tu calendario:\n` +
+    `https://fixday.cl/cita/${c.id}\n\n` +
     `Cualquier cambio me avisas por acá. ¡Nos vemos!`
 }
 
