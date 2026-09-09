@@ -155,6 +155,7 @@ export async function POST(req: NextRequest) {
 
   // Acuse de recibo al cliente (requiere dominio verificado en Resend)
   let avisoCliente = false
+  let motivoCorreo: string | undefined
   if (email) {
     const r = await enviarCorreo({
       to: email, esCliente: true, replyTo: correoAdmin(),
@@ -167,6 +168,7 @@ export async function POST(req: NextRequest) {
       }),
     })
     avisoCliente = r.enviado
+    motivoCorreo = r.motivo
   }
 
   sendLeadEvent({
@@ -180,6 +182,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     success: true, id: creada.id, cuando,
     avisoCliente,
+    motivoCorreo,
     dominioVerificado: dominioVerificado(),
   })
 }
