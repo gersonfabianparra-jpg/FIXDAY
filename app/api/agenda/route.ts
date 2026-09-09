@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 import { rateLimit, getIP } from '@/lib/rateLimit'
-import { enviarCorreo, plantilla, correoAdmin, dominioVerificado } from '@/lib/email'
+import { enviarCorreo, plantilla, correoAdmin, correosAdmin, dominioVerificado } from '@/lib/email'
 import { sendLeadEvent } from '@/lib/meta-capi'
 import {
   AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, diaSemana, sumarDias,
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
 
   // Aviso al administrador
   await enviarCorreo({
-    to: correoAdmin(),
+    to: correosAdmin().join(', '),
     replyTo: email || undefined,
     subject: `📅 Nueva hora solicitada · ${comuna} · ${fecha} ${bloque}`,
     html: plantilla({

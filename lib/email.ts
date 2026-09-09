@@ -20,8 +20,15 @@ export function remitente(): string {
   return process.env.EMAIL_FROM ?? FROM_PRUEBAS
 }
 
+/** Todas las direcciones del negocio. EMAIL_TO admite varias separadas por coma. */
+export function correosAdmin(): string[] {
+  const v = process.env.EMAIL_TO ?? 'fabiansitolaral@gmail.com'
+  return v.split(',').map(x => x.trim()).filter(Boolean)
+}
+
+/** La principal, para usar como dirección de respuesta. */
 export function correoAdmin(): string {
-  return process.env.EMAIL_TO ?? 'fabiansitolaral@gmail.com'
+  return correosAdmin()[0]
 }
 
 interface EnvioParams {
@@ -43,22 +50,42 @@ export async function enviarCorreo({ to, subject, html, esCliente, replyTo }: En
     return { enviado: false, motivo: 'Falta configurar el remitente (EMAIL_FROM)' }
   }
 
-  try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    const r = await resend.emails.send({ from: remitente(), to, subject, html, replyTo })
-
-    // Resend responde 200 con `error` cuando rechaza el envío
-    if (r.error) {
-      console.error('[email] Resend rechazó el envío:', r.error)
-      return { enviado: false, motivo: r.error.message ?? 'Resend rechazó el envío' }
-    }
-
-    console.log(`[email] Enviado a ${to} · id ${r.data?.id}`)
-    return { enviado: true, id: r.data?.id }
-  } catch (err) {
-    console.error('[email] Error de Resend:', err)
-    return { enviado: false, motivo: err instanceof Error ? err.message : 'Error de envío' }
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  // De lo que se le manda al cliente queda copia oculta para el negocio
+  const destinatarios = to.split(',').map(x => x.trim()).filter(Boolean)
+  const carta = {
+    from: remitente(), to: destinatarios, subject, html, replyTo,
+    ...(esCliente ? { bcc: correosAdmin() } : {}),
   }
+
+  for (let intento = 1; intento <= 2; intento++) {
+    try {
+      const r = await resend.emails.send(carta)
+
+      // Resend responde 200 con `error` cuando rechaza el envío
+      if (r.error) {
+        const msg = r.error.message ?? 'Resend rechazó el envío'
+        // Resend limita la cadencia de envíos: se reintenta una vez
+        if (intento === 1 && /rate|too many/i.test(msg)) {
+          await new Promise(res => setTimeout(res, 700))
+          continue
+        }
+        console.error('[email] Resend rechazó el envío:', r.error)
+        return { enviado: false, motivo: msg }
+      }
+
+      console.log(`[email] Enviado a ${to} · id ${r.data?.id}`)
+      return { enviado: true, id: r.data?.id }
+    } catch (err) {
+      if (intento === 1) {
+        await new Promise(res => setTimeout(res, 700))
+        continue
+      }
+      console.error('[email] Error de Resend:', err)
+      return { enviado: false, motivo: err instanceof Error ? err.message : 'Error de envío' }
+    }
+  }
+  return { enviado: false, motivo: 'No se pudo enviar tras reintentar' }
 }
 
 /** Envoltorio visual común de los correos de FIXDAY. */
