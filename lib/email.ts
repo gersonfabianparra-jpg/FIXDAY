@@ -34,22 +34,30 @@ interface EnvioParams {
 }
 
 export async function enviarCorreo({ to, subject, html, esCliente, replyTo }: EnvioParams):
-  Promise<{ enviado: boolean; motivo?: string }> {
-  if (!process.env.RESEND_API_KEY) return { enviado: false, motivo: 'Sin RESEND_API_KEY' }
-  if (!to) return { enviado: false, motivo: 'Sin destinatario' }
+  Promise<{ enviado: boolean; motivo?: string; id?: string }> {
+  if (!process.env.RESEND_API_KEY) return { enviado: false, motivo: 'Falta la clave de Resend' }
+  if (!to) return { enviado: false, motivo: 'El cliente no dejó correo' }
 
   if (esCliente && !dominioVerificado()) {
-    console.warn(`[email] Correo a cliente omitido (${to}): falta verificar fixday.cl en Resend y definir EMAIL_FROM.`)
-    return { enviado: false, motivo: 'Dominio no verificado' }
+    console.warn(`[email] Correo a cliente omitido (${to}): falta EMAIL_FROM.`)
+    return { enviado: false, motivo: 'Falta configurar el remitente (EMAIL_FROM)' }
   }
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
-    await resend.emails.send({ from: remitente(), to, subject, html, replyTo })
-    return { enviado: true }
+    const r = await resend.emails.send({ from: remitente(), to, subject, html, replyTo })
+
+    // Resend responde 200 con `error` cuando rechaza el envío
+    if (r.error) {
+      console.error('[email] Resend rechazó el envío:', r.error)
+      return { enviado: false, motivo: r.error.message ?? 'Resend rechazó el envío' }
+    }
+
+    console.log(`[email] Enviado a ${to} · id ${r.data?.id}`)
+    return { enviado: true, id: r.data?.id }
   } catch (err) {
     console.error('[email] Error de Resend:', err)
-    return { enviado: false, motivo: 'Error de envío' }
+    return { enviado: false, motivo: err instanceof Error ? err.message : 'Error de envío' }
   }
 }
 

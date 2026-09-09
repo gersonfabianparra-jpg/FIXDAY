@@ -20,6 +20,7 @@ interface CitaCreada {
   whatsapp: string
   texto: string
   correoCliente: boolean
+  motivoCorreo?: string
   aviso: string | null
 }
 
@@ -87,7 +88,9 @@ export default function AgendaAdmin() {
     })
     const d = await res.json().catch(() => ({}))
     if (status === 'confirmada') {
-      avisar(d.correoCliente ? 'Confirmada · correo enviado al cliente ✓' : 'Confirmada (sin correo al cliente)')
+      avisar(d.correoCliente
+        ? 'Confirmada · correo enviado al cliente ✓'
+        : `Confirmada, pero el correo no salió: ${d.motivoCorreo ?? 'motivo desconocido'}`)
     } else avisar('Actualizada ✓')
   }
 
@@ -107,7 +110,7 @@ export default function AgendaAdmin() {
       })
       const d = await r.json()
       if (!r.ok) throw new Error(d.error || 'No se pudo crear la cita.')
-      setCreada({ url: d.url, whatsapp: d.whatsapp, texto: d.texto, correoCliente: d.correoCliente, aviso: d.aviso })
+      setCreada({ url: d.url, whatsapp: d.whatsapp, texto: d.texto, correoCliente: d.correoCliente, motivoCorreo: d.motivoCorreo, aviso: d.aviso })
       setNueva(NUEVA_VACIA)
       cargar()
     } catch (err) {
@@ -212,7 +215,7 @@ export default function AgendaAdmin() {
               <p style={{ fontSize: 13.5, color: '#AEAEB2', margin: '0 0 4px', lineHeight: 1.6 }}>
                 {creada.correoCliente
                   ? 'Ya le llegó el comprobante por correo.'
-                  : 'No se envió correo (el cliente no dejó dirección de correo).'}
+                  : `No se envió correo: ${creada.motivoCorreo ?? 'motivo desconocido'}.`}
                 {' '}Mándale también el mensaje por WhatsApp:
               </p>
               {creada.aviso && (

@@ -22,8 +22,8 @@ function linkGoogleCalendar(fecha: string, bloque: string, comuna: string, direc
 }
 
 /** Correo de confirmación. Lo usan tanto la agenda web como las citas internas. */
-async function enviarConfirmacion(reserva: Reserva): Promise<boolean> {
-  if (!reserva.email) return false
+async function enviarConfirmacion(reserva: Reserva): Promise<{ enviado: boolean; motivo?: string }> {
+  if (!reserva.email) return { enviado: false, motivo: 'El cliente no dejó correo' }
 
   const cuando = `${formatoLargo(reserva.fecha)}, entre ${reserva.bloque.replace('-', ' y ')}`
   const filas: Array<[string, string]> = [
@@ -47,7 +47,7 @@ async function enviarConfirmacion(reserva: Reserva): Promise<boolean> {
       nota: 'Te avisaremos por WhatsApp cuando el técnico vaya en camino. Si necesitas cambiar o cancelar la hora, escríbenos al +56 9 3664 9332 con anticipación.',
     }),
   })
-  return r.enviado
+  return { enviado: r.enviado, motivo: r.motivo }
 }
 
 export async function GET() {
@@ -112,9 +112,12 @@ export async function PATCH(req: NextRequest) {
   }
 
   let correoCliente = false
+  let motivoCorreo: string | undefined
 
   if (status === 'confirmada' && reserva.email) {
-    correoCliente = await enviarConfirmacion({ ...reserva, ...patch } as Reserva)
+    const r = await enviarConfirmacion({ ...reserva, ...patch } as Reserva)
+    correoCliente = r.enviado
+    motivoCorreo = r.motivo
   }
 
   if (status === 'cancelada' && reserva.email) {
@@ -132,7 +135,7 @@ export async function PATCH(req: NextRequest) {
     correoCliente = r.enviado
   }
 
-  return NextResponse.json({ ok: true, correoCliente })
+  return NextResponse.json({ ok: true, correoCliente, motivoCorreo })
 }
 
 /** Borra una hora definitivamente (por ejemplo, una de prueba). */
@@ -216,7 +219,7 @@ export async function POST(req: NextRequest) {
     status: 'confirmada', confirmed_at: ahora, valor: valor || undefined, origen: 'interna',
   }
 
-  const correoCliente = await enviarConfirmacion(reserva)
+  const envio = await enviarConfirmacion(reserva)
 
   // Mensaje listo para pegar en WhatsApp, con el enlace a su comprobante
   const url = `https://fixday.cl/cita/${id}`
@@ -234,7 +237,9 @@ export async function POST(req: NextRequest) {
   const numero = soloDigitos.startsWith('56') ? soloDigitos : `56${soloDigitos}`
 
   return NextResponse.json({
-    ok: true, id, url, aviso, correoCliente,
+    ok: true, id, url, aviso,
+    correoCliente: envio.enviado,
+    motivoCorreo: envio.motivo,
     whatsapp: `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`,
     texto,
   })
