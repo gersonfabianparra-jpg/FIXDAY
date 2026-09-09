@@ -69,3 +69,41 @@ export function mesCorto(fecha: string): string { return MESES[Number(fecha.spli
 
 /** Margen mínimo para agendar el mismo día (2 horas). */
 export const MARGEN_MINUTOS = 120
+
+/** Datos mínimos de una cita para armar el mensaje al cliente. */
+export interface CitaMensaje {
+  id: string
+  name: string
+  fecha: string
+  bloque: string
+  comuna?: string
+  direccion?: string
+  servicio?: string
+  valor?: string
+}
+
+/**
+ * Mensaje de WhatsApp con la cita completa.
+ * Lo usan el panel y el servidor, para que el cliente reciba siempre lo mismo.
+ */
+export function mensajeCita(c: CitaMensaje): string {
+  const lugar = [c.direccion, c.comuna].filter(Boolean).join(', ')
+  return `¡Hola ${c.name.split(' ')[0]}! 👋 Te confirmo tu visita técnica de FIXDAY:\n\n` +
+    `📅 ${formatoLargo(c.fecha)}\n` +
+    `🕐 Entre ${c.bloque.replace('-', ' y ')}\n` +
+    (lugar ? `📍 ${lugar}\n` : '') +
+    (c.servicio ? `🔧 ${c.servicio}\n` : '') +
+    (c.valor ? `💵 Valor acordado: ${c.valor}\n` : '') +
+    `\nAcá puedes ver tu cita y agregarla a tu calendario:\nhttps://fixday.cl/cita/${c.id}\n\n` +
+    `Cualquier cambio me avisas por acá. ¡Nos vemos!`
+}
+
+/** Normaliza un teléfono chileno al formato que espera wa.me. */
+export function numeroWhatsApp(phone: string): string {
+  const d = phone.replace(/\D/g, '').replace(/^0+/, '')
+  return d.startsWith('56') ? d : `56${d}`
+}
+
+export function linkWhatsApp(phone: string, texto: string): string {
+  return `https://wa.me/${numeroWhatsApp(phone)}?text=${encodeURIComponent(texto)}`
+}

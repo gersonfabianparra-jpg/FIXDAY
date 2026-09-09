@@ -45,17 +45,18 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'FIXDAY – Páginas web que venden. Computadores que rinden.',
+    title: 'FIXDAY – Un técnico en tu casa. Hoy mismo.',
     description:
-      'Diseño web profesional y servicio técnico de computadores a domicilio en Santiago y toda la Región Metropolitana.',
+      'Servicio técnico de computadores a domicilio en toda la Región Metropolitana. Agenda tu visita en línea: visita + diagnóstico $25.000. También diseñamos páginas web.',
     siteName: 'FIXDAY',
     locale: 'es_CL',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'FIXDAY – Diseño Web y Técnico a Domicilio' }],
+    // Sin `images`: Next usa app/opengraph-image.tsx y le pone un identificador
+    // que cambia con el contenido, así WhatsApp deja de mostrar la versión vieja.
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FIXDAY – Páginas web que venden. Computadores que rinden.',
-    description: 'Diseño web profesional y técnico de computadores a domicilio en la Región Metropolitana.',
+    title: 'FIXDAY – Un técnico en tu casa. Hoy mismo.',
+    description: 'Técnico de computadores a domicilio en la Región Metropolitana. Agenda tu visita en línea en fixday.cl',
   },
   verification: {
     google: 'b2iejJ6TyvO27tVj4_4kwJZ_Jyzq6QhrxfNuV8qv2lY',

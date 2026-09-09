@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 import { enviarCorreo, plantilla, dominioVerificado, correoAdmin } from '@/lib/email'
-import { AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, formatoLargo, TZ } from '@/lib/agenda'
+import { AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, formatoLargo, mensajeCita, linkWhatsApp, TZ } from '@/lib/agenda'
 import { listarReservas, obtenerReserva, actualizarReserva, eliminarReserva, crearReserva, contarEnBloque, type Reserva } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
@@ -222,25 +222,13 @@ export async function POST(req: NextRequest) {
   const envio = await enviarConfirmacion(reserva)
 
   // Mensaje listo para pegar en WhatsApp, con el enlace a su comprobante
-  const url = `https://fixday.cl/cita/${id}`
-  const texto =
-    `¡Hola ${name.split(' ')[0]}! 👋 Te confirmo tu visita técnica de FIXDAY:\n\n` +
-    `📅 ${formatoLargo(fecha)}\n` +
-    `🕐 Entre ${bloqueLimpio.replace('-', ' y ')}\n` +
-    (direccion || comuna ? `📍 ${[direccion, comuna].filter(Boolean).join(', ')}\n` : '') +
-    (servicio ? `🔧 ${servicio}\n` : '') +
-    (valor ? `💵 Valor acordado: ${valor}\n` : '') +
-    `\nAcá puedes ver tu cita y agregarla a tu calendario:\n${url}\n\n` +
-    `Cualquier cambio me avisas por acá. ¡Nos vemos!`
-
-  const soloDigitos = phone.replace(/\D/g, '').replace(/^0+/, '')
-  const numero = soloDigitos.startsWith('56') ? soloDigitos : `56${soloDigitos}`
+  const texto = mensajeCita(reserva)
 
   return NextResponse.json({
-    ok: true, id, url, aviso,
+    ok: true, id, url: `https://fixday.cl/cita/${id}`, aviso,
     correoCliente: envio.enviado,
     motivoCorreo: envio.motivo,
-    whatsapp: `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`,
+    whatsapp: linkWhatsApp(phone, texto),
     texto,
   })
 }

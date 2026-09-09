@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { AGENDA_DEFAULT, AgendaConfig, formatoLargo } from '@/lib/agenda'
+import { AGENDA_DEFAULT, AgendaConfig, formatoLargo, mensajeCita, linkWhatsApp } from '@/lib/agenda'
 import { COMUNAS } from '@/app/zonas/comunas'
 
 const SERVICIOS = [
@@ -61,6 +61,7 @@ export default function AgendaAdmin() {
   const [errorNueva, setErrorNueva] = useState('')
   const [creada, setCreada] = useState<CitaCreada | null>(null)
   const [copiado, setCopiado] = useState(false)
+  const [copiadoId, setCopiadoId] = useState<string | null>(null)
 
   const cargar = useCallback(async () => {
     setCargando(true)
@@ -118,6 +119,14 @@ export default function AgendaAdmin() {
     } finally {
       setCreando(false)
     }
+  }
+
+  /** Copia al portapapeles el mensaje completo de una cita ya agendada. */
+  const copiarCita = async (r: Reserva) => {
+    try {
+      await navigator.clipboard.writeText(mensajeCita(r))
+      setCopiadoId(r.id); setTimeout(() => setCopiadoId(null), 2200)
+    } catch { /* el navegador no dio permiso al portapapeles */ }
   }
 
   const copiarMensaje = async () => {
@@ -426,10 +435,17 @@ export default function AgendaAdmin() {
                         style={{ background: 'transparent', border: '1px solid #2A2A2E', color: '#2997FF', borderRadius: 999, padding: '10px 14px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
                         Comprobante
                       </a>
-                      <a href={`https://wa.me/${r.phone.replace(/\D/g, '').replace(/^0+/, '').replace(/^(?!56)/, '56')}?text=${encodeURIComponent(`Hola ${r.name}, te escribo de FIXDAY por tu visita del ${formatoLargo(r.fecha)} entre ${r.bloque.replace('-', ' y ')}.`)}`}
+                      <button onClick={() => copiarCita(r)}
+                        title="Copiar el mensaje completo de la cita"
+                        style={{ background: 'transparent', border: '1px solid #2A2A2E', color: copiadoId === r.id ? '#30D158' : '#8E8E93', borderRadius: 999, padding: '10px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+                        {copiadoId === r.id ? '¡Copiado!' : 'Copiar'}
+                      </button>
+                      <a href={linkWhatsApp(r.phone, mensajeCita(r))}
                         target="_blank" rel="noopener noreferrer"
-                        style={{ background: '#25D366', color: '#fff', borderRadius: 999, padding: '10px 16px', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
-                        WhatsApp
+                        title="Enviar la cita completa por WhatsApp"
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#25D366', color: '#fff', borderRadius: 999, padding: '10px 16px', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.855L.057 23.886a.5.5 0 0 0 .613.613l6.012-1.47A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.001-1.366l-.358-.214-3.712.908.935-3.613-.233-.37A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+                        Enviar cita
                       </a>
                     </div>
                   </div>
