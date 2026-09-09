@@ -33,9 +33,22 @@ export interface Reserva {
   source?: string
   utm_source?: string | null
   device?: string
+  /** Monto acordado con el cliente, tal como se muestra (ej. "$45.000"). */
+  valor?: string
+  /** 'web' si la pidió el cliente; 'interna' si la creó el administrador. */
+  origen?: string
 }
 
 export type Modo = 'tabla' | 'respaldo'
+
+const COLUMNA_FALTANTE = new Set(['42703', 'PGRST204'])
+
+function esColumnaFaltante(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false
+  if (error.code && COLUMNA_FALTANTE.has(error.code)) return true
+  const m = (error.message ?? '').toLowerCase()
+  return m.includes('could not find the') && m.includes('column')
+}
 
 function esTablaFaltante(error: { code?: string; message?: string } | null): boolean {
   if (!error) return false
@@ -105,6 +118,19 @@ export async function crearReserva(db: SupabaseClient, datos: Omit<Reserva, 'id'
   Promise<{ id: string; modo: Modo }> {
   const { data, error } = await db.from('bookings').insert(datos).select('id').single()
   if (!error) return { id: data!.id as string, modo: 'tabla' }
+
+  // La tabla existe pero es anterior a estos campos: se guardan en el texto
+  if (esColumnaFaltante(error)) {
+    const { valor, origen, ...base } = datos
+    const extra = [valor ? `Valor acordado: ${valor}` : '', origen ? `Origen: ${origen}` : '']
+      .filter(Boolean).join(' · ')
+    const { data: d2, error: e2 } = await db.from('bookings')
+      .insert({ ...base, mensaje: extra ? `${base.mensaje ?? ''}\n${extra}`.trim() : base.mensaje })
+      .select('id').single()
+    if (e2) throw new Error(e2.message)
+    return { id: d2!.id as string, modo: 'tabla' }
+  }
+
   if (!esTablaFaltante(error)) throw new Error(error.message)
 
   const id = crypto.randomUUID()
@@ -142,14 +168,6 @@ export async function actualizarReserva(db: SupabaseClient, id: string, patch: P
  * nuevas, se guarda con lo que ya existe en la base.
  * ──────────────────────────────────────────────────────────────────────────── */
 
-const COLUMNA_FALTANTE = new Set(['42703', 'PGRST204'])
-
-function esColumnaFaltante(error: { code?: string; message?: string } | null): boolean {
-  if (!error) return false
-  if (error.code && COLUMNA_FALTANTE.has(error.code)) return true
-  const m = (error.message ?? '').toLowerCase()
-  return m.includes('could not find the') && m.includes('column')
-}
 
 export interface LeadNuevo {
   name: string

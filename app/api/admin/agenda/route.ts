@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 import { enviarCorreo, plantilla, dominioVerificado, correoAdmin } from '@/lib/email'
 import { AGENDA_DEFAULT, AgendaConfig, ahoraEnChile, formatoLargo, TZ } from '@/lib/agenda'
-import { listarReservas, obtenerReserva, actualizarReserva, eliminarReserva } from '@/lib/store'
+import { listarReservas, obtenerReserva, actualizarReserva, eliminarReserva, crearReserva, contarEnBloque, type Reserva } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,6 +19,35 @@ function linkGoogleCalendar(fecha: string, bloque: string, comuna: string, direc
     ctz: TZ,
   })
   return `https://calendar.google.com/calendar/render?${params}`
+}
+
+/** Correo de confirmación. Lo usan tanto la agenda web como las citas internas. */
+async function enviarConfirmacion(reserva: Reserva): Promise<boolean> {
+  if (!reserva.email) return false
+
+  const cuando = `${formatoLargo(reserva.fecha)}, entre ${reserva.bloque.replace('-', ' y ')}`
+  const filas: Array<[string, string]> = [
+    ['Cuándo', cuando],
+    ['Dónde', [reserva.direccion, reserva.comuna].filter(Boolean).join(', ') || 'La coordinamos contigo'],
+    ['Servicio', reserva.servicio || 'Diagnóstico general'],
+  ]
+  // Si se acordó un monto, ese manda; si no, se informa el valor de la visita
+  filas.push(reserva.valor
+    ? ['Valor acordado', reserva.valor]
+    : ['Valor visita', '$25.000 (se descuenta si haces la reparación)'])
+
+  const r = await enviarCorreo({
+    to: reserva.email, esCliente: true, replyTo: correoAdmin(),
+    subject: `✅ Visita confirmada · ${formatoLargo(reserva.fecha)}`,
+    html: plantilla({
+      titulo: '¡Tu visita está confirmada!',
+      intro: `Listo, ${String(reserva.name).split(' ')[0]}. Un técnico de FIXDAY llegará a tu domicilio en el horario acordado.`,
+      filas,
+      cta: { texto: 'Ver mi cita y agregarla al calendario', url: `https://fixday.cl/cita/${reserva.id}` },
+      nota: 'Te avisaremos por WhatsApp cuando el técnico vaya en camino. Si necesitas cambiar o cancelar la hora, escríbenos al +56 9 3664 9332 con anticipación.',
+    }),
+  })
+  return r.enviado
 }
 
 export async function GET() {
@@ -85,24 +114,7 @@ export async function PATCH(req: NextRequest) {
   let correoCliente = false
 
   if (status === 'confirmada' && reserva.email) {
-    const cuando = `${formatoLargo(reserva.fecha)}, entre ${reserva.bloque.replace('-', ' y ')}`
-    const r = await enviarCorreo({
-      to: reserva.email, esCliente: true, replyTo: correoAdmin(),
-      subject: `✅ Visita confirmada · ${formatoLargo(reserva.fecha)}`,
-      html: plantilla({
-        titulo: '¡Tu visita está confirmada!',
-        intro: `Listo, ${String(reserva.name).split(' ')[0]}. Un técnico de FIXDAY llegará a tu domicilio en el horario acordado.`,
-        filas: [
-          ['Cuándo', cuando],
-          ['Dónde', [reserva.direccion, reserva.comuna].filter(Boolean).join(', ') || 'La coordinamos contigo'],
-          ['Servicio', reserva.servicio || 'Diagnóstico general'],
-          ['Valor visita', '$25.000 (se descuenta si haces la reparación)'],
-        ],
-        cta: { texto: 'Agregar a mi calendario', url: linkGoogleCalendar(reserva.fecha, reserva.bloque, reserva.comuna ?? '', reserva.direccion ?? '') },
-        nota: 'Te avisaremos por WhatsApp cuando el técnico vaya en camino. Si necesitas cambiar o cancelar la hora, escríbenos al +56 9 3664 9332 con anticipación.',
-      }),
-    })
-    correoCliente = r.enviado
+    correoCliente = await enviarConfirmacion({ ...reserva, ...patch } as Reserva)
   }
 
   if (status === 'cancelada' && reserva.email) {
@@ -138,4 +150,92 @@ export async function DELETE(req: NextRequest) {
     console.error('[agenda admin] No se pudo eliminar:', err)
     return NextResponse.json({ error: 'No se pudo eliminar la hora.' }, { status: 500 })
   }
+}
+
+/**
+ * Crea una cita agendada por el administrador (cliente que cerró por WhatsApp).
+ * Nace confirmada, porque el trato ya está hecho, y avisa al cliente si dejó correo.
+ */
+export async function POST(req: NextRequest) {
+  const b = await req.json().catch(() => ({}))
+
+  const name      = String(b.name || '').trim().slice(0, 80)
+  const phone     = String(b.phone || '').trim().slice(0, 30)
+  const email     = String(b.email || '').trim().toLowerCase().slice(0, 120)
+  const fecha     = String(b.fecha || '').trim()
+  const bloque    = String(b.bloque || '').trim().slice(0, 20)
+  const comuna    = String(b.comuna || '').trim().slice(0, 60)
+  const direccion = String(b.direccion || '').trim().slice(0, 200)
+  const servicio  = String(b.servicio || '').trim().slice(0, 80)
+  const mensaje   = String(b.mensaje || '').trim().slice(0, 500)
+  const valor     = String(b.valor || '').trim().slice(0, 40)
+
+  if (name.length < 2) return NextResponse.json({ error: 'Falta el nombre del cliente.' }, { status: 400 })
+  if (phone.replace(/\D/g, '').length < 8) return NextResponse.json({ error: 'Falta un teléfono válido.' }, { status: 400 })
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return NextResponse.json({ error: 'Falta la fecha.' }, { status: 400 })
+  if (!/^\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2}$/.test(bloque)) {
+    return NextResponse.json({ error: 'El horario debe ser tipo 09:00-11:00.' }, { status: 400 })
+  }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json({ error: 'El correo no es válido.' }, { status: 400 })
+  }
+
+  const db = getSupabase()
+  if (!db) return NextResponse.json({ error: 'Supabase no configurado' }, { status: 503 })
+
+  const bloqueLimpio = bloque.replace(/\s/g, '')
+  const ahora = new Date().toISOString()
+
+  // Aviso (no bloqueo): el administrador manda, pero conviene saber si se topa
+  let aviso: string | null = null
+  try {
+    const ocupados = await contarEnBloque(db, fecha, bloqueLimpio)
+    if (ocupados > 0) aviso = `Ya había ${ocupados} visita(s) en ese horario.`
+  } catch { /* si no se puede contar, se crea igual */ }
+
+  let id: string
+  try {
+    const r = await crearReserva(db, {
+      fecha, bloque: bloqueLimpio, name, phone, email: email || null,
+      comuna, direccion, servicio, mensaje,
+      status: 'confirmada',
+      confirmed_at: ahora,
+      valor: valor || undefined,
+      origen: 'interna',
+      source: 'admin',
+    })
+    id = r.id
+  } catch (err) {
+    console.error('[agenda admin] No se pudo crear la cita:', err)
+    return NextResponse.json({ error: 'No se pudo crear la cita.' }, { status: 500 })
+  }
+
+  const reserva: Reserva = {
+    id, created_at: ahora, fecha, bloque: bloqueLimpio, name, phone,
+    email: email || null, comuna, direccion, servicio, mensaje,
+    status: 'confirmada', confirmed_at: ahora, valor: valor || undefined, origen: 'interna',
+  }
+
+  const correoCliente = await enviarConfirmacion(reserva)
+
+  // Mensaje listo para pegar en WhatsApp, con el enlace a su comprobante
+  const url = `https://fixday.cl/cita/${id}`
+  const texto =
+    `¡Hola ${name.split(' ')[0]}! 👋 Te confirmo tu visita técnica de FIXDAY:\n\n` +
+    `📅 ${formatoLargo(fecha)}\n` +
+    `🕐 Entre ${bloqueLimpio.replace('-', ' y ')}\n` +
+    (direccion || comuna ? `📍 ${[direccion, comuna].filter(Boolean).join(', ')}\n` : '') +
+    (servicio ? `🔧 ${servicio}\n` : '') +
+    (valor ? `💵 Valor acordado: ${valor}\n` : '') +
+    `\nAcá puedes ver tu cita y agregarla a tu calendario:\n${url}\n\n` +
+    `Cualquier cambio me avisas por acá. ¡Nos vemos!`
+
+  const soloDigitos = phone.replace(/\D/g, '').replace(/^0+/, '')
+  const numero = soloDigitos.startsWith('56') ? soloDigitos : `56${soloDigitos}`
+
+  return NextResponse.json({
+    ok: true, id, url, aviso, correoCliente,
+    whatsapp: `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`,
+    texto,
+  })
 }

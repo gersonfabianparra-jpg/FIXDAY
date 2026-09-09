@@ -2,12 +2,32 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { AGENDA_DEFAULT, AgendaConfig, formatoLargo } from '@/lib/agenda'
+import { COMUNAS } from '@/app/zonas/comunas'
+
+const SERVICIOS = [
+  'Mantención de PC', 'Instalación de Windows', 'Recuperación de datos',
+  'Optimización del sistema', 'Respaldo de información', 'WiFi y repetidores',
+  'Diagnóstico general', 'Otro',
+]
+
+const NUEVA_VACIA = {
+  name: '', phone: '', email: '', fecha: '', bloque: '', bloqueLibre: '',
+  comuna: '', direccion: '', servicio: '', valor: '', mensaje: '',
+}
+
+interface CitaCreada {
+  url: string
+  whatsapp: string
+  texto: string
+  correoCliente: boolean
+  aviso: string | null
+}
 
 interface Reserva {
   id: string; created_at: string; fecha: string; bloque: string
   name: string; phone: string; email?: string; comuna?: string
   direccion?: string; servicio?: string; mensaje?: string
-  status: string; admin_note?: string
+  status: string; admin_note?: string; valor?: string; origen?: string
 }
 
 const ESTADOS: Record<string, { label: string; color: string }> = {
@@ -34,6 +54,12 @@ export default function AgendaAdmin() {
   const [msg, setMsg] = useState('')
   const [cargando, setCargando] = useState(true)
   const [filtro, setFiltro] = useState('pendiente')
+  const [nuevaOpen, setNuevaOpen] = useState(false)
+  const [nueva, setNueva] = useState(NUEVA_VACIA)
+  const [creando, setCreando] = useState(false)
+  const [errorNueva, setErrorNueva] = useState('')
+  const [creada, setCreada] = useState<CitaCreada | null>(null)
+  const [copiado, setCopiado] = useState(false)
 
   const cargar = useCallback(async () => {
     setCargando(true)
@@ -63,6 +89,40 @@ export default function AgendaAdmin() {
     if (status === 'confirmada') {
       avisar(d.correoCliente ? 'Confirmada · correo enviado al cliente ✓' : 'Confirmada (sin correo al cliente)')
     } else avisar('Actualizada ✓')
+  }
+
+  const crearCita = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (creando) return
+    const bloque = nueva.bloque === 'otro' ? nueva.bloqueLibre : nueva.bloque
+    if (!nueva.name.trim() || !nueva.phone.trim() || !nueva.fecha || !bloque) {
+      setErrorNueva('Completa nombre, teléfono, fecha y horario.')
+      return
+    }
+    setErrorNueva(''); setCreando(true)
+    try {
+      const r = await fetch('/api/admin/agenda', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...nueva, bloque }),
+      })
+      const d = await r.json()
+      if (!r.ok) throw new Error(d.error || 'No se pudo crear la cita.')
+      setCreada({ url: d.url, whatsapp: d.whatsapp, texto: d.texto, correoCliente: d.correoCliente, aviso: d.aviso })
+      setNueva(NUEVA_VACIA)
+      cargar()
+    } catch (err) {
+      setErrorNueva(err instanceof Error ? err.message : 'Error inesperado.')
+    } finally {
+      setCreando(false)
+    }
+  }
+
+  const copiarMensaje = async () => {
+    if (!creada) return
+    try {
+      await navigator.clipboard.writeText(creada.texto)
+      setCopiado(true); setTimeout(() => setCopiado(false), 2200)
+    } catch { /* el navegador no dio permiso al portapapeles */ }
   }
 
   const eliminar = async (id: string) => {
@@ -128,6 +188,138 @@ export default function AgendaAdmin() {
           </div>
         )}
 
+        {/* ── Nueva cita (cerrada por WhatsApp) ── */}
+        <div style={{ ...card, marginBottom: 18, padding: nuevaOpen ? 24 : 18 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <h2 style={{ fontSize: 17, fontWeight: 800, margin: '0 0 4px' }}>Agendar una cita tú mismo</h2>
+              <p style={{ fontSize: 13, color: '#8E8E93', margin: 0 }}>
+                Para el cliente que cerró contigo por WhatsApp. Queda confirmada y le llega su comprobante.
+              </p>
+            </div>
+            <button onClick={() => { setNuevaOpen(!nuevaOpen); setCreada(null); setErrorNueva('') }}
+              style={{ background: nuevaOpen ? '#1C1C1E' : 'linear-gradient(135deg,#0071E3,#2997FF)', color: '#fff', border: nuevaOpen ? '1px solid #2A2A2E' : 'none', borderRadius: 999, padding: '12px 24px', fontSize: 14.5, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+              {nuevaOpen ? 'Cerrar' : '+ Nueva cita'}
+            </button>
+          </div>
+
+          {/* Resultado: la cita quedó creada */}
+          {creada && (
+            <div style={{ marginTop: 20, background: 'rgba(48,209,88,.07)', border: '1px solid rgba(48,209,88,.35)', borderRadius: 16, padding: 20 }}>
+              <div style={{ fontSize: 15.5, fontWeight: 800, color: '#30D158', marginBottom: 6 }}>
+                Cita creada y confirmada
+              </div>
+              <p style={{ fontSize: 13.5, color: '#AEAEB2', margin: '0 0 4px', lineHeight: 1.6 }}>
+                {creada.correoCliente
+                  ? 'Ya le llegó el comprobante por correo.'
+                  : 'No se envió correo (el cliente no dejó dirección de correo).'}
+                {' '}Mándale también el mensaje por WhatsApp:
+              </p>
+              {creada.aviso && (
+                <p style={{ fontSize: 12.5, color: '#FF9F0A', margin: '8px 0 0', fontWeight: 600 }}>⚠ {creada.aviso}</p>
+              )}
+
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 16 }}>
+                <a href={creada.whatsapp} target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', borderRadius: 999, padding: '12px 22px', fontSize: 14, fontWeight: 800, textDecoration: 'none' }}>
+                  Enviar por WhatsApp
+                </a>
+                <button onClick={copiarMensaje}
+                  style={{ background: '#1C1C1E', border: '1px solid #2A2A2E', color: copiado ? '#30D158' : '#F5F5F7', borderRadius: 999, padding: '12px 20px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+                  {copiado ? '¡Copiado!' : 'Copiar mensaje'}
+                </button>
+                <a href={creada.url} target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', background: 'transparent', border: '1px solid #2A2A2E', color: '#2997FF', borderRadius: 999, padding: '12px 20px', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+                  Ver el comprobante ↗
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Formulario */}
+          {nuevaOpen && (
+            <form onSubmit={crearCita} style={{ marginTop: 22 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 14, marginBottom: 14 }}>
+                <div>
+                  <label style={lbl}>Nombre del cliente *</label>
+                  <input style={field} value={nueva.name} onChange={e => setNueva({ ...nueva, name: e.target.value })} />
+                </div>
+                <div>
+                  <label style={lbl}>Teléfono *</label>
+                  <input style={field} value={nueva.phone} placeholder="+56 9 ..." inputMode="tel"
+                    onChange={e => setNueva({ ...nueva, phone: e.target.value })} />
+                </div>
+                <div>
+                  <label style={lbl}>Correo (para enviarle el comprobante)</label>
+                  <input style={field} type="email" value={nueva.email}
+                    onChange={e => setNueva({ ...nueva, email: e.target.value })} />
+                </div>
+                <div>
+                  <label style={lbl}>Fecha *</label>
+                  <input style={field} type="date" value={nueva.fecha}
+                    onChange={e => setNueva({ ...nueva, fecha: e.target.value })} />
+                </div>
+                <div>
+                  <label style={lbl}>Horario *</label>
+                  <select style={{ ...field, cursor: 'pointer' }} value={nueva.bloque}
+                    onChange={e => setNueva({ ...nueva, bloque: e.target.value })}>
+                    <option value="">Selecciona</option>
+                    {config.bloques.map(b => <option key={b} value={b}>{b.replace('-', ' a ')}</option>)}
+                    <option value="otro">Otro horario…</option>
+                  </select>
+                </div>
+                {nueva.bloque === 'otro' && (
+                  <div>
+                    <label style={lbl}>Horario acordado *</label>
+                    <input style={field} value={nueva.bloqueLibre} placeholder="20:00-21:30"
+                      onChange={e => setNueva({ ...nueva, bloqueLibre: e.target.value })} />
+                  </div>
+                )}
+                <div>
+                  <label style={lbl}>Comuna</label>
+                  <select style={{ ...field, cursor: 'pointer' }} value={nueva.comuna}
+                    onChange={e => setNueva({ ...nueva, comuna: e.target.value })}>
+                    <option value="">Selecciona</option>
+                    {COMUNAS.map(c => <option key={c.slug} value={c.name}>{c.name}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={lbl}>Dirección</label>
+                  <input style={field} value={nueva.direccion} placeholder="calle y número"
+                    onChange={e => setNueva({ ...nueva, direccion: e.target.value })} />
+                </div>
+                <div>
+                  <label style={lbl}>Servicio</label>
+                  <select style={{ ...field, cursor: 'pointer' }} value={nueva.servicio}
+                    onChange={e => setNueva({ ...nueva, servicio: e.target.value })}>
+                    <option value="">Selecciona</option>
+                    {SERVICIOS.map(x => <option key={x} value={x}>{x}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={lbl}>Valor acordado</label>
+                  <input style={field} value={nueva.valor} placeholder="$45.000"
+                    onChange={e => setNueva({ ...nueva, valor: e.target.value })} />
+                </div>
+              </div>
+
+              <div style={{ marginBottom: 16 }}>
+                <label style={lbl}>Qué hay que hacer (lo ve el cliente)</label>
+                <textarea rows={2} style={{ ...field, resize: 'vertical' }} value={nueva.mensaje}
+                  placeholder="Ej: cambio de disco a SSD y limpieza interna"
+                  onChange={e => setNueva({ ...nueva, mensaje: e.target.value })} />
+              </div>
+
+              {errorNueva && <p style={{ color: '#FF6B6B', fontSize: 14, margin: '0 0 12px' }}>{errorNueva}</p>}
+
+              <button type="submit" disabled={creando}
+                style={{ background: creando ? '#1C4E8A' : 'linear-gradient(135deg,#0071E3,#2997FF)', color: '#fff', border: 'none', borderRadius: 999, padding: '14px 30px', fontSize: 15, fontWeight: 800, cursor: creando ? 'wait' : 'pointer', fontFamily: 'inherit' }}>
+                {creando ? 'Creando…' : 'Crear cita y avisar al cliente'}
+              </button>
+            </form>
+          )}
+        </div>
+
         {/* ── Filtros ── */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
           {['pendiente', 'confirmada', 'realizada', 'cancelada', 'Todas'].map(f => (
@@ -178,6 +370,11 @@ export default function AgendaAdmin() {
                         <span style={{ fontSize: 11, fontWeight: 800, color: est.color, background: `${est.color}1c`, border: `1px solid ${est.color}44`, borderRadius: 999, padding: '2px 10px' }}>
                           {est.label}
                         </span>
+                        {r.origen === 'interna' && (
+                          <span style={{ fontSize: 11, fontWeight: 700, color: '#BF5AF2', background: 'rgba(191,90,242,.12)', border: '1px solid rgba(191,90,242,.3)', borderRadius: 999, padding: '2px 9px' }}>
+                            agendada por ti
+                          </span>
+                        )}
                         {pasada && r.status === 'pendiente' && (
                           <span style={{ fontSize: 11, color: '#FF453A', fontWeight: 700 }}>· fecha ya pasó</span>
                         )}
@@ -188,7 +385,12 @@ export default function AgendaAdmin() {
                       <div style={{ fontSize: 13, color: '#8E8E93', marginTop: 3 }}>
                         {r.phone}{r.email ? ` · ${r.email}` : ' · sin correo'}
                       </div>
-                      {r.servicio && <div style={{ fontSize: 13, color: '#2997FF', marginTop: 5, fontWeight: 600 }}>{r.servicio}</div>}
+                      {(r.servicio || r.valor) && (
+                        <div style={{ fontSize: 13, marginTop: 5, fontWeight: 600, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                          {r.servicio && <span style={{ color: '#2997FF' }}>{r.servicio}</span>}
+                          {r.valor && <span style={{ color: '#30D158' }}>{r.valor}</span>}
+                        </div>
+                      )}
                       {r.mensaje && <div style={{ fontSize: 13, color: '#AEAEB2', marginTop: 6, lineHeight: 1.55 }}>{r.mensaje}</div>}
                     </div>
 
@@ -217,6 +419,10 @@ export default function AgendaAdmin() {
                           Marcar realizada
                         </button>
                       )}
+                      <a href={`/cita/${r.id}`} target="_blank" rel="noopener noreferrer"
+                        style={{ background: 'transparent', border: '1px solid #2A2A2E', color: '#2997FF', borderRadius: 999, padding: '10px 14px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+                        Comprobante
+                      </a>
                       <a href={`https://wa.me/${r.phone.replace(/\D/g, '').replace(/^0+/, '').replace(/^(?!56)/, '56')}?text=${encodeURIComponent(`Hola ${r.name}, te escribo de FIXDAY por tu visita del ${formatoLargo(r.fecha)} entre ${r.bloque.replace('-', ' y ')}.`)}`}
                         target="_blank" rel="noopener noreferrer"
                         style={{ background: '#25D366', color: '#fff', borderRadius: 999, padding: '10px 16px', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>

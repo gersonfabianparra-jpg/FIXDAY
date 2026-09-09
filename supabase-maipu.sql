@@ -104,6 +104,10 @@ create table if not exists bookings (
   device       text
 );
 
+-- Citas creadas por el administrador (cliente que cerró por WhatsApp)
+alter table bookings add column if not exists valor  text;   -- monto acordado, ej. "$45.000"
+alter table bookings add column if not exists origen text;   -- 'web' | 'interna'
+
 create index if not exists bookings_fecha_idx   on bookings (fecha);
 create index if not exists bookings_status_idx  on bookings (status);
 create index if not exists bookings_created_idx on bookings (created_at desc);
