@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { ausenciaActiva, vueltaCorta } from '@/lib/temporada'
 
 /**
  * Barra de disponibilidad en vivo.
@@ -13,6 +14,9 @@ interface Cfg { activo: boolean; cuposHoy: number }
 interface Estado { abierto: boolean; titulo: string; detalle: string; color: string }
 
 function calcular(): Estado {
+  if (ausenciaActiva()) {
+    return { abierto: false, titulo: 'Fuera de Santiago por Fiestas Patrias', detalle: `Agenda ya tu visita desde el ${vueltaCorta()}`, color: '#FF9F0A' }
+  }
   const d = new Date()
   const h = d.getHours()
   const m = d.getMinutes()
@@ -56,7 +60,7 @@ export default function CuposHoy({ comuna, settingKey }: { comuna: string; setti
 
   if (!estado) return null // evita desajuste entre servidor y navegador
 
-  const mostrarCupos = Boolean(cfg?.activo) && typeof cfg?.cuposHoy === 'number' && cfg.cuposHoy > 0
+  const mostrarCupos = estado.abierto && Boolean(cfg?.activo) && typeof cfg?.cuposHoy === 'number' && cfg.cuposHoy > 0
   const cupos = cfg?.cuposHoy ?? 0
   const pct = mostrarCupos ? Math.max(12, Math.min(100, (cupos / 5) * 100)) : 0
 

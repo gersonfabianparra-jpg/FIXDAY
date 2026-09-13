@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Logo from '@/app/components/Logo'
+import AvisoAusencia from '@/app/components/temporada/AvisoAusencia'
 import { getComunaBySlug } from '../zonas/comunas'
 import AgendaCliente from './AgendaCliente'
 
@@ -58,6 +59,8 @@ export default function AgendarPage({ searchParams }: { searchParams: { comuna?:
           <span style={{ color: '#2997FF', fontWeight: 600 }}>Agendar visita</span>
         </nav>
       </div>
+
+      <AvisoAusencia />
 
       <section style={{ padding: '38px 0 80px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Logo from '@/app/components/Logo'
+import AvisoAusencia from '@/app/components/temporada/AvisoAusencia'
 import MapaWrapper from './MapaWrapper'
 import SectorsGrid from './SectorsGrid'
 
@@ -41,6 +42,8 @@ export default function ZonasPage() {
       </nav>
 
       {/* Hero */}
+      <AvisoAusencia />
+
       <section style={{ padding: '88px 0 72px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 400, background: 'radial-gradient(ellipse, rgba(41,151,255,.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>

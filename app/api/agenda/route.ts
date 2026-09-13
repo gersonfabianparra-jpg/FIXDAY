@@ -8,6 +8,7 @@ import {
   minutosDeBloque, MARGEN_MINUTOS, formatoLargo,
 } from '@/lib/agenda'
 import { ocupacionEntre, contarEnBloque, crearReserva } from '@/lib/store'
+import { diaBloqueado, AUSENCIA, vueltaCorta } from '@/lib/temporada'
 
 export const dynamic = 'force-dynamic'
 
@@ -46,6 +47,8 @@ export async function GET() {
   for (let i = 0; i <= cfg.diasAnticipacion; i++) {
     const fecha = sumarDias(hoy, i)
     if (!cfg.diasHabiles.includes(diaSemana(fecha))) continue
+    // Días de ausencia (ej. fuera de Santiago): no se ofrecen
+    if (diaBloqueado(fecha)) continue
 
     const bloques = cfg.bloques.map(bloque => {
       const usados = ocupacion[`${fecha}|${bloque}`] ?? 0
@@ -66,6 +69,7 @@ export async function GET() {
     {
       activo: cfg.activo,
       dias,
+      ausencia: hoy <= AUSENCIA.hasta ? { ...AUSENCIA, vueltaTexto: vueltaCorta() } : null,
       sinConexion: noSePuedeGuardar && !enDesarrollo,
       demo: noSePuedeGuardar && enDesarrollo,
     },
@@ -103,6 +107,9 @@ export async function POST(req: NextRequest) {
   if (fecha < hoy) return NextResponse.json({ error: 'Esa fecha ya pasó.' }, { status: 400 })
   if (fecha > sumarDias(hoy, cfg.diasAnticipacion)) return NextResponse.json({ error: 'Esa fecha está fuera del rango.' }, { status: 400 })
   if (!cfg.diasHabiles.includes(diaSemana(fecha))) return NextResponse.json({ error: 'Ese día no atendemos.' }, { status: 400 })
+  if (diaBloqueado(fecha)) {
+    return NextResponse.json({ error: `Esa semana no hay visitas. Agenda a partir del ${vueltaCorta()}.` }, { status: 400 })
+  }
   if (fecha === hoy && minutosDeBloque(bloque) - minutos < MARGEN_MINUTOS) {
     return NextResponse.json({ error: 'Ese horario ya está muy cerca. Elige uno más tarde.' }, { status: 400 })
   }

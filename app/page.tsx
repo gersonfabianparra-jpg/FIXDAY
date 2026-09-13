@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTemporada } from './components/temporada/useTemporada'
+import BanderaChile from './components/temporada/BanderaChile'
+import { AUSENCIA, vueltaCorta } from '@/lib/temporada'
 import Bix from './components/Bix'
 import StatsCounter from './components/StatsCounter'
 import JsonLd from './components/JsonLd'
@@ -88,6 +91,8 @@ export default function Home() {
   const [navScrolled, setNavScrolled] = useState(false)
   // Hero "en vivo": saludo + estado según hora/día reales (se recalcula solo)
   const [live, setLive] = useState<LiveInfo | null>(null)
+  // Fiestas Patrias / ausencia: se activa y apaga sola según la fecha
+  const temporada = useTemporada()
   useEffect(() => {
     const compute = () => {
       const d = new Date()
@@ -503,7 +508,8 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ── */}
-      <section id="hero">
+      <section id="hero" className={temporada.fiestas ? 'hero--patria' : undefined}>
+        {temporada.fiestas && <><div className="patria-brillo" aria-hidden /><div className="patria-guirnalda" aria-hidden /></>}
         <div className="aurora aurora-1" />
         <div className="aurora aurora-2" />
         <div className="aurora aurora-3" />
@@ -516,9 +522,11 @@ export default function Home() {
           <div className="hero-inner">
             <div className="hero-content">
               <div className="hero-glow" />
-              <div className="hbadge" style={live && !live.open ? { borderColor: 'rgba(255,159,10,.35)', background: 'rgba(255,159,10,.08)' } : undefined}>
-                <div className="hdot" style={live && !live.open ? { background: '#FF9F0A', boxShadow: '0 0 0 0 rgba(255,159,10,.5)' } : undefined} />
-                {live ? `${live.status} · ${live.when}` : 'Diseño web + Técnico a domicilio · Región Metropolitana'}
+              <div className="hbadge" style={temporada.ausencia || (live && !live.open) ? { borderColor: 'rgba(255,159,10,.35)', background: 'rgba(255,159,10,.08)' } : undefined}>
+                <div className="hdot" style={temporada.ausencia || (live && !live.open) ? { background: '#FF9F0A', boxShadow: '0 0 0 0 rgba(255,159,10,.5)' } : undefined} />
+                {temporada.ausencia
+                  ? `Fuera de Santiago hasta el ${Number(AUSENCIA.hasta.slice(8))} · te agendo desde el ${vueltaCorta()}`
+                  : live ? `${live.status} · ${live.when}` : 'Diseño web + Técnico a domicilio · Región Metropolitana'}
               </div>
               <div className="htrust">
                 <span className="htrust-stars" aria-hidden>★★★★★</span>
@@ -531,9 +539,38 @@ export default function Home() {
                   {live.greeting} <span style={{ display: 'inline-block' }}>👋</span>
                 </div>
               )}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `${theme.color}1c`, border: `1px solid ${theme.color}55`, borderRadius: 980, padding: '6px 15px', fontSize: 11.5, fontWeight: 800, color: theme.color, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 16 }}>
-                <span style={{ fontSize: 9 }}>◆</span> Tema de la semana · {theme.kicker}
-              </div>
+              {temporada.fiestas ? (
+                <div className="hpatria-chip">
+                  <BanderaChile ancho={20} /> ¡Felices Fiestas Patrias! · Semana del 18
+                </div>
+              ) : (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `${theme.color}1c`, border: `1px solid ${theme.color}55`, borderRadius: 980, padding: '6px 15px', fontSize: 11.5, fontWeight: 800, color: theme.color, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 16 }}>
+                  <span style={{ fontSize: 9 }}>◆</span> Tema de la semana · {theme.kicker}
+                </div>
+              )}
+              {temporada.fiestas ? (
+              <h1 className="hero-title htv htv--patria">
+                <span className="htv-line htv-l1">
+                  <svg className="htv-pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M12 2l2.9 6.26 6.6.72-4.9 4.45 1.36 6.57L12 16.7l-5.96 3.3 1.36-6.57L2.5 8.98l6.6-.72z" />
+                  </svg>
+                  Este 18,{' '}
+                  <span className="htv-mark">
+                    <span className="htv-mark-bg" aria-hidden />
+                    <span className="htv-mark-t">desconéctate</span>
+                  </span>.
+                </span>
+                <span className="htv-line htv-l2">Nosotros te conectamos</span>
+                <span className="htv-line htv-l3">
+                  <span className="htv-ghost" aria-hidden>el lunes.</span>
+                  <span className="htv-mega">el lunes.</span>
+                  <span className="htv-seal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 11h18" /></svg>
+                    Agenda abierta · {Number(AUSENCIA.vuelta.slice(8))} sept
+                  </span>
+                </span>
+              </h1>
+              ) : (
               <h1 className="hero-title htv">
                 <span className="htv-line htv-l1">
                   <svg className="htv-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -559,12 +596,17 @@ export default function Home() {
                   </span>
                 </span>
               </h1>
+              )}
               <div className="hero-stack">
                 <span className="hs-tag">Páginas Web</span>
                 <span className="hs-tag">Tiendas Online</span>
                 <span className="hs-tag">Soporte a Domicilio</span>
               </div>
-              <p className="hero-sub">{theme.sub}</p>
+              <p className="hero-sub">
+                {temporada.ausencia
+                  ? `Estoy fuera de Santiago del ${Number(AUSENCIA.desde.slice(8))} al ${Number(AUSENCIA.hasta.slice(8))} de septiembre. Te respondo igual por WhatsApp y te dejo agendada tu visita desde el ${vueltaCorta()}.`
+                  : theme.sub}
+              </p>
               <div className="hbtns">
                 <a
                   href={WA_LINK}
@@ -572,8 +614,8 @@ export default function Home() {
                 >
                   <WAIcon /> Cotizar por WhatsApp
                 </a>
-                <a href="/paginas-web" className="btn btn-do btn-xl">
-                  Ver mi trabajo
+                <a href={temporada.ausencia ? '/agendar' : '/paginas-web'} className="btn btn-do btn-xl">
+                  {temporada.ausencia ? `Agendar para el ${Number(AUSENCIA.vuelta.slice(8))}` : 'Ver mi trabajo'}
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -581,7 +623,7 @@ export default function Home() {
               </div>
               <div className="hurgency">
                 <span className="hu-dot" />
-                Agenda hoy · Respondemos en minutos por WhatsApp
+                {temporada.ausencia ? 'La semana post 18 se llena rápido · reserva hoy tu hora' : 'Agenda hoy · Respondemos en minutos por WhatsApp'}
               </div>
 <div className="hstats" id="hstats">
                 <div className="stat-item">

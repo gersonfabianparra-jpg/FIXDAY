@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import AvisoAusencia from '@/app/components/temporada/AvisoAusencia'
+import BadgeDisponible from '@/app/components/temporada/BadgeDisponible'
 import { notFound } from 'next/navigation'
 import { SERVICES, getServiceBySlug } from '../../services'
 import { COMUNAS, getComunaBySlug } from '../../../zonas/comunas'
@@ -176,6 +178,9 @@ export default function ServicioComunaPage({ params }: { params: { servicio: str
       </div>
 
       {/* Hero animado */}
+      {/* Aviso de ausencia por Fiestas Patrias (se oculta solo al terminar) */}
+      <AvisoAusencia comuna={c.name} slug={c.slug} />
+
       <section className="cz-hero" style={{ padding: '48px 0 56px' }}>
         <div className="cz-aurora a1" />
         <div className="cz-aurora a2" />
@@ -201,10 +206,7 @@ export default function ServicioComunaPage({ params }: { params: { servicio: str
           </p>
 
           <div className="cz-rise cz-d4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32, alignItems: 'center' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(48,209,88,.08)', border: '1px solid rgba(48,209,88,.28)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#7EE29B', fontWeight: 600 }}>
-              <span className="cz-dot" />
-              Disponibles hoy en {c.name}
-            </span>
+            <BadgeDisponible comuna={c.name} />
             {['7 días de garantía', 'Sin traslados', 'Diagnóstico transparente'].map(t => (
               <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 980, padding: '7px 15px', fontSize: 12.5, color: '#C7C7CC', fontWeight: 500 }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
