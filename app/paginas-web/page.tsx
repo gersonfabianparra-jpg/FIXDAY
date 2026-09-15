@@ -128,6 +128,15 @@ const CLIENTES = [
     color: '#FF375F',
     border: 'rgba(255,55,95,.2)',
   },
+  {
+    name: 'Umbral Worship',
+    url: 'https://umbralworship.com',
+    category: 'Música y ministerio',
+    desc: 'Sitio del dúo chileno de adoración Cristian Peña & Susan Lor: su música, próximos shows con cuenta regresiva, letras y acordes para iglesias, kit de prensa y contrataciones.',
+    screenshot: '/screenshots/umbralworship.jpg',
+    color: '#F08A3C',
+    border: 'rgba(240,138,60,.22)',
+  },
 ]
 
 const PASOS = [
