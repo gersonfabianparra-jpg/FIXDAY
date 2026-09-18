@@ -137,6 +137,15 @@ const CLIENTES = [
     color: '#F08A3C',
     border: 'rgba(240,138,60,.22)',
   },
+  {
+    name: 'Plásticos Ángel',
+    url: 'https://plasticosangel.cl',
+    category: 'Integración WooCommerce',
+    desc: 'Tienda online de productos plásticos, desechables, envases, cotillón y artículos de limpieza con despacho en Santiago. Participamos en la integración y puesta a punto de su tienda WooCommerce, en colaboración con DFontana.',
+    screenshot: '/screenshots/plasticosangel.jpg',
+    color: '#2563C9',
+    border: 'rgba(37,99,201,.25)',
+  },
 ]
 
 const PASOS = [
