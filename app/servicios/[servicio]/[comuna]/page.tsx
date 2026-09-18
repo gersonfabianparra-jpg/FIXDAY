@@ -5,6 +5,7 @@ import BadgeDisponible from '@/app/components/temporada/BadgeDisponible'
 import { notFound } from 'next/navigation'
 import { SERVICES, getServiceBySlug } from '../../services'
 import { COMUNAS, getComunaBySlug } from '../../../zonas/comunas'
+import { getZonaPlus } from '../../../zonas/zonas-plus'
 import Logo from '@/app/components/Logo'
 
 // 6 servicios × 40 comunas = 240 landing pages long-tail
@@ -62,6 +63,10 @@ export default function ServicioComunaPage({ params }: { params: { servicio: str
 
   // Otros servicios en esta misma comuna → interlinking
   const otherServices = SERVICES.filter(x => x.slug !== s.slug)
+
+  // Datos locales reales de la comuna (sectores + hitos) → contenido único que
+  // diferencia cada una de las 240 páginas servicio×comuna para Google.
+  const plus = getZonaPlus(c.slug)
 
   // FAQ: una específica de la comuna al inicio + las del servicio
   const faqs = [
@@ -277,6 +282,40 @@ export default function ServicioComunaPage({ params }: { params: { servicio: str
           </div>
         </div>
       </section>
+
+      {/* Cobertura local — contenido único por comuna (sectores + hitos reales) */}
+      {plus && (
+        <section style={{ padding: '0 0 72px' }}>
+          <div style={{ maxWidth: 820, margin: '0 auto', padding: '0 24px' }}>
+            <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 8 }}>
+              {s.shortTitle} en todo {c.name}
+            </h2>
+            <p style={{ color: '#8E8E93', fontSize: 15, marginBottom: 22, lineHeight: 1.7, maxWidth: 640 }}>
+              {plus.llegada} Hacemos {s.shortTitle.toLowerCase()} a domicilio en los distintos sectores de {c.name}, no solo en el centro de la comuna.
+            </p>
+
+            {/* Sectores de cobertura */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9, marginBottom: 22 }}>
+              {plus.sectores.map(sec => (
+                <span key={sec} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#101014', border: '1px solid #22222A', borderRadius: 999, padding: '9px 15px', fontSize: 13.5, color: '#D1D1D6', fontWeight: 600 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#30D158" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                  {sec}
+                </span>
+              ))}
+            </div>
+
+            {/* Referencias urbanas */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 11, flexWrap: 'wrap', background: '#0C0C10', border: '1px solid #1C1C22', borderRadius: 16, padding: '15px 18px' }}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2997FF" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 1, flexShrink: 0 }}>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+              </svg>
+              <p style={{ margin: 0, fontSize: 13.5, color: '#9A9AA0', lineHeight: 1.65, flex: 1, minWidth: 220 }}>
+                Nos movemos por referencias que conoces en {c.name}: <strong style={{ color: '#D1D1D6', fontWeight: 600 }}>{plus.hitos.join(' · ')}</strong>. Cuéntanos tu sector y coordinamos la hora exacta de llegada.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* FAQ */}
       <section style={{ padding: '0 0 72px' }}>
